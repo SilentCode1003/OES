@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-sm-4">
+        <h1>EVALUATION SUBJECTS</h1>
+        <select class="entry-input" name="yearlist" id="yearlist">
+            <option value="-">YEAR</option>
+        </select>
+        <table id="summary-table">
+            <thead>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>NAME</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="col-xl-2 col-lg-2 col-sm-2">
+
+    </div>
+
+    <div class="col-xl-4 col-lg-4 col-sm-4">
+        <h1>ACTIVE PARTICIPANTS</h1>
+        <table id="participants-table">
+            <thead>
+                <th>ALLIAS</th>
+                <th>STATUS</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="summaryModal" class="modal card shadow mb-4">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-button-container">
+            <span id="questionModalSpan" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div>
+                <table id="modal-summary-table">
+                    <thead>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>E</th>
+                        <th>G</th>
+                        <th>S</th>
+                        <th>N</th>
+                        <th>U</th>
+                        <th>O</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <hr>
+            <div>
+                <table id="modal-details-table">
+                    <thead>
+                        <th>CRITERIA</th>
+                        <th>QUESTION</th>
+                        <th>GRADE</th>
+                        <th>COUNT</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- <div id="modal-button-container" class="center-content">
+            <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
+            <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
+        </div> -->
+    </div>
+</div>

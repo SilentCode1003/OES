@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+    <%= title%>
+  </title>
+  <meta property="og:title" content="Evaluation" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta property="twitter:card" content="summary_large_image" />
+
+  <style data-tag="reset-style-sheet">
+    html {
+      line-height: 1.15;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+    }
+
+    p,
+    li,
+    ul,
+    pre,
+    div,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    figure,
+    blockquote,
+    figcaption {
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      background-color: transparent;
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: inherit;
+      font-size: 100%;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    button,
+    select {
+      text-transform: none;
+    }
+
+    button,
+    [type="button"],
+    [type="reset"],
+    [type="submit"] {
+      -webkit-appearance: button;
+    }
+
+    button::-moz-focus-inner,
+    [type="button"]::-moz-focus-inner,
+    [type="reset"]::-moz-focus-inner,
+    [type="submit"]::-moz-focus-inner {
+      border-style: none;
+      padding: 0;
+    }
+
+    button:-moz-focus,
+    [type="button"]:-moz-focus,
+    [type="reset"]:-moz-focus,
+    [type="submit"]:-moz-focus {
+      outline: 1px dotted ButtonText;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: inherit;
+    }
+
+    input {
+      padding: 2px 4px;
+    }
+
+    img {
+      display: block;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+  </style>
+  <style data-tag="default-style-sheet">
+    html {
+      font-family: Inter;
+      font-size: 16px;
+    }
+
+    body {
+      font-weight: 400;
+      font-style: normal;
+      text-decoration: none;
+      text-transform: none;
+      letter-spacing: normal;
+      line-height: 1.15;
+      color: var(--dl-color-gray-black);
+      background-color: var(--dl-color-gray-white);
+
+    }
+  </style>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+    data-tag="font" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+  <div>
+    <link href="/stylesheets/login.css" rel="stylesheet" />
+
+    <div class="login-container">
+      <div id="uselection" class="login-user-sel boxshadow">
+        <button id="aloginBtn" type="button" class="login-start-btn button">Admin</button>
+        <button id="eloginBtn" type="button" class="login-start-btn1 button">
+          Employee
+        </button>
+        <span class="login-text">
+          <span class="login-text1">Welcome</span>
+          <br />
+        </span>
+      </div>
+
+      <div id="elogin" class="login-e-login-c boxshadow">
+        <input id="userid" type="text" placeholder="ID No." class="login-elctxtbox input" />
+        <button id="userloginBtn" class="login-alcbutton button">LOGIN</button>
+      </div>
+      <div id="alogin" class="login-a-login-c boxshadow">
+        <input id="adminuserid" type="text" placeholder="ID No." class="login-atxtbox input" />
+        <input id="password" type="password" placeholder="Password" class="login-p-wtxtbox input" />
+        <button id="adminloginBtn" class="login-alcbutton button">LOGIN</button>
+
+        <!-- <a href="/introduction" class="login-alcbutton button">Log in</a> -->
+      </div>
+
+
+
+      <span class="login-err1">
+        This Employee already completed the Evaluation!
+      </span>
+      <span class="login-err2">Incorrect ID No. Please Try Again.</span>
+    </div>
+  </div>
+
+  <%- include('scripts.ejs') %>
+    <script>
+      $(document).ready(function () {
+        var isClick_Employee = '';
+        var accessType = '';
+        $(document).on('click', '#eloginBtn', function () {
+          isClick = 'employee';
+          Show(isClick);
+        })
+
+        $(document).on('click', '#aloginBtn', function () {
+          isClick = 'admin';
+          Show(isClick);
+        })
+
+        function Show(caller) {
+          if (caller == 'employee') {
+            accessType = 'employee';
+            document.getElementById('elogin').style.display = "block";
+            document.getElementById('uselection').style.display = "none";
+          }
+
+          if (caller == 'admin') {
+            accessType = 'admin';
+            document.getElementById('alogin').style.display = "block";
+            document.getElementById('uselection').style.display = "none";
+          }
+        }
+
+        $(document).on('click', '#adminloginBtn', function () {
+          var userid = $('#adminuserid').val();
+          var password = $('#password').val();
+          var message = '';
+
+          if (userid == '') { message += 'USER ' }
+          if (password == '') { message += 'PASSWORD ' }
+
+          if (message != '') { warning('Empty', `Please fillup ${message}`) }
+          else {
+            $.ajax({
+              type: 'POST',
+              url: '/login',
+              data: {
+                userid: userid,
+                password: password,
+              },
+              success: function (result) {
+                if (result.msg != 'success') {
+                  warning('Access Denied', 'Access denied please contact administrator');
+                } else {
+                  location.replace('/dashboard');
+                }
+              },
+              error: function (error) {
+                error(error);
+              }
+            })
+          }
+        })
+
+        $(document).on('click', '#userloginBtn', function () {
+          var userid = $('#userid').val();
+          var message = '';
+
+          if (userid == '') { message += 'USER ' }
+
+          if (message != '') { warning('Empty', `Please fillup ${message}`) }
+          else {
+            $.ajax({
+              type: 'POST',
+              url: '/loginuser',
+              data: {
+                userid: userid,
+              },
+              success: function (result) {
+                if (result.msg !== 'success') {
+                  warning('Access Denied', 'Access denied please contact administrator');
+                } else {
+                  location.replace('/introduction');
+                }
+
+                if (result.msg === 'done') {
+                  warning('Already Done', `User ${userid} already done evaluation`);
+                }
+
+                if (result.msg === 'success') {
+                  location.replace('/introduction');
+                }
+              },
+              error: function (error) {
+                error(error);
+              }
+            })
+          }
+        })
+
+
+        document.addEventListener("keyup", function (event) {
+          if (event.keyCode === 13) {
+            if (accessType == 'admin') {
+              var userid = $('#adminuserid').val();
+              var password = $('#password').val();
+              var message = '';
+
+              if (userid == '') { message += 'USER ' }
+              if (password == '') { message += 'PASSWORD ' }
+
+              if (message != '') { warning('Empty', `Please fillup ${message}`) }
+              else {
+                $.ajax({
+                  type: 'POST',
+                  url: '/login',
+                  data: {
+                    userid: userid,
+                    password: password,
+                  },
+                  success: function (result) {
+                    if (result.msg != 'success') {
+                      warning('Access Denied', 'Access denied please contact administrator');
+                    } else {
+                      location.replace('/dashboard');
+                    }
+                  },
+                  error: function (error) {
+                    error(error);
+                  }
+                })
+              }
+            }
+            if (accessType == 'employee') {
+              var userid = $('#userid').val();
+              var message = '';
+
+              if (userid == '') { message += 'USER ' }
+
+              if (message != '') { warning('Empty', `Please fillup ${message}`) }
+              else {
+                $.ajax({
+                  type: 'POST',
+                  url: '/loginuser',
+                  data: {
+                    userid: userid,
+                  },
+                  success: function (result) {
+                    console.log(result.msg);
+
+                    if (result.msg !== 'success') {
+                      warning('Access Denied', 'Access denied please contact administrator');
+                    } else {
+                      location.replace('/introduction');
+                    }
+
+                    if (result.msg === 'done') {
+                      warning('Already Done', `User ${userid} already done evaluation`);
+                    }
+
+                    if (result.msg === 'success') {
+                      location.replace('/introduction');
+                    }
+                  },
+                  error: function (error) {
+                    error(error);
+                  }
+                })
+              }
+            }
+          }
+        });
+      })
+    </script>
+
+</body>
+
+</html>

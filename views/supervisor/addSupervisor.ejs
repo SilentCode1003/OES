@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-xl-4 col-lg-3">
+        <div class="entry-area">
+            <input class="entry-input" type="text" name="supervisorid" id="supervisorid" placeholder="SUPERVISOR ID">
+        </div>
+        <div class="entry-area">
+            <input class="entry-input" type="text" name="firstname" id="firstname" placeholder="FIRST NAME">
+        </div>
+        <div class="entry-area">
+            <input class="entry-input" type="text" name="middlename" id="middlename" placeholder="MIDDLE NAME">
+        </div>
+        <div class="entry-area">
+            <input class="entry-input" type="text" name="lastname" id="lastname" placeholder="LAST NAME">
+        </div>
+        <div class="entry-area">
+            <select class="entry-input" name="departmentlist" id="departmentlist">
+                <option value="-">DEPARTMENT</option>
+                <option value="CABLING">CABLING</option>
+                <option value="IT">IT</option>
+                <option value="DRIVER">DRIVER</option>
+            </select>
+        </div>
+        <div class="entry-area">
+            <button class="approve-btn" id="addBtn" name="addBtn">ADD</button>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-3">
+        <div class="ebtry-area center-content">
+            <img style="width: 50%; height: 50%;" id="preview" src="" alt="Image preview">
+        </div>
+        <br>
+        <div class="entry-area">
+            <input class="entry-input" type="file" id="imageInput">
+        </div>
+    </div>
+</div>
+<hr>
+<div>
+    <table id="supervisor-table">
+        <thead>
+            <th>IMAGE</th>
+            <th>ID</th>
+            <th>FULLNAME</th>
+            <th>STATUS</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>

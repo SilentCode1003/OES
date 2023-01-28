@@ -1,0 +1,93 @@
+<script>
+    $(document).ready(function () {
+
+        LoadTable();
+
+        $.ajax({
+            type: "GET",
+            url: "/criteria/load",
+            success: function (result) {
+                console.log(result.data);
+                var data = result.data;
+                $('#criteriallist').empty();
+
+                $.each(data, function (key, item) {
+                    var options = new Option(item.criterianame, item.criterianame);
+                    $(options).html(item.criterianame);
+                    $('#criteriallist').append(options);
+                    console.log(item.criterianame);
+                });
+            },
+            error: function (result) {
+                alert('error: ' + result.data);
+            }
+        });
+
+        $(document).on('click', '#addBtn', function () {
+            let criterianame = $('#criteriallist').val();
+            let question = $('#question').val();
+            var message = '';
+
+            if (criterianame == '-') { message += 'CRITERIA NAME ' }
+            if (question == '') { message += 'QUESTION ' }
+
+            if (message != '') { warning('Empty', `Please fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/questions/save',
+                    data: {
+                        criterianame: criterianame,
+                        question: question
+                    },
+                    success: function (result) {
+                        LoadTable();
+                        if (result.msg != 'success') {
+                            warning('Exist', 'Data Already Exist!')
+                        } else {
+                            success('Success', 'Data Saved!')
+                        }
+
+                    },
+                    error: function (error) {
+                        error(error.msg);
+                    }
+                })
+            }
+        })
+
+        function LoadTable() {
+            showloader();
+
+            var table = $('#question-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/questions/load'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'questioncode' },
+                    { data: 'criteria' },
+                    { data: 'question' },
+                    { data: 'createdby' },
+                    { data: 'createddate' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+        };
+    })
+</script>

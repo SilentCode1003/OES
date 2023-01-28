@@ -1,0 +1,213 @@
+<script>
+    $(document).ready(function () {
+        LoadTable();
+        var supervisorid = '';
+
+        var questionModal = document.getElementById("questionModal");
+        var questionModalSpan = document.getElementById("questionModalSpan");
+
+        questionModalSpan.onclick = function () {
+            questionModal.style.display = "none";
+        }
+
+        window.onclick = function () {
+            if (event.target == questionModal) {
+                questionModal.style.display = "none";
+            }
+        }
+
+        $('#supervisor-table tbody').on('click', 'tr', function () {
+            var dataRow = [];
+            $(this).closest('tr').find('td').each(function () {
+                dataRow.push([$(this).text()]);
+
+            });
+
+            supervisorid = dataRow[0];
+            console.log(dataRow);
+
+            var questiontable = $('#modal-question-table').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/questions/load",
+                // data: { requestid: requestid },
+                success: function (result) {
+                    questiontable.clear().draw();
+                    var data = result.data;
+                    var index = 0;
+
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        questiontable.row.add([item.criteria, item.question, `<select class="entry-input" id="criteria" name="criteria">
+                                    <option value="-">CRITERIA</option>
+                                    <option value="E">EXCELLENT</option>
+                                    <option value="G">GOOD</option>
+                                    <option value="S">SATISFACTORY</option>
+                                    <option value="N">NEED WORK</option>
+                                    <option value="U">UNSATISFACTORY</option>
+                                    <option value="0">NO OPINION</option>
+                                </select>`]).draw(false);
+
+                        index += 1;
+                    })
+                },
+                error: function (result) {
+                    error('error: ' + result);
+                }
+            });
+
+            questionModal.style.display = "block";
+        })
+
+        $(document).on('click', '#submitBtn', function () {
+            var data = $("#modal-question-table tr");
+            var dataRaw = [];
+            var message = '';
+            let userid = '<%= userid %>';
+
+            console.log(data.length);
+            for (x = 1; x < data.length; x++) {
+                // console.log(header[x].innerText);
+                // console.log(data[x].innerText);
+                var innerData = data[x].innerText;
+                innerData = innerData.split("\t");
+                var table = document.getElementById("modal-question-table");
+                var select = table.getElementsByTagName("select")[x - 1];
+                var value = select.value;
+                var selection = value;
+
+                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection}`);
+
+                if (selection == '-') {
+                    message += `criteria "${innerData[0]}" question "${innerData[1]}"`;
+                    dataRaw = [];
+                }
+                else {
+                    dataRaw.push({
+                        criteria: innerData[0],
+                        question: innerData[1],
+                        grade: selection,
+                    })
+                }
+            }
+
+            if (message != '') { warning('No Grade', `${message}`); }
+            else {
+                console.log(dataRaw);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/selection/generatereport',
+                    data: {
+                        supervisorid: supervisorid,
+                        userid: userid,
+                        data: dataRaw,
+                    },
+                    success: function (result) {
+                        LoadTable();
+                        if (result.msg != 'success') {
+                            success('Thank You', 'Thank you for participating');
+
+                            setTimeout(() => {
+                                Logout();
+                            }, 2000)
+                        }
+                        else {
+                            success('Done', 'Thank you for participating, please proceed to another subject.')
+                            setTimeout(() => {
+                                questionModal.style.display = "none";
+                            }, 2000)
+                        }
+
+                    },
+                    error: function (error) {
+                        error(error);
+                    }
+                })
+            }
+        })
+
+        function LoadTable() {
+            showloader();
+            let userid = '<%= userid %>';
+
+            var table = $('#supervisor-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                // 'scrollY': 1,
+                'scrollCollapse': true,
+                'serverMethod': 'POST',
+                'ajax': {
+                    'url': '/supervisor/getsubjects',
+                    'data': {
+                        userid: userid
+                    },
+                    'dataSrc': (result) => {
+                        var data = result.data;
+                        var finalData = [];
+
+                        console.log(data);
+
+                        $.each(data, (key, item) => {
+                            finalData.push({
+                                id: item.supervisorid,
+                                image: `<img src="data:image/png;base64,${item.image}" alt="#" />`,
+                                fullname: item.fullname,
+                                status: item.status,
+                            })
+
+                        })
+
+                        return finalData;
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'id' },
+                    { data: 'image' },
+                    { data: 'fullname' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+        }
+
+        function Logout() {
+            $.ajax({
+                type: "POST",
+                url: "/logout",
+                success: function (result) {
+                    console.log(result);
+                    if (result.msg == 'success') {
+                        success('Logout', 'Logout successfully...')
+                        location.replace("/");
+                    }
+                    else {
+                        error('ID & Password not match...');
+                    }
+                },
+                error: function (result) {
+                    error(result.msg);
+                }
+            });
+        }
+    })
+</script>

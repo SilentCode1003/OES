@@ -1,0 +1,211 @@
+.login-container {
+  width: 100%;
+  height: 939px;
+  display: flex;
+  position: sticky;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background-size: cover;
+  justify-content: center;
+  background-image: url("/playground_assets/bg5l-1000h.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.login-user-sel {
+  gap: var(--dl-space-space-threeunits);
+  top: 200px;
+  left: 0px;
+  right: 0px;
+  width: 30%;
+  height: 27%;
+  margin: auto;
+  align-items: center;
+  border-radius: 30px;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0.63);
+}
+
+.login-start-btn {
+  top: 166px;
+  left: 0px;
+  right: 0px;
+  width: 80%;
+  height: 15%;
+  margin: auto;
+  z-index: 500;
+  position: absolute;
+  font-size: 1vw;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.login-start-btn:hover {
+  transform: scale(1.04);
+}
+
+.login-start-btn1 {
+  top: 113px;
+  left: 0px;
+  right: 0px;
+  width: 80%;
+  height: 15%;
+  margin: auto;
+  z-index: 500;
+  position: absolute;
+  font-size: 1vw;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.login-start-btn1:hover {
+  transform: scale(1.04);
+}
+
+.login-text {
+  top: 33px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  z-index: 500;
+  position: absolute;
+  font-size: 3.5vw;
+  text-align: center;
+}
+
+.login-text1 {
+  font-weight: 700;
+}
+
+.login-e-login-c {
+  gap: 35px;
+  left: 0px;
+  right: 0px;
+  width: 338px;
+  height: 193px;
+  margin: auto;
+  display: none;
+  align-items: center;
+  border-radius: 30px;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.63);
+}
+
+.login-elctxtbox {
+  top: 78px;
+  left: 0px;
+  right: 0px;
+  width: 208px;
+  margin: auto;
+  position: absolute;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.login-elctxtbox:hover {
+  transform: scale(1.03);
+}
+
+.login-elcbutton {
+  left: 0px;
+  right: 0px;
+  width: 117px;
+  bottom: 27px;
+  margin: auto;
+  position: absolute;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.login-elcbutton:hover {
+  transform: scale(1.04);
+}
+
+.login-a-login-c {
+  gap: 20px;
+  top: 159px;
+  left: 0px;
+  right: 0px;
+  width: 338px;
+  height: 246px;
+  margin: auto;
+  display: none;
+  position: absolute;
+  align-items: flex-start;
+  border-radius: 30px;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.63);
+}
+
+.login-atxtbox {
+  top: 77px;
+  left: 0px;
+  right: 0px;
+  width: 245px;
+  margin: auto;
+  position: absolute;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.login-atxtbox:hover {
+  transform: scale(1.03);
+}
+
+.login-p-wtxtbox {
+  top: 133px;
+  left: 0px;
+  right: 0px;
+  width: 245px;
+  margin: auto;
+  position: absolute;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.login-p-wtxtbox:hover {
+  transform: scale(1.03);
+}
+
+.login-alcbutton {
+  left: 0px;
+  right: 0px;
+  width: 140px;
+  bottom: 19px;
+  margin: auto;
+  position: absolute;
+  text-align: center;
+  transition: 0.3s;
+  text-decoration: none;
+  background: linear-gradient(to bottom left, #0066ff 0%, #ff99cc 100%);
+}
+
+.login-alcbutton:hover {
+  transform: scale(1.04);
+  background: linear-gradient(to bottom left, #99ccff 0%, #ff99cc 100%);
+}
+
+.login-err1 {
+  top: 185px;
+  left: 0px;
+  right: 0px;
+  width: var(--dl-size-size-xxlarge);
+  margin: auto;
+  display: none;
+  position: absolute;
+  text-align: center;
+}
+
+.login-err2 {
+  top: 201px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  display: none;
+  position: absolute;
+  text-align: center;
+}

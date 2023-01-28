@@ -1,0 +1,69 @@
+<script>
+    $(document).ready(function () {
+
+        LoadTable();
+
+        $(document).on('click', '#addBtn', function () {
+            let criterianame = $('#criterianame').val();
+            var message = '';
+
+            if (criterianame == '') { message += 'CRITERIA NAME ' }
+
+            if (message != '') { warning('Empty', `Please fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/criteria/save',
+                    data: {
+                        criterianame: criterianame,
+                    },
+                    success: function (result) {
+                        LoadTable();
+                        if (result.msg != 'success') {
+                            warning('Exist', 'Data Already Exist!')
+                        } else {
+                            success('Success', 'Data Saved!')
+                        }
+
+                    },
+                    error: function (error) {
+                        error(error.msg);
+                    }
+                })
+            }
+        })
+
+        function LoadTable() {
+            showloader();
+
+            var table = $('#criteria-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/criteria/load'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'criteriacode' },
+                    { data: 'criterianame' },
+                    { data: 'createdby' },
+                    { data: 'createddate' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+        };
+    })
+</script>

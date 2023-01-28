@@ -1,0 +1,134 @@
+<script>
+    $(document).ready(function () {
+        let base64String = "";
+        LoadTable();
+
+        $(document).on('click', '#addBtn', function () {
+            let supervisorid = $('#supervisorid').val();
+            let firstname = $('#firstname').val();
+            let middlename = $('#middlename').val();
+            let lastname = $('#lastname').val();
+            let departmentlist = $('#departmentlist').val();
+            let imageInput = $('#imageInput').val();
+            var message = '';
+
+            console.log(imageInput)
+
+            if (supervisorid == '') { message += 'SUPERVISOR ID ' }
+            if (firstname == '') { message += 'FIRST NAME ' }
+            if (lastname == '') { message += 'LAST NAME ' }
+            if (departmentlist == '-') { message += 'DEPARTMENT ' }
+            if (imageInput == '') { message += 'IMAGE PATH ' }
+
+            if (message != '') { warning('Exmpty', `Please fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/supervisor/save',
+                    data: {
+                        supervisorid: supervisorid,
+                        firstname: firstname,
+                        middlename: middlename,
+                        lastname: lastname,
+                        department: departmentlist,
+                        image: base64String,
+                    },
+                    success: function (result) {
+                        LoadTable();
+
+                        if (result.msg != 'success') {
+                            warning('Exist', 'Data Already Exist!')
+                        } else {
+                            success('Success', 'Data Saved!');
+                        }
+
+                    },
+                    error: function (error) {
+                        error(error.msg);
+                    }
+                })
+            }
+        })
+
+        $(document).on('change', '#imageInput', function () {
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function () {
+                const preview = document.getElementById('preview');
+                preview.src = reader.result;
+            }
+            imageUploaded();
+        })
+
+        function imageUploaded() {
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+
+            var reader = new FileReader();
+            console.log("next");
+
+            reader.onload = function () {
+                base64String = reader.result.replace("data:", "")
+                    .replace(/^.+,/, "");
+
+                imageBase64Stringsep = base64String;
+
+                // alert(imageBase64Stringsep);
+                console.log(base64String);
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function LoadTable() {
+            showloader();
+
+            var table = $('#supervisor-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/supervisor/load',
+                    'dataSrc': (result) => {
+                        var data = result.data;
+                        var finalData = [];
+
+                        $.each(data, (key, item) => {
+                            finalData.push({
+                                image: `<img src="data:image/png;base64,${item.image}" alt="#" />`,
+                                supervisorid: item.supervisorid,
+                                fullname: item.fullname,
+                                status: item.status,
+                            })
+
+                        })
+
+                        return finalData;
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'image' },
+                    { data: 'supervisorid' },
+                    { data: 'fullname' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+        }
+    })
+</script>

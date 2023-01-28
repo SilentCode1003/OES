@@ -1,0 +1,82 @@
+<script>
+    $(document).ready(function () {
+
+        LoadTable();
+
+        $(document).on('click', '#addBtn', function () {
+            let firstname = $('#firstname').val();
+            let middlename = $('#middlename').val();
+            let lastname = $('#lastname').val();
+            let username = $('#username').val();
+            let password = $('#password').val();
+            var message = '';
+
+            if (firstname == '') { message += 'FIRST NAME ' }
+            if (lastname == '') { message += 'LAST NAME ' }
+            if (username == '') { message += 'USERNAME ' }
+            if (password == '') { message += 'PASSWORD ' }
+
+            if (message != '') { warning('Empty', `Please fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/save',
+                    data: {
+                        firstname: firstname,
+                        middlename: middlename,
+                        lastname: lastname,
+                        username: username,
+                        password: password
+                    },
+                    success: function (result) {
+                        LoadTable();
+                        if (result.msg != 'success') {
+                            warning('Exist', 'Data Already Exist!')
+                        } else {
+                            success('Success', 'Data Saved!')
+                        }
+
+                    },
+                    error: function (error) {
+                        error(error.msg);
+                    }
+                })
+            }
+        })
+
+        function LoadTable() {
+            showloader();
+
+            var table = $('#admin-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/admin/load'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'fullname' },
+                    { data: 'username' },
+                    { data: 'password' },
+                    { data: 'createdby' },
+                    { data: 'createddate' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+        };
+    })
+</script>
