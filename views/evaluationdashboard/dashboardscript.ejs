@@ -1,0 +1,178 @@
+<script>
+    var employeeid = '';
+    LoadParticipants()
+    LoadSummary();
+
+    var summaryModal = document.getElementById("summaryModal");
+    var questionModalSpan = document.getElementById("questionModalSpan");
+
+    questionModalSpan.onclick = function () {
+        summaryModal.style.display = "none";
+    }
+
+    window.onclick = function () {
+        if (event.target == summaryModal) {
+            summaryModal.style.display = "none";
+        }
+    }
+
+    $('#summary-table').on('click', 'tr', function () {
+        var dataRow = [];
+        $(this).closest('tr').find('td').each(function () {
+            dataRow.push([$(this).text()]);
+
+        });
+
+        supervisorid = dataRow[0];
+        department = dataRow[2];
+
+        employeeid = supervisorid;
+
+        var summary = $('#modal-summary-table').DataTable({
+            'destroy': true,
+            'paging': false,
+            'searching': false,
+            'info': false,
+            'scrollCollapse': true,
+        });
+
+        var details = $('#modal-details-table').DataTable({
+            'destroy': true,
+            'paging': false,
+            'searching': false,
+            'info': false,
+            'scrollCollapse': true,
+        });
+
+        
+        details.clear().draw();
+
+        $.ajax({
+            type: "POST",
+            url: "/evaluation/getsummary",
+            data: {
+                supervisorid: supervisorid,
+                department: department
+            },
+            success: function (result) {
+                summary.clear().draw();
+                var data = result.data;
+                var index = 0;
+
+                console.log(result.data);
+                $.each(data, (key, item) => {
+                    // console.log(datajson);
+                    summary.row.add([item.employeeid, item.employeename, item.E, item.G, item.S, item.N, item.U, item.O,]).draw(false);
+
+                    index += 1;
+                })
+            },
+            error: function (result) {
+                error('error: ' + result);
+            }
+        });
+
+        summaryModal.style.display = "block";
+    })
+
+    $('#modal-summary-table').on('click', 'th', function (e) {
+        var grade = $(this).text();
+
+        var summary = $('#modal-details-table').DataTable({
+            'destroy': true,
+            'paging': false,
+            'searching': false,
+            'info': false,
+            'scrollCollapse': true,
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/evaluation/getevaluationdetails",
+            data: {
+                employeeid: employeeid,
+                grade: grade,
+            },
+            success: function (result) {
+                summary.clear().draw();
+                var data = result.data;
+                var index = 0;
+
+                console.log(result.data);
+                $.each(data, (key, item) => {
+                    // console.log(datajson);
+                    summary.row.add([item.criteria,item.question,item.grade,item.count]).draw(false);
+
+                    index += 1;
+                })
+            },
+            error: function (result) {
+                error('error: ' + result);
+            }
+        });
+
+    });
+
+    function LoadParticipants() {
+        showloader();
+
+        var table = $('#participants-table').DataTable({
+            'destroy': true,
+            'processing': true,
+            'serverSide': true,
+            'paging': false,
+            'searching': false,
+            'info': false,
+            'scrollY': 400,
+            'scrollCollapse': true,
+            'serverMethod': 'GET',
+            'ajax': {
+                'url': '/evaluation/loadparticipants'
+            },
+            'columnDefs': [{
+                targets: 1,
+                className: 'td-indent',
+            }],
+            'columns': [
+                { data: 'participantid' },
+                { data: 'status' },
+            ],
+            initComplete: function () {
+                console.log('init complete');
+                hideload();
+            }
+        })
+    }
+
+    function LoadSummary() {
+        showloader();
+
+        var table = $('#summary-table').DataTable({
+            'destroy': true,
+            'processing': true,
+            'serverSide': true,
+            'paging': false,
+            'searching': false,
+            'info': false,
+            'scrollY': 400,
+            'scrollCollapse': true,
+            'serverMethod': 'GET',
+            'ajax': {
+                'url': '/evaluation/loadsummary'
+            },
+            'columnDefs': [{
+                targets: 1,
+                className: 'td-indent',
+            }],
+            'columns': [
+                { data: 'employeeid' },
+                { data: 'fullname' },
+                { data: 'department' },
+            ],
+            initComplete: function () {
+                console.log('init complete');
+                hideload();
+            }
+        })
+    }
+</script>
