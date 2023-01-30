@@ -27,7 +27,9 @@ router.post('/generatereport', (req, res) => {
     let supervisorid = req.body.supervisorid;
     let userid = req.body.userid;
     let data = req.body.data;
+    let comment = req.body.comment;
     let transaction_evaluation = [];
+    let transaction_evaluation_comment = [];
     let year = helper.GetCurrentYear();
     let status = 'DONE';
     let active = 'ACTIVE'
@@ -36,6 +38,14 @@ router.post('/generatereport', (req, res) => {
     console.log(data);
 
     console.log(alias);
+
+    transaction_evaluation_comment.push([
+      year,
+      supervisorid,
+      alias,
+      comment,
+      status,
+    ])
 
     data.forEach((key, item) => {
       transaction_evaluation.push([
@@ -47,51 +57,57 @@ router.post('/generatereport', (req, res) => {
         key.question,
         key.grade,
         status,
-      ])
+      ]);
     });
 
     Insert_TransactionEvaluation(transaction_evaluation)
       .then(result => {
         console.log(result);
 
-        Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
+        Insert_TransactionEvaluationComment(transaction_evaluation_comment)
           .then(result => {
-            console.log(result)
+            console.log(result);
+            Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
+              .then(result => {
+                console.log(result)
 
-            let sql = `select * from transaction_participant_subjects 
+                let sql = `select * from transaction_participant_subjects 
             where ps_year='${year}'
             and ps_participantid='${userid}'
             and ps_status='${active}'`;
 
-            mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
-              if (err) console.error(err);
+                mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
+                  if (err) console.error(err);
 
-              if (result.length != 0) {
-                return res.json({
-                  msg: 'success'
+                  if (result.length != 0) {
+                    return res.json({
+                      msg: 'success'
+                    })
+                  } else {
+
+                    Update_ParticipantDetails(status, year, userid)
+                      .then(result => {
+                        console.log(result);
+                        res.json({
+                          msg: 'done'
+                        })
+                      })
+                      .catch(error => {
+                        res.json({
+                          msg: error
+                        })
+                      })
+                  }
                 })
-              } else {
+              })
+              .catch(error => {
+                res.json({
+                  msg: error
+                })
+              })
+          })
 
-                Update_ParticipantDetails(status, year, userid)
-                  .then(result => {
-                    console.log(result);
-                    res.json({
-                      msg: 'done'
-                    })
-                  })
-                  .catch(error => {
-                    res.json({
-                      msg: error
-                    })
-                  })
-              }
-            })
-          })
-          .catch(error => {
-            res.json({
-              msg: error
-            })
-          })
+
       })
       .catch(error => {
         res.json({
@@ -116,6 +132,16 @@ router.post('/generatereport', (req, res) => {
 function Insert_TransactionEvaluation(data) {
   return new Promise((resolve, reject) => {
     mysql.InsertTable('transaction_evaluation', data, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  })
+}
+
+function Insert_TransactionEvaluationComment(data) {
+  return new Promise((resolve, reject) => {
+    mysql.InsertTable('transaction_evaluation_comment', data, (err, result) => {
       if (err) reject(err);
 
       resolve(result);

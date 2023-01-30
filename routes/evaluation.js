@@ -22,12 +22,19 @@ router.get('/', function (req, res, next) {
 module.exports = router;
 
 
-router.get('/loadparticipants', (req, res) => {
+router.post('/loadparticipants', (req, res) => {
   try {
     let year = helper.GetCurrentYear();
-    let sql = `select * from participant_details where pd_year='${year}'`;
+    let department = req.body.department;
+    let sql = `select te_alias as allias, pd_status as status
+    from participant_details PD
+    inner join transaction_evaluation PE on pd_participantid = te_participantid
+    inner join master_employee on te_participantid = me_employeeid
+    where pd_year='${year}'
+    and me_department='${department}'
+    group by pd_participantid`;
 
-    mysql.Select(sql, 'ParticipantDetails', (err, result) => {
+    mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
 
       res.json({
@@ -123,6 +130,26 @@ router.post('/getevaluationdetails', (req, res) => {
       })
     })
 
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/getcomments', (req, res) => {
+  try {
+    let employeeid = req.body.employeeid;
+    let year = helper.GetCurrentYear();
+    let sql = `select * from transaction_evaluation_comment where tec_supervisorid='${employeeid}' and tec_year='${year}'`;
+
+    mysql.Select(sql, 'TransactionEvaluationComment', (err, result) => {
+      if (err) console.error(err);
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
   } catch (error) {
     res.json({
       msg: error

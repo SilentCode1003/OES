@@ -85,6 +85,10 @@ exports.Select = (sql, table, callback) => {
             if (table == 'TransactionParticipantSubject') {
                 callback(null, model.TransactionParticipantSubject(results));
             }
+
+            if (table == 'TransactionEvaluationComment') {
+                callback(null, model.TransactionEvaluationComment(results));
+            }
         });
 
     } catch (error) {
@@ -327,6 +331,22 @@ exports.InsertTable = (tablename, data, callback) => {
             ps_status,
             ps_createdby,
             ps_createddate) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
+    if (tablename == 'transaction_evaluation_comment') {
+        let sql = `INSERT INTO transaction_evaluation_comment(
+            tec_year,
+            tec_supervisorid,
+            tec_allias,
+            tec_comment,
+            tec_status) VALUES ?`;
 
         this.Insert(sql, data, (err, result) => {
             if (err) {

@@ -1,25 +1,39 @@
 <div class="row">
     <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h1>EVALUATION SUBJECTS</h1>
-        <select class="entry-input" name="yearlist" id="yearlist">
+        <h3>EVALUATION SUBJECTS</h3>
+        <!-- <select class="entry-input" name="yearlist" id="yearlist">
             <option value="-">YEAR</option>
-        </select>
+        </select> -->
         <table id="summary-table">
             <thead>
                 <th>ID</th>
                 <th>NAME</th>
-                <th>NAME</th>
+                <th>DEPARTMENT</th>
             </thead>
             <tbody></tbody>
         </table>
     </div>
-    <div class="col-xl-2 col-lg-2 col-sm-2">
 
+
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-sm-4">
+        <h3>IT ACTIVE PARTICIPANTS</h3>
+        <table id="it-participants-table">
+            <thead>
+                <th>ALLIAS</th>
+                <th>STATUS</th>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h1>ACTIVE PARTICIPANTS</h1>
-        <table id="participants-table">
+        <h3>CABLING ACTIVE PARTICIPANTS</h3>
+        <table id="cabling-participants-table">
             <thead>
                 <th>ALLIAS</th>
                 <th>STATUS</th>
@@ -37,37 +51,51 @@
             <span id="questionModalSpan" class="close">&times;</span>
         </div>
         <div class="modal-body">
-            <div>
-                <table id="modal-summary-table">
-                    <thead>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>E</th>
-                        <th>G</th>
-                        <th>S</th>
-                        <th>N</th>
-                        <th>U</th>
-                        <th>O</th>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="modal-summary-table">
+                        <thead>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>E</th>
+                            <th>G</th>
+                            <th>S</th>
+                            <th>N</th>
+                            <th>U</th>
+                            <th>O</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="comment-table">
+                        <thead>
+                            <th>ALLIAS</th>
+                            <th>COMMENT</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
+
             <hr>
-            <div>
-                <table id="modal-details-table">
-                    <thead>
-                        <th>CRITERIA</th>
-                        <th>QUESTION</th>
-                        <th>GRADE</th>
-                        <th>COUNT</th>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="modal-details-table">
+                        <thead>
+                            <th>CRITERIA</th>
+                            <th>QUESTION</th>
+                            <th>GRADE</th>
+                            <th>COUNT</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
- 
-        
+
+
         <!-- <div id="modal-button-container" class="center-content">
             <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
             <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>

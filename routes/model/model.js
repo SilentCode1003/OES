@@ -154,3 +154,21 @@ exports.TransactionParticipantSubject = (data) => {
 
     return dataResult;
 }
+
+exports.TransactionEvaluationComment = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            transactionid: key.tec_transactiodid,
+            year: key.tec_year,
+            supervisorid: key.tec_supervisorid,
+            allias: key.tec_allias,
+            comment: key.tec_comment,
+            status: key.tec_status,
+        })
+    });
+
+    return dataResult;
+}

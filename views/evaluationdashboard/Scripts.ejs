@@ -44,7 +44,7 @@
             'scrollCollapse': true,
         });
 
-        
+
         details.clear().draw();
 
         $.ajax({
@@ -71,6 +71,8 @@
                 error('error: ' + result);
             }
         });
+
+        LoadComments(employeeid);
 
         summaryModal.style.display = "block";
     })
@@ -101,7 +103,7 @@
                 console.log(result.data);
                 $.each(data, (key, item) => {
                     // console.log(datajson);
-                    summary.row.add([item.criteria,item.question,item.grade,item.count]).draw(false);
+                    summary.row.add([item.criteria, item.question, item.grade, item.count]).draw(false);
 
                     index += 1;
                 })
@@ -110,13 +112,12 @@
                 error('error: ' + result);
             }
         });
-
     });
 
     function LoadParticipants() {
         showloader();
 
-        var table = $('#participants-table').DataTable({
+        var table = $('#it-participants-table').DataTable({
             'destroy': true,
             'processing': true,
             'serverSide': true,
@@ -125,16 +126,52 @@
             'info': false,
             'scrollY': 400,
             'scrollCollapse': true,
-            'serverMethod': 'GET',
+            'serverMethod': 'POST',
             'ajax': {
-                'url': '/evaluation/loadparticipants'
+                'type': 'POST',
+                'url': '/evaluation/loadparticipants',
+                'data': {
+                    department: 'IT'
+                }
             },
             'columnDefs': [{
                 targets: 1,
                 className: 'td-indent',
             }],
             'columns': [
-                { data: 'participantid' },
+                { data: 'allias' },
+                { data: 'status' },
+            ],
+            initComplete: function () {
+                console.log('init complete');
+                hideload();
+            }
+        })
+
+        showloader();
+        var table2 = $('#cabling-participants-table').DataTable({
+            'destroy': true,
+            'processing': true,
+            'serverSide': true,
+            'paging': false,
+            'searching': false,
+            'info': false,
+            'scrollY': 400,
+            'scrollCollapse': true,
+            'serverMethod': 'POST',
+            'ajax': {
+                'type': 'POST',
+                'url': '/evaluation/loadparticipants',
+                'data': {
+                    department: 'CABLING'
+                }
+            },
+            'columnDefs': [{
+                targets: 1,
+                className: 'td-indent',
+            }],
+            'columns': [
+                { data: 'allias' },
                 { data: 'status' },
             ],
             initComplete: function () {
@@ -174,5 +211,39 @@
                 hideload();
             }
         })
+    }
+
+    function LoadComments(employeeid) {
+        var summary = $('#comment-table').DataTable({
+            'destroy': true,
+            'paging': false,
+            'searching': false,
+            'info': false,
+            'scrollCollapse': true,
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/evaluation/getcomments",
+            data: {
+                employeeid: employeeid,
+            },
+            success: function (result) {
+                summary.clear().draw();
+                var data = result.data;
+                var index = 0;
+
+                console.log(result.data);
+                $.each(data, (key, item) => {
+                    // console.log(datajson);
+                    summary.row.add([item.allias, item.comment]).draw(false);
+
+                    index += 1;
+                })
+            },
+            error: function (result) {
+                error('error: ' + result);
+            }
+        });
     }
 </script>

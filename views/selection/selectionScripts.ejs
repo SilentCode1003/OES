@@ -26,6 +26,7 @@
 
             supervisorid = dataRow[0];
             console.log(dataRow);
+            document.getElementById('comment').value ="";
 
             var questiontable = $('#modal-question-table').DataTable({
                 'destroy': true,
@@ -70,6 +71,7 @@
 
         $(document).on('click', '#submitBtn', function () {
             var data = $("#modal-question-table tr");
+            var comment = $("#comment").val();
             var dataRaw = [];
             var message = '';
             let userid = '<%= userid %>';
@@ -110,6 +112,7 @@
                     data: {
                         supervisorid: supervisorid,
                         userid: userid,
+                        comment: comment,
                         data: dataRaw,
                     },
                     success: function (result) {
