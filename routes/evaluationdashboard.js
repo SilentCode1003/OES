@@ -20,8 +20,10 @@ router.get('/', isAuth, function (req, res, next) {
     res.render('dashboard', {
         title: process.env._TITLE,
         user: req.session.username,
+        userid: req.session.userid,
         fullname: req.session.fullname,
         accounttype: req.session.accounttype,
+        department: req.session.department,
         date: helper.GetCurrentDate()
     });
 });

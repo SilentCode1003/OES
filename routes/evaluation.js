@@ -11,9 +11,10 @@ router.get('/', function (req, res, next) {
   res.render('evaluation', {
     title: process.env._TITLE,
     user: req.session.username,
+    userid: req.session.userid,
     fullname: req.session.fullname,
     accounttype: req.session.accounttype,
-    userid: req.session.userid,
+    department: req.session.department,
     date: helper.GetCurrentDate()
   });
 });
@@ -114,10 +115,10 @@ router.post('/getevaluationdetails', (req, res) => {
       group by te_grade,te_criteria,te_question`;
 
     mysql.SelectResult(sql, (err, result) => {
-      if(err) console.log(err);
+      if (err) console.log(err);
 
       res.json({
-        msg:'success',
+        msg: 'success',
         data: result
       })
     })

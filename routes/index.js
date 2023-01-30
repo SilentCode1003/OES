@@ -14,6 +14,7 @@ router.get('/', function (req, res, next) {
     userid: req.session.userid,
     fullname: req.session.fullname,
     accounttype: req.session.accounttype,
+    department: req.session.department,
     date: helper.GetCurrentDate()
   });
 });
@@ -37,6 +38,7 @@ router.post('/login', (req, res) => {
         req.session.username = data[0].username;
         req.session.accounttype = data[0].type;
         req.session.userid = data[0].userid;
+        req.session.department = data[0].department;
         req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
         res.json({
@@ -87,6 +89,7 @@ router.post('/loginuser', (req, res) => {
               req.session.isAuth = true;
               req.session.accounttype = 'USER';
               req.session.userid = userid;
+              req.session.department = data[0].department;
               req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
 
@@ -113,10 +116,11 @@ router.post('/loginuser', (req, res) => {
             req.session.isAuth = true;
             req.session.accounttype = 'USER';
             req.session.userid = userid;
+            req.session.department = data[0].department;
             req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
 
-            Create_ParticipantDetails(userid, req.session.fullname)
+            Create_ParticipantDetails(userid, req.session.fullname, req.session.department)
               .then(result => {
                 console.log(result);
               })
@@ -164,7 +168,7 @@ router.post('/logout', (req, res) => {
 
 //#region FUNCTIONS
 
-function Create_ParticipantDetails(participantid, fullname) {
+function Create_ParticipantDetails(participantid, fullname, department) {
 
   return new Promise((resolve, reject) => {
     let data = [];
@@ -187,7 +191,7 @@ function Create_ParticipantDetails(participantid, fullname) {
         resolve('exist')
       }
       else {
-        let sql_supervisor = `select * from master_supervisor where ms_status='${status}'`;
+        let sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department='${department}'`;
         mysql.Select(sql_supervisor, 'MasterSupervisor', (err, result) => {
           if (err) reject(err);
 

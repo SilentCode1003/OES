@@ -22,8 +22,10 @@ router.get('/', isAuth, function (req, res, next) {
     res.render('supervisors', {
         title: process.env._TITLE,
         user: req.session.username,
+        userid: req.session.userid,
         fullname: req.session.fullname,
         accounttype: req.session.accounttype,
+        department: req.session.department,
         date: helper.GetCurrentDate()
     });
 });
@@ -137,6 +139,7 @@ router.post('/save', (req, res) => {
 router.post('/getsubjects', (req, res) => {
     try {
         let userid = req.body.userid;
+        let department = req.body.department;
         let status = dictionary.GetValue(dictionary.ACT());
         let sql = `select * from transaction_participant_subjects where ps_participantid='${userid}' and ps_status='${status}'`;
 

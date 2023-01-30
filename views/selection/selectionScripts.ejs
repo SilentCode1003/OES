@@ -2,6 +2,7 @@
     $(document).ready(function () {
         LoadTable();
         var supervisorid = '';
+        
 
         var questionModal = document.getElementById("questionModal");
         var questionModalSpan = document.getElementById("questionModalSpan");
@@ -138,6 +139,7 @@
         function LoadTable() {
             showloader();
             let userid = '<%= userid %>';
+            let department = '<%= department%>';
 
             var table = $('#supervisor-table').DataTable({
                 'destroy': true,
@@ -152,7 +154,8 @@
                 'ajax': {
                     'url': '/supervisor/getsubjects',
                     'data': {
-                        userid: userid
+                        userid: userid,
+                        department: department
                     },
                     'dataSrc': (result) => {
                         var data = result.data;

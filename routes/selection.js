@@ -11,9 +11,10 @@ router.get('/', function (req, res, next) {
   res.render('selection', {
     title: process.env._TITLE,
     user: req.session.username,
+    userid: req.session.userid,
     fullname: req.session.fullname,
     accounttype: req.session.accounttype,
-    userid: req.session.userid,
+    department: req.session.department,
     date: helper.GetCurrentDate()
   });
 });
