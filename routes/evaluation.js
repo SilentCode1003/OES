@@ -106,12 +106,55 @@ router.post('/getsummary', (req, res) => {
   }
 })
 
+router.post('/getyearsummary', (req, res) => {
+  try {
+    let id = req.body.supervisorid;
+    let year = req.body.year;
+    let department = req.body.department;
+    let sql = `call evaluation.GetEvaluationSymmaru('${year}', '${id}', '${department}'); `
+
+    GetSummary(sql)
+      .then(result => {
+        console.log(result);
+
+        res.json({
+          msg: 'success',
+          data: result
+        })
+      })
+      .catch(error => {
+        res.json({
+          msg: error
+        })
+      })
+  } catch (error) {
+    res.json({
+      msg: err
+    })
+  }
+})
+
 router.post('/getevaluationdetails', (req, res) => {
   try {
     let employeeid = req.body.employeeid;
     let grade = req.body.grade;
     let year = helper.GetCurrentYear();
-    let sql = `select te_criteria as criteria,
+    let sql = '';
+
+    console.log(grade);
+
+    if (grade == 'O') {
+      sql = `select te_criteria as criteria,
+      te_question as question,
+      te_grade as grade,
+      count(te_grade) as count
+      from transaction_evaluation
+      where te_subjectid='${employeeid}'
+      and te_year='${year}'
+      and te_grade not in ('E','G','S','U','N')
+      group by te_grade,te_criteria,te_question`;
+    } else {
+      sql = `select te_criteria as criteria,
       te_question as question,
       te_grade as grade,
       count(te_grade) as count
@@ -120,6 +163,60 @@ router.post('/getevaluationdetails', (req, res) => {
       and te_year='${year}'
       and te_grade = '${grade}'
       group by te_grade,te_criteria,te_question`;
+    }
+
+
+
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.log(err);
+
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/getyearevaluationdetails', (req, res) => {
+  try {
+    let employeeid = req.body.employeeid;
+    let grade = req.body.grade;
+    let year = req.body.year;
+    let sql = '';
+
+    console.log(grade);
+
+    if (grade == 'O') {
+      sql = `select te_criteria as criteria,
+      te_question as question,
+      te_grade as grade,
+      count(te_grade) as count
+      from transaction_evaluation
+      where te_subjectid='${employeeid}'
+      and te_year='${year}'
+      and te_grade not in ('E','G','S','U','N')
+      group by te_grade,te_criteria,te_question`;
+    } else {
+      sql = `select te_criteria as criteria,
+      te_question as question,
+      te_grade as grade,
+      count(te_grade) as count
+      from transaction_evaluation
+      where te_subjectid='${employeeid}'
+      and te_year='${year}'
+      and te_grade = '${grade}'
+      group by te_grade,te_criteria,te_question`;
+    }
+
+
+
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
@@ -145,6 +242,109 @@ router.post('/getcomments', (req, res) => {
 
     mysql.Select(sql, 'TransactionEvaluationComment', (err, result) => {
       if (err) console.error(err);
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/getyearcomments', (req, res) => {
+  try {
+    let employeeid = req.body.employeeid;
+    let year = req.body.year;
+    let sql = `select * from transaction_evaluation_comment where tec_supervisorid='${employeeid}' and tec_year='${year}'`;
+
+    mysql.Select(sql, 'TransactionEvaluationComment', (err, result) => {
+      if (err) console.error(err);
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.get('/loadrankings', (req, res) => {
+  try {
+    let year = helper.GetCurrentYear();
+    let sql = `select distinct te_subjectid as subjectid,
+        concat(master_supervisor.ms_lastname) as supervisorname, 
+        count(te_grade) as excellentpoints 
+        from transaction_evaluation 
+        inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+        where te_grade='E'
+        and te_year='${year}'
+        group by te_subjectid`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.log(err);
+
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/loadyearrankings', (req, res) => {
+  try {
+    let year = req.body.year;
+    let sql = `select distinct te_subjectid as subjectid,
+        concat(master_supervisor.ms_lastname) as supervisorname, 
+        count(te_grade) as excellentpoints 
+        from transaction_evaluation 
+        inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+        where te_grade='E'
+        and te_year='${year}'
+        group by te_subjectid`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.log(err);
+
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/loaddepartmentrankings', (req, res) => {
+  try {
+    let department = req.body.department;
+    let year = helper.GetCurrentYear();
+    let sql = `select distinct te_subjectid as subjectid,
+        concat(master_supervisor.ms_lastname) as supervisorname, 
+        count(te_grade) as excellentpoints 
+        from transaction_evaluation 
+        inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+        where te_grade='E'
+        and te_year='${year}'
+        and ms_department='${department}'
+        group by te_subjectid`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.log(err);
+
       res.json({
         msg: 'success',
         data: result

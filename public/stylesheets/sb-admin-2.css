@@ -7111,7 +7111,9 @@ button.bg-dark:focus {
 
 .bg-white {
   /* background-color: #d28383 !important; */
-  background: linear-gradient(to right, #00cc00 10%, #00cc00 90%);
+  /* background: linear-gradient(to right, #00cc00 10%, #00cc00 90%); */
+
+  background: linear-gradient(to right, #33cccc 10%, #33cccc 90%);
 }
 
 .bg-transparent {
@@ -11107,7 +11109,8 @@ a:focus {
 
 .bg-gradient-primary {
   background-color: #4e73df;
-  background-image: linear-gradient(to top, #003300 0%, #015701 100%);
+  /* background-image: linear-gradient(to top, #003300 0%, #015701 100%); */
+  background-image: linear-gradient(to top, #000000 0%, #009999 100%);
   background-size: cover;
 }
 
@@ -11695,7 +11698,8 @@ a:focus {
 }
 
 .ftbg {
-  background: linear-gradient(to bottom, #00cc00 10%, #003300 60%);
+  /* background: linear-gradient(to bottom, #00cc00 10%, #003300 60%); */
+  background: linear-gradient(to top, #000000 10%, #009999 80%);
   color: white;
   font-weight: 400;
 }

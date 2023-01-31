@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-sm-4">
+        <div class="entry-area settings">
+            <label class="entry-input">YEAR</label>
+            <select class="entry-input" name="yearlist" id="yearlist"></select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-sm-4">
+        <table id="report-table">
+            <thead>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>DEPARTMENT</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<hr>
+<div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
+        <h6 class="m-0 font-weight-bold ">RANKING</h6>
+    </div>
+    <!-- Card Body -->
+    <div class="card-body">
+        <div class="chart-bar chart-content">
+            <canvas id="rankingBarChart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+<div id="summaryModal" class="modal card shadow mb-4">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-button-container">
+            <span id="questionModalSpan" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="modal-summary-table">
+                        <thead>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>E</th>
+                            <th>G</th>
+                            <th>S</th>
+                            <th>N</th>
+                            <th>U</th>
+                            <th>O</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="comment-table">
+                        <thead>
+                            <th>ALLIAS</th>
+                            <th>COMMENT</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="modal-details-table">
+                        <thead>
+                            <th>CRITERIA</th>
+                            <th>QUESTION</th>
+                            <th>GRADE</th>
+                            <th>COUNT</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <div id="modal-button-container" class="center-content">
+            <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
+            <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
+        </div> -->
+    </div>
+</div>

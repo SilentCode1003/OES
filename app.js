@@ -19,6 +19,7 @@ var employeeRouter = require('./routes/employees');
 var criteriaRouter = require('./routes/criteria');
 var questionRouter = require('./routes/questions');
 var supervisorRouter = require('./routes/supervisor');
+var resultsRouter = require('./routes/results');
 
 
 var app = express();
@@ -67,6 +68,7 @@ app.use('/employees', employeeRouter);
 app.use('/criteria', criteriaRouter);
 app.use('/questions', questionRouter);
 app.use('/supervisor', supervisorRouter);
+app.use('/results', resultsRouter);
 
 
 // catch 404 and forward to error handler

@@ -1,6 +1,6 @@
 <style>
   .input-button {
-    background: linear-gradient(to bottom left, #0066ff 0%, #ff99cc 100%);
+    background: linear-gradient(to bottom left, #F0FF00 0%, #ff99cc 100%);
   }
 
   button {
@@ -38,12 +38,14 @@
 
   .approve-btn {
     /* background-color: #9BD7A2; */
-    background: linear-gradient(to right, #015701 10%, #003300 90%);
+    /* background: linear-gradient(to right, #015701 10%, #003300 90%); */
+    background: linear-gradient(to right, #009999 10%, #000000 90%);
     color: white;
   }
 
   .content-bg {
-    background: linear-gradient(to right, #015701 10%, #003300 90%);
+    /* background: linear-gradient(to right, #015701 10%, #003300 90%); */
+    background: linear-gradient(to right, #009999 10%, #000000 90%);
   }
 
   hr {
@@ -95,7 +97,8 @@
   }
 
   .bg-topbar {
-    background: linear-gradient(to bottom, #003300 80%, #00cc00 100%);
+    /* background: linear-gradient(to bottom, #003300 80%, #00cc00 100%); */
+    background: linear-gradient(to bottom, #000000 80%, #009999 100%);
   }
 
   .loader-wrapper {
@@ -379,5 +382,28 @@
 
   .modal-company-header {
     color: red;
+  }
+
+  .hr-black {
+    border: 0.2em solid #009999;
+    border-radius: 60px;
+  }
+
+  div.settings {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 5px;
+  }
+
+  div.settings label {
+    text-align: right;
+  }
+
+  div.settings select {
+    width: auto;
+  }
+
+  div.settings label:after {
+    content: ":";
   }
 </style>
