@@ -278,13 +278,12 @@ router.get('/loadrankings', (req, res) => {
   try {
     let year = helper.GetCurrentYear();
     let sql = `select distinct te_subjectid as subjectid,
-        concat(master_supervisor.ms_lastname) as supervisorname, 
-        count(te_grade) as excellentpoints 
-        from transaction_evaluation 
-        inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
-        where te_grade='E'
-        and te_year='${year}'
-        group by te_subjectid`;
+    concat(master_supervisor.ms_lastname) as supervisorname, 
+    if((select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E') = 0,0,(select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E')) as excellentpoints 
+    from transaction_evaluation 
+    inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+    where te_year='${year}'
+    group by te_subjectid`;
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
@@ -305,13 +304,12 @@ router.post('/loadyearrankings', (req, res) => {
   try {
     let year = req.body.year;
     let sql = `select distinct te_subjectid as subjectid,
-        concat(master_supervisor.ms_lastname) as supervisorname, 
-        count(te_grade) as excellentpoints 
-        from transaction_evaluation 
-        inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
-        where te_grade='E'
-        and te_year='${year}'
-        group by te_subjectid`;
+    concat(master_supervisor.ms_lastname) as supervisorname, 
+    if((select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E') = 0,0,(select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E')) as excellentpoints 
+    from transaction_evaluation 
+    inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+    where te_year='${year}'
+    group by te_subjectid`;
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
@@ -333,14 +331,13 @@ router.post('/loaddepartmentrankings', (req, res) => {
     let department = req.body.department;
     let year = helper.GetCurrentYear();
     let sql = `select distinct te_subjectid as subjectid,
-        concat(master_supervisor.ms_lastname) as supervisorname, 
-        count(te_grade) as excellentpoints 
-        from transaction_evaluation 
-        inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
-        where te_grade='E'
-        and te_year='${year}'
-        and ms_department='${department}'
-        group by te_subjectid`;
+    concat(master_supervisor.ms_lastname) as supervisorname, 
+    if((select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E') = 0,0,(select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E')) as excellentpoints 
+    from transaction_evaluation 
+    inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+    where te_year='${year}'
+    and ms_department='${department}'
+    group by te_subjectid`;
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
