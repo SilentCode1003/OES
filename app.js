@@ -20,6 +20,9 @@ var criteriaRouter = require('./routes/criteria');
 var questionRouter = require('./routes/questions');
 var supervisorRouter = require('./routes/supervisor');
 var resultsRouter = require('./routes/results');
+var departmentRouter = require('./routes/department');
+var positionRouter = require('./routes/position');
+var subjectRouter = require('./routes/subject');
 
 
 var app = express();
@@ -69,6 +72,9 @@ app.use('/criteria', criteriaRouter);
 app.use('/questions', questionRouter);
 app.use('/supervisor', supervisorRouter);
 app.use('/results', resultsRouter);
+app.use('/department', departmentRouter);
+app.use('/position', positionRouter);
+app.use('/subject', subjectRouter);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,95 @@
+<script>
+    $(document).ready(function () {
+        LoadTable();
+
+        $.ajax({
+            type: "GET",
+            url: "/department/load",
+            success: function (result) {
+                console.log(result.data);
+                var data = result.data;
+                $('#departmentlist').empty();
+
+                $.each(data, function (key, item) {
+                    var options = new Option(item.department, item.department);
+                    $(options).html(item.department);
+                    $('#departmentlist').append(options);
+                    console.log(item.department);
+                });
+            },
+            error: function (result) {
+                alert('error: ' + result.data);
+            }
+        });
+
+        $(document).on('click', '#addBtn', function () {
+            var department = $('#departmentlist').val();
+            var position = $('#position').val();
+            var message = '';
+
+            if (department == '-') (message += 'DEPARTMENT ');
+            if (position == '') (message += 'POSITION ');
+
+
+            if (message != '') { warning('Empty', `Required to fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/position/save',
+                    data: {
+                        department: department,
+                        position: position
+                    },
+                    success: function (result) {
+                        if (result.msg === 'exist') {
+                            warning('Exist', `${position} - ${department} already exist!`);
+                        }
+                        else {
+                            success('Success', 'Data Saved!')
+                        }
+
+                    },
+                    error: function (err) {
+                        error(err);
+                    }
+                })
+            }
+
+            LoadTable();
+        })
+
+        function LoadTable() {
+            showloader();
+            var table = $('#position-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/position/load'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'positioncode' },
+                    { data: 'position' },
+                    { data: 'department' },
+                    { data: 'createdby' },
+                    { data: 'creadteddate' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                }
+            })
+
+            hideload();
+        }
+    })
+</script>

@@ -1,0 +1,71 @@
+<script>
+    $(document).ready(function () {
+        LoadTable();
+
+        $(document).on('click', '#addBtn', function () {
+            var subject = $('#subject').val();
+            var message = '';
+
+            if (subject == '') (message += 'DEPARTMENT')
+
+
+            if (message != '') { warning('Empty', `Required to fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/subject/save',
+                    data: {
+                        subject: subject
+                    },
+                    success: function (result) {
+                        if (result.msg === 'exist') {
+                            warning('Exist', `${subject} already exist!`);
+                        }
+                        else {
+                            success('Success', 'Data Saved!')
+                        }
+
+                    },
+                    error: function (err) {
+                        error(err);
+                    }
+                })
+            }
+
+            LoadTable();
+        })
+
+        function LoadTable() {
+            showloader();
+            var table = $('#subject-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/subject/load'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'subjectcode' },
+                    { data: 'subject' },
+                    { data: 'createdby' },
+                    { data: 'createddate' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                }
+            })
+
+            hideload();
+        }
+    })
+</script>

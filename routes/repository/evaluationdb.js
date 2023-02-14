@@ -89,6 +89,18 @@ exports.Select = (sql, table, callback) => {
             if (table == 'TransactionEvaluationComment') {
                 callback(null, model.TransactionEvaluationComment(results));
             }
+
+            if (table == 'MasterDepartment') {
+                callback(null, model.MasterDepartment(results));
+            }
+
+            if (table == 'MasterPosition') {
+                callback(null, model.MasterPosition(results));
+            }
+
+            if (table == 'MasterSubject') {
+                callback(null, model.MasterSubject(results));
+            }
         });
 
     } catch (error) {
@@ -277,6 +289,49 @@ exports.InsertTable = (tablename, data, callback) => {
             mcq_question,
             mcq_createdby,
             mcq_createddate) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
+    if (tablename == 'master_department') {
+        let sql = `INSERT INTO master_department(
+            md_department,
+            md_createdby,
+            md_creadteddate) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
+    if (tablename == 'master_position') {
+        let sql = `INSERT INTO master_position(
+            mp_position,
+            mp_department,
+            mp_createdby,
+            mp_createddate) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
+    if (tablename == 'master_subject') {
+        let sql = `INSERT INTO master_subject(
+            ms_subject,
+            ms_createdby,
+            ms_createddate) VALUES ?`;
 
         this.Insert(sql, data, (err, result) => {
             if (err) {

@@ -1,0 +1,71 @@
+<script>
+    $(document).ready(function () {
+        LoadTable();
+
+        $(document).on('click', '#addBtn', function () {
+            var department = $('#departmentname').val();
+            var message = '';
+
+            if (department == '') (message += 'DEPARTMENT')
+
+
+            if (message != '') { warning('Empty', `Required to fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/department/save',
+                    data: {
+                        department: department
+                    },
+                    success: function (result) {
+                        if (result.msg === 'exist') {
+                            warning('Exist', `${department} already exist!`);
+                        }
+                        else {
+                            success('Success', 'Data Saved!')
+                        }
+
+                    },
+                    error: function (err) {
+                        error(err);
+                    }
+                })
+            }
+
+            LoadTable();
+        })
+
+        function LoadTable() {
+            showloader();
+            var table = $('#department-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/department/load'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'departmentcode' },
+                    { data: 'department' },
+                    { data: 'createdby' },
+                    { data: 'creadteddate' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                }
+            })
+
+            hideload();
+        }
+    })
+</script>

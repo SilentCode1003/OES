@@ -1,3 +1,4 @@
+//#region  MASTERS
 exports.MasterEmployee = (data) => {
     let dataResult = [];
 
@@ -9,6 +10,7 @@ exports.MasterEmployee = (data) => {
             middlename: key.me_middlename,
             lastname: key.me_lastname,
             department: key.me_department,
+            position: key.me_position,
             image: key.me_image,
             status: key.me_status,
             createdby: key.me_createdby,
@@ -30,6 +32,7 @@ exports.MasterSupervisor = (data) => {
             middlename: key.ms_middlename,
             lastname: key.ms_lastname,
             department: key.ms_department,
+            position: key.ms_position,
             image: key.ms_image,
             status: key.ms_status,
             createdby: key.ms_createdby,
@@ -70,6 +73,7 @@ exports.MasterCriteria = (data) => {
         dataResult.push({
             criteriacode: key.mc_criteriacode,
             criterianame: key.mc_criterianame,
+            type: key.mc_type,
             createdby: key.mc_createdby,
             createddate: key.mc_createddate,
         })
@@ -86,6 +90,7 @@ exports.MasterCriteriaQuestions = (data) => {
         dataResult.push({
             questioncode: key.mcq_questioncode,
             criteria: key.mcq_criteria,
+            type: key.mcq_type,
             question: key.mcq_question,
             createdby: key.mcq_createdby,
             createddate: key.mcq_createddate,
@@ -95,6 +100,58 @@ exports.MasterCriteriaQuestions = (data) => {
     return dataResult;
 }
 
+exports.MasterDepartment = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            departmentcode: key.md_departmentcode,
+            department: key.md_department,
+            createdby: key.md_createdby,
+            creadteddate: key.md_creadteddate,
+        })
+    });
+
+    return dataResult;
+}
+
+exports.MasterPosition = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            positioncode: key.mp_positioncode,
+            position: key.mp_position,
+            department: key.mp_department,
+            createdby: key.mp_createdby,
+            creadteddate: key.mp_createddate,
+        })
+    });
+
+    return dataResult;
+}
+
+exports.MasterSubject = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            subjectcode: key.ms_subjectcode,
+            subject: key.ms_subject,
+            createdby: key.ms_createdby,
+            createddate: key.ms_createddate,
+        })
+    });
+
+    return dataResult;
+}
+
+//#endregion
+
+//#region TRANSACTIONS
 exports.TransactionEvaluation = (data) => {
     let dataResult = [];
 
@@ -172,3 +229,4 @@ exports.TransactionEvaluationComment = (data) => {
 
     return dataResult;
 }
+//#endregion
