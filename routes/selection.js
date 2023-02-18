@@ -4,7 +4,9 @@ var router = express.Router();
 const helper = require('./repository/customhelper');
 const mysql = require('./repository/evaluationdb');
 const dictionary = require('./repository/dictionary');
-const { json } = require('express');
+const Filter = require('bad-words');
+const filipinoBadwords = require('filipino-badwords-list');
+const filter = new Filter({ list: filipinoBadwords.array });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -39,87 +41,91 @@ router.post('/generatereport', (req, res) => {
 
     console.log(alias);
 
-    transaction_evaluation_comment.push([
-      year,
-      supervisorid,
-      alias,
-      comment,
-      status,
-    ])
+    console.log(filter.isProfane(`${comment}`));
 
-    data.forEach((key, item) => {
-      transaction_evaluation.push([
+    if (filter.isProfane(`${comment}`)) {
+      console.log('Foul words detected!');
+      return res.json({
+        msg: 'badwords'
+      })
+    }
+    else {
+      console.log('No, foul words detected!');
+      transaction_evaluation_comment.push([
         year,
-        userid,
         supervisorid,
         alias,
-        key.criteria,
-        key.question,
-        key.grade,
+        comment,
         status,
-      ]);
-    });
+      ])
 
-    Insert_TransactionEvaluation(transaction_evaluation)
-      .then(result => {
-        console.log(result);
+      data.forEach((key, item) => {
+        transaction_evaluation.push([
+          year,
+          userid,
+          supervisorid,
+          alias,
+          key.criteria,
+          key.question,
+          key.grade,
+          key.comment,
+          status,
+        ]);
+      });
 
-        Insert_TransactionEvaluationComment(transaction_evaluation_comment)
-          .then(result => {
-            console.log(result);
-            Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
-              .then(result => {
-                console.log(result)
+      Insert_TransactionEvaluation(transaction_evaluation)
+        .then(result => {
+          console.log(result);
 
-                let sql = `select * from transaction_participant_subjects 
-            where ps_year='${year}'
-            and ps_participantid='${userid}'
-            and ps_status='${active}'`;
+          Insert_TransactionEvaluationComment(transaction_evaluation_comment)
+            .then(result => {
+              console.log(result);
+              Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
+                .then(result => {
+                  console.log(result)
 
-                mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
-                  if (err) console.error(err);
+                  let sql = `select * from transaction_participant_subjects 
+              where ps_year='${year}'
+              and ps_participantid='${userid}'
+              and ps_status='${active}'`;
 
-                  if (result.length != 0) {
-                    return res.json({
-                      msg: 'success'
-                    })
-                  } else {
+                  mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
+                    if (err) console.error(err);
 
-                    Update_ParticipantDetails(status, year, userid)
-                      .then(result => {
-                        console.log(result);
-                        res.json({
-                          msg: 'done'
-                        })
+                    if (result.length != 0) {
+                      return res.json({
+                        msg: 'success'
                       })
-                      .catch(error => {
-                        res.json({
-                          msg: error
+                    } else {
+
+                      Update_ParticipantDetails(status, year, userid)
+                        .then(result => {
+                          console.log(result);
+                          res.json({
+                            msg: 'done'
+                          })
                         })
-                      })
-                  }
+                        .catch(error => {
+                          res.json({
+                            msg: error
+                          })
+                        })
+                    }
+                  })
                 })
-              })
-              .catch(error => {
-                res.json({
-                  msg: error
+                .catch(error => {
+                  res.json({
+                    msg: error
+                  })
                 })
-              })
-          })
-
-
-      })
-      .catch(error => {
-        res.json({
-          msg: error
+            })
         })
-      })
-
-    // res.json({
-    //   msg: 'success'
-    // })
-
-
+        .catch(error => {
+          res.json({
+            msg: error
+          })
+        })
+    }
   } catch (error) {
     res.json({
       msg: error

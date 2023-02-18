@@ -3,11 +3,33 @@
 
         LoadTable();
 
+        $.ajax({
+            type: "GET",
+            url: "/subject/load",
+            success: function (result) {
+                console.log(result.data);
+                var data = result.data;
+                $('#typelist').empty();
+
+                $.each(data, function (key, item) {
+                    var options = new Option(item.subject, item.subject);
+                    $(options).html(item.subject);
+                    $('#typelist').append(options);
+                    console.log(item.subject);
+                });
+            },
+            error: function (result) {
+                alert('error: ' + result.data);
+            }
+        });
+
         $(document).on('click', '#addBtn', function () {
             let criterianame = $('#criterianame').val();
+            let subject = $('#typelist').val();
             var message = '';
 
             if (criterianame == '') { message += 'CRITERIA NAME ' }
+            if (subject == '-') { message += 'SUBJECT ' }
 
             if (message != '') { warning('Empty', `Please fillup ${message}`) }
             else {
@@ -16,11 +38,12 @@
                     url: '/criteria/save',
                     data: {
                         criterianame: criterianame,
+                        subject: subject,
                     },
                     success: function (result) {
                         LoadTable();
                         if (result.msg != 'success') {
-                            warning('Exist', 'Data Already Exist!')
+                            warning('Exist', `${subject}-${criterianame} exist!`)
                         } else {
                             success('Success', 'Data Saved!')
                         }
@@ -56,6 +79,7 @@
                 'columns': [
                     { data: 'criteriacode' },
                     { data: 'criterianame' },
+                    { data: 'type' },
                     { data: 'createdby' },
                     { data: 'createddate' },
                 ],

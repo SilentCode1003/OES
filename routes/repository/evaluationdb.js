@@ -101,6 +101,10 @@ exports.Select = (sql, table, callback) => {
             if (table == 'MasterSubject') {
                 callback(null, model.MasterSubject(results));
             }
+
+            if (table == 'MasterSubcriteria') {
+                callback(null, model.MasterSubcriteria(results));
+            }
         });
 
     } catch (error) {
@@ -216,6 +220,8 @@ exports.InsertTable = (tablename, data, callback) => {
             me_middlename,
             me_lastname,
             me_department,
+            me_position,
+            me_type,
             me_image,
             me_status,
             me_createdby,
@@ -236,6 +242,8 @@ exports.InsertTable = (tablename, data, callback) => {
                 ms_middlename,
                 ms_lastname,
                 ms_department,
+                ms_position,
+                ms_type,
                 ms_image,
                 ms_status,
                 ms_createdby,
@@ -272,6 +280,7 @@ exports.InsertTable = (tablename, data, callback) => {
     if (tablename == 'master_criteria') {
         let sql = `INSERT INTO master_criteria(
             mc_criterianame,
+            mc_type,
             mc_createdby,
             mc_createddate) VALUES ?`;
 
@@ -286,6 +295,7 @@ exports.InsertTable = (tablename, data, callback) => {
     if (tablename == 'master_criteria_questions') {
         let sql = `INSERT INTO master_criteria_questions(
             mcq_criteria,
+            mcq_subcriteria,
             mcq_question,
             mcq_createdby,
             mcq_createddate) VALUES ?`;
@@ -341,6 +351,21 @@ exports.InsertTable = (tablename, data, callback) => {
         })
     }
 
+    if (tablename == 'master_subcriteria') {
+        let sql = `INSERT INTO master_subcriteria(
+            ms_criteria,
+            ms_subcriteria,
+            ms_createdby,
+            ms_createddate) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
     if (tablename == 'transaction_evaluation') {
         let sql = `INSERT INTO transaction_evaluation(
             te_year,
@@ -350,6 +375,7 @@ exports.InsertTable = (tablename, data, callback) => {
             te_criteria,
             te_question,
             te_grade,
+            te_comment,
             te_status) VALUES ?`;
 
         this.Insert(sql, data, (err, result) => {
@@ -383,6 +409,7 @@ exports.InsertTable = (tablename, data, callback) => {
             ps_participantid,
             ps_year,
             ps_subjectname,
+            ps_type,
             ps_status,
             ps_createdby,
             ps_createddate) VALUES ?`;

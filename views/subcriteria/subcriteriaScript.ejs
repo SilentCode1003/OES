@@ -1,0 +1,95 @@
+<script>
+    $(document).ready(function () {
+        LoadTable();
+
+        $.ajax({
+            type: "GET",
+            url: "/criteria/load",
+            success: function (result) {
+                console.log(result.data);
+                var data = result.data;
+                
+
+                $.each(data, function (key, item) {
+                    var options = new Option(item.criterianame, item.criterianame);
+                    $(options).html(item.criterianame);
+                    $('#criterialist').append(options);
+                    console.log(item.criterianame);
+                });
+            },
+            error: function (result) {
+                alert('error: ' + result.data);
+            }
+        });
+
+        $(document).on('click', '#addBtn', function () {
+            var criteria = $('#criterialist').val();
+            var subcriteria = $('#subcriterianame').val();
+            var message = '';
+
+            if (criteria == '-') (message += 'CRITERIA ');
+            if (subcriteria == '') (message += 'SUBCRITERIA ');
+
+
+            if (message != '') { warning('Empty', `Required to fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/subcriteria/save',
+                    data: {
+                        criteria: criteria,
+                        subcriteria: subcriteria
+                    },
+                    success: function (result) {
+                        if (result.msg === 'exist') {
+                            warning('Exist', `${criteria} - ${subcriteria} already exist!`);
+                        }
+                        else {
+                            success('Success', 'Data Saved!')
+                        }
+
+                    },
+                    error: function (err) {
+                        error(err);
+                    }
+                })
+            }
+
+            LoadTable();
+        })
+
+        function LoadTable() {
+            showloader();
+            var table = $('#subcriteria-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/subcriteria/load'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'subcriteriacode' },
+                    { data: 'criteria' },
+                    { data: 'subcriteria' },
+                    { data: 'createdby' },
+                    { data: 'createddate' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                }
+            })
+
+            hideload();
+        }
+    })
+</script>

@@ -1,5 +1,5 @@
 <div>
-    <h1 class="center-text">SUBJECT TO EVALUATE</h1>
+    <h1 style="color:white" class="center-text">OPERATIONS OFFICERS</h1>
     <div class="row center-content">
         <div class="col-xl-9 col-lg-9 col-sm-9">
             <table id="supervisor-table">
@@ -7,6 +7,7 @@
                     <th>ID</th>
                     <th>IMAGE</th>
                     <th>NAME</th>
+                    <th>SUBJECT</th>
                     <th>STATUS</th>
                 </thead>
                 <tbody></tbody>
@@ -23,13 +24,75 @@
             <span id="questionModalSpan" class="close">&times;</span>
         </div>
         <div class="modal-body">
+            <div class="center-content">
+                <div class="center-text instructions">
+                    <p>Evaluations of supervisors by employees is an important process for providing supervisors with an
+                        assessment of the quality of their work.
+                        Annual supervisor evaluations can be used to compliment a supervisor for doing a good job.
+                        Annual evaluations can also identify areas for improvement.
+                        Evaluations can strengthen communications between supervisors and employees.</p>
+
+                    <p>Have two options for evaluating supervisors:</p>
+                    <p>1) Completing the Evaluation of Supervisor form.</p>
+                    <p>2) Writing a memo evaluating the supervisor.</p>
+
+                    <p>Evaluations received by the deadline will be incorporated into the annual review of the
+                        supervisor. Forms and/or memos should be sent to the Human Resources department by prior to the
+                        deadline.</p>
+                </div>
+            </div>
+            <hr class="hr-black">
+            <div class="center-text">
+                <h1 id="subjectname"></h1>
+            </div>
+
+            <div class="row center-content">
+                <table id="modal-question-table" class="question-table">
+                    <thead>
+                        <th class="criteria">CRITERIA</th>
+                        <th class="question">QUESTION</th>
+                        <th>GRADE</th>
+                        <th style="width: 300px;">COMMENT</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <br>
+            <div class="center-text">
+                <strong>
+                    <p>Your comment is important, please leave comment.</p>
+                </strong>
+            </div>
+
+            <div class="center-content">
+                <textarea name="comment" id="comment" cols="100" rows="10" placeholder="COMMENT / REMARKS"></textarea>
+            </div>
+        </div>
+
+        <div id="modal-button-container" class="center-content">
+            <!-- <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a> -->
+            <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="adminquestionModal" class="modal card shadow mb-4">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-button-container">
+            <span id="adminquestionModalSpan" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
             <div class="row center-content">
                 <div>
-                    <table id="modal-question-table" class="question-table">
+                    <table id="modal-question-table-admin" class="question-table">
                         <thead>
                             <th class="criteria">CRITERIA</th>
+                            <th class="criteria">SUBCRITERIA</th>
                             <th class="question">QUESTION</th>
                             <th>GRADE</th>
+                            <th>COMMENT</th>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -45,15 +108,60 @@
             </div>
 
             <div class="center-content">
-                <textarea name="comment" id="comment" cols="100" rows="10" placeholder="COMMENT / REMARKS"></textarea>
+                <textarea name="admincomment" id="admincomment" cols="100" rows="10"
+                    placeholder="COMMENT / REMARKS"></textarea>
             </div>
         </div>
 
+        <div id="modal-button-container" class="center-content">
+            <!-- <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a> -->
+            <button class="approve-btn" id="submitadminBtn" name="submitadminBtn">SUBMIT</button>
+        </div>
+    </div>
+</div>
 
+
+<!-- The Modal EMPLOYEE 3 month before end of the year -->
+<div id="employeequestionModal" class="modal card shadow mb-4">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-button-container">
+            <span id="employeequestionModalSpan" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="row center-content">
+                <div>
+                    <table id="modal-question-table-employee" class="question-table">
+                        <thead>
+                            <th class="criteria">CRITERIA</th>
+                            <th class="question">QUESTION</th>
+                            <th>CRITICAL INCIDENCE</th>
+                            <th>RATING</th>
+                            <th>WEIGHT</th>
+                            <th>TOTAL POINTS</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="center-text">
+                <strong>
+                    <p>Your comment is important, please leave comment.</p>
+                </strong>
+            </div>
+
+            <div class="center-content">
+                <textarea name="admincomment" id="admincomment" cols="100" rows="10"
+                    placeholder="COMMENT / REMARKS"></textarea>
+            </div>
+        </div>
 
         <div id="modal-button-container" class="center-content">
             <!-- <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a> -->
-            <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
+            <button class="approve-btn" id="submitadminBtn" name="submitadminBtn">SUBMIT</button>
         </div>
     </div>
 </div>

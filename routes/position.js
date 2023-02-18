@@ -33,7 +33,7 @@ module.exports = router;
 
 router.get('/load', (req, res) => {
     try {
-        let sql = 'select * from master_position';
+        let sql = `select * from master_position`;
         mysql.Select(sql, 'MasterPosition', (err, result) => {
             if (err) console.error(err);
 
@@ -94,5 +94,26 @@ router.post('/save', (req, res) => {
         res.json({
             msg: error
         });
+    }
+})
+
+router.post('/getposition', (req, res) => {
+    try {
+        let department = req.body.department;
+        let sql = `select * from master_position where mp_department='${department}'`;
+
+        mysql.Select(sql, 'MasterPosition', (err, result) => {
+            if (err) console.error(err);
+
+            res.json({
+                msg: 'success',
+                data: result
+            })
+        })
+
+    } catch (error) {
+        res.json({
+            msg: error
+        })
     }
 })

@@ -55,6 +55,7 @@ router.get('/load', (req, res) => {
 router.post('/save', (req, res) => {
     try {
         let criterianame = req.body.criterianame;
+        let subject = req.body.subject;
         let createdby = req.session.fullname;
         let createddate = helper.GetCurrentDatetime();
         let master_criteria = [];
@@ -71,6 +72,7 @@ router.post('/save', (req, res) => {
             else {
                 master_criteria.push([
                     criterianame,
+                    subject,
                     createdby,
                     createddate,
                 ])

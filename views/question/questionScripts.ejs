@@ -23,12 +23,42 @@
             }
         });
 
+        $(document).on('change click', '#criteriallist', function () {
+            var criteria = $('#criteriallist').val();
+            $('#subcriteriallist').empty();
+
+            $.ajax({
+                type: "POST",
+                url: "/subcriteria/getsubcriteria",
+                data:{
+                    criteria: criteria
+                },
+                success: function (result) {
+                    console.log(result.data);
+                    var data = result.data;
+                    $('#subcriteriallist').empty();
+
+                    $.each(data, function (key, item) {
+                        var options = new Option(item.subcriteria, item.subcriteria);
+                        $(options).html(item.subcriteria);
+                        $('#subcriteriallist').append(options);
+                        console.log(item.subcriteria);
+                    });
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+        })
+
         $(document).on('click', '#addBtn', function () {
             let criterianame = $('#criteriallist').val();
+            let subcriterianame = $('#subcriteriallist').val();
             let question = $('#question').val();
             var message = '';
 
             if (criterianame == '-') { message += 'CRITERIA NAME ' }
+            if (subcriterianame == '-') { message += 'SUBCRITERIA NAME ' }
             if (question == '') { message += 'QUESTION ' }
 
             if (message != '') { warning('Empty', `Please fillup ${message}`) }
@@ -37,20 +67,21 @@
                     type: 'POST',
                     url: '/questions/save',
                     data: {
-                        criterianame: criterianame,
+                        criteria: criterianame,
+                        subcriteria: subcriterianame,
                         question: question
                     },
                     success: function (result) {
                         LoadTable();
                         if (result.msg != 'success') {
-                            warning('Exist', 'Data Already Exist!')
+                            warning('Exist', `${criterianame}-${subcriterianame}-${question} exist`);
                         } else {
                             success('Success', 'Data Saved!')
                         }
 
                     },
-                    error: function (error) {
-                        error(error.msg);
+                    error: function (err) {
+                        error(err.msg);
                     }
                 })
             }
@@ -79,6 +110,7 @@
                 'columns': [
                     { data: 'questioncode' },
                     { data: 'criteria' },
+                    { data: 'subcriteria' },
                     { data: 'question' },
                     { data: 'createdby' },
                     { data: 'createddate' },

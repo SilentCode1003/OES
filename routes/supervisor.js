@@ -74,6 +74,8 @@ router.post('/save', (req, res) => {
         let middlename = req.body.middlename == '' ? 'N/A' : req.body.middlename;
         let lastname = req.body.lastname;
         let department = req.body.department;
+        let position = req.body.position;
+        let type = '';
         let image = req.body.image;
         let status = dictionary.GetValue(dictionary.ACT())
         let createdby = req.session.fullname;
@@ -82,6 +84,14 @@ router.post('/save', (req, res) => {
         var filepath = `${supervisorPath}${supervisorid}.json`;
         var filename = `${supervisorid}.json`;
         var datajson = [];
+
+        if(department == 'IT' || department == 'CABLING'){
+            type = 'SUPERVISOR';
+        }
+
+        if(department == 'ADMIN'){
+            type = 'ADMIN';
+        }
 
         let sql_check = `select * from master_supervisor where ms_employeeid='${supervisorid}'`;
         mysql.Select(sql_check, 'MasterSupervisor', (err, result) => {
@@ -109,6 +119,8 @@ router.post('/save', (req, res) => {
                     middlename,
                     lastname,
                     department,
+                    position,
+                    type,
                     filename,
                     status,
                     createdby,
@@ -156,10 +168,13 @@ router.post('/getsubjects', (req, res) => {
                         image: value.base64,
                         supervisorid: key.subjectname,
                         fullname: value.fullname,
+                        type: key.type,
                         status: key.status,
                     })
                 })
             });
+
+            console.log(data);
 
             res.json({
                 msg: 'success',

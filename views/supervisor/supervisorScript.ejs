@@ -3,12 +3,60 @@
         let base64String = "";
         LoadTable();
 
+        $.ajax({
+            type: "GET",
+            url: "/department/load",
+            success: function (result) {
+                console.log(result.data);
+                var data = result.data;
+
+                $.each(data, function (key, item) {
+                    var options = new Option(item.department, item.department);
+                    $(options).html(item.department);
+                    $('#departmentlist').append(options);
+                    console.log(item.department);
+                });
+            },
+            error: function (result) {
+                alert('error: ' + result.data);
+            }
+        });
+
+        $(document).on('change', '#departmentlist', function () {
+            var department = $('#departmentlist').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/position/getposition",
+                data: {
+                    department: department
+                },
+                success: function (result) {
+                    console.log(result.data);
+                    var data = result.data;
+                    $('#positionlist').empty();
+
+                    $.each(data, function (key, item) {
+                        var options = new Option(item.position, item.position);
+                        $(options).html(item.position);
+                        $('#positionlist').append(options);
+                        console.log(item.position);
+                    });
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+        })
+
+
         $(document).on('click', '#addBtn', function () {
             let supervisorid = $('#supervisorid').val();
             let firstname = $('#firstname').val();
             let middlename = $('#middlename').val();
             let lastname = $('#lastname').val();
             let departmentlist = $('#departmentlist').val();
+            let positionlist = $('#positionlist').val();
             let imageInput = $('#imageInput').val();
             var message = '';
 
@@ -31,6 +79,7 @@
                         middlename: middlename,
                         lastname: lastname,
                         department: departmentlist,
+                        position: positionlist,
                         image: base64String,
                     },
                     success: function (result) {

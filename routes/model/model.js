@@ -11,6 +11,7 @@ exports.MasterEmployee = (data) => {
             lastname: key.me_lastname,
             department: key.me_department,
             position: key.me_position,
+            type: key.me_type,
             image: key.me_image,
             status: key.me_status,
             createdby: key.me_createdby,
@@ -33,6 +34,7 @@ exports.MasterSupervisor = (data) => {
             lastname: key.ms_lastname,
             department: key.ms_department,
             position: key.ms_position,
+            type: key.ms_type,
             image: key.ms_image,
             status: key.ms_status,
             createdby: key.ms_createdby,
@@ -90,6 +92,7 @@ exports.MasterCriteriaQuestions = (data) => {
         dataResult.push({
             questioncode: key.mcq_questioncode,
             criteria: key.mcq_criteria,
+            subcriteria: key.mcq_subcriteria,
             type: key.mcq_type,
             question: key.mcq_question,
             createdby: key.mcq_createdby,
@@ -149,6 +152,23 @@ exports.MasterSubject = (data) => {
     return dataResult;
 }
 
+exports.MasterSubcriteria = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            subcriteriacode: key.ms_subcriteriacode,
+            criteria: key.ms_criteria,
+            subcriteria: key.ms_subcriteria,
+            createdby: key.ms_createdby,
+            createddate: key.ms_createddate,
+        })
+    });
+
+    return dataResult;
+}
+
 //#endregion
 
 //#region TRANSACTIONS
@@ -166,6 +186,7 @@ exports.TransactionEvaluation = (data) => {
             criteria: key.te_criteria,
             question: key.te_question,
             grade: key.te_grade,
+            comment: key.te_comment,
             status: key.te_status,
         })
     });
@@ -203,6 +224,7 @@ exports.TransactionParticipantSubject = (data) => {
             participantid: key.ps_participantid,
             year: key.ps_year,
             subjectname: key.ps_subjectname,
+            type: key.ps_type,
             status: key.ps_status,
             createdby: key.ps_createdby,
             createddate: key.ps_createddate,

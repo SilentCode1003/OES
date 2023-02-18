@@ -33,11 +33,13 @@ module.exports = router;
 
 router.get('/load', (req, res) => {
     try {
-        let sql = 'select * from master_employee';
+        let status = dictionary.GetValue(dictionary.RSGD());
+        let sql = `select * from master_employee where not me_status='${status}'`;
 
         mysql.Select(sql, 'MasterEmployee', (err, result) => {
             if (err) console.error(err);
             var data = [];
+            var action = '<button class="approve-btn" id="updateBtn" name="updateBtn">UPDATE</button>';
 
             result.forEach((key, item) => {
                 var fullname = `${key.firstname} ${key.middlename} ${key.lastname}`;
@@ -45,9 +47,11 @@ router.get('/load', (req, res) => {
                     employeeid: key.employeeid,
                     fullname: fullname,
                     department: key.department,
+                    position: key.position,
                     status: key.status,
                     createdby: key.createdby,
                     createddate: key.createddate,
+                    action: action,
                 })
             });
 
@@ -71,9 +75,11 @@ router.post('/save', (req, res) => {
         let middlename = req.body.middlename == '' ? 'N/A' : req.body.middlename;
         let lastname = req.body.lastname;
         let department = req.body.department;
-        let status = dictionary.GetValue(dictionary.ACT())
+        let position = req.body.position;
+        let status = dictionary.GetValue(dictionary.RGLR());
         let createdby = req.session.fullname;
         let createddate = helper.GetCurrentDatetime();
+        let type = 'EMPLOYEE';
         let master_employee = [];
 
         let sql_check = `SELECT * FROM master_employee where me_employeeid='${employeeid}'`;
@@ -93,6 +99,8 @@ router.post('/save', (req, res) => {
                     middlename,
                     lastname,
                     department,
+                    position,
+                    type,
                     '',
                     status,
                     createdby,

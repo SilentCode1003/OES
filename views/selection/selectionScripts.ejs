@@ -2,7 +2,8 @@
     $(document).ready(function () {
         LoadTable();
         var supervisorid = '';
-        
+        var subject = '';
+
 
         var questionModal = document.getElementById("questionModal");
         var questionModalSpan = document.getElementById("questionModalSpan");
@@ -11,13 +12,87 @@
             questionModal.style.display = "none";
         }
 
+        var adminquestionModal = document.getElementById("adminquestionModal");
+        var adminquestionModalSpan = document.getElementById("adminquestionModalSpan");
+
+        adminquestionModalSpan.onclick = function () {
+            adminquestionModal.style.display = "none";
+        }
+
+        var employeequestionModal = document.getElementById("employeequestionModal");
+        var employeequestionModalSpan = document.getElementById("employeequestionModalSpan");
+
+        employeequestionModalSpan.onclick = function () {
+            employeequestionModal.style.display = "none";
+        }
+
         window.onclick = function () {
             if (event.target == questionModal) {
                 questionModal.style.display = "none";
             }
+
+            if (event.target == adminquestionModal) {
+                adminquestionModal.style.display = "none";
+            }
+
+            if (event.target == employeequestionModal) {
+                employeequestionModal.style.display = "none";
+            }
         }
 
-        $('#supervisor-table tbody').on('click', 'tr', function () {
+        $('#modal-question-table tbody').on('click', 'td', function (e) {
+            e.preventDefault();
+            console.log($(this).closest('tr').find('select').val());
+
+            var selection = $(this).closest('tr').find('select').val();
+
+            // console.log(selection);
+
+            if ($(this).attr('edit_type') == 'button') {
+                return false;
+            }
+
+            if (selection == 'U' || selection == 'N') {
+                //make div editable
+                $(this).closest('td').attr('contenteditable', 'true');
+                //add bg css
+                $(this).addClass('edit-cost').css('padding', '5px');
+            }
+            else {
+                //make div editable
+                $(this).closest('td').attr('contenteditable', 'false');
+                //add bg css
+                $(this).addClass('edit-cost').css('padding', '-5px');
+            }
+        });
+
+        $('#modal-question-table-admin tbody').on('click', 'td', function (e) {
+            e.preventDefault();
+            console.log($(this).closest('tr').find('select').val());
+
+            var selection = $(this).closest('tr').find('select').val();
+
+            // console.log(selection);
+
+            if ($(this).attr('edit_type') == 'button') {
+                return false;
+            }
+
+            if (selection == '2' || selection == '1') {
+                //make div editable
+                $(this).closest('td').attr('contenteditable', 'true');
+                //add bg css
+                $(this).addClass('edit-cost').css('padding', '5px');
+            }
+            else {
+                //make div editable
+                $(this).closest('td').attr('contenteditable', 'false');
+                //add bg css
+                $(this).addClass('edit-cost').css('padding', '-5px');
+            }
+        });
+
+        $('#supervisor-table tbody').on('click', 'tr', function (e) {
             var dataRow = [];
             $(this).closest('tr').find('td').each(function () {
                 dataRow.push([$(this).text()]);
@@ -25,8 +100,10 @@
             });
 
             supervisorid = dataRow[0];
+            document.getElementById('subjectname').innerText = dataRow[2];
+            subject = dataRow[3];
             console.log(dataRow);
-            document.getElementById('comment').value ="";
+            document.getElementById('comment').value = "";
 
             var questiontable = $('#modal-question-table').DataTable({
                 'destroy': true,
@@ -36,10 +113,18 @@
                 'scrollCollapse': true,
             });
 
+            var questiontableadmin = $('#modal-question-table-admin').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
+
             $.ajax({
-                type: "GET",
-                url: "/questions/load",
-                // data: { requestid: requestid },
+                type: "POST",
+                url: "/questions/getquestions",
+                data: { subject: subject },
                 success: function (result) {
                     questiontable.clear().draw();
                     var data = result.data;
@@ -48,15 +133,31 @@
                     console.log(result.data);
                     $.each(data, (key, item) => {
                         // console.log(datajson);
-                        questiontable.row.add([item.criteria, item.question, `<select class="entry-input-select" id="criteria" name="criteria">
-                                    <option value="-">CRITERIA</option>
-                                    <option value="E">EXCELLENT</option>
-                                    <option value="G">GOOD</option>
-                                    <option value="S">SATISFACTORY</option>
-                                    <option value="N">NEED WORK</option>
-                                    <option value="U">UNSATISFACTORY</option>
-                                    <option value="0">NO OPINION</option>
-                                </select>`]).draw(false);
+                        if (item.subjecttype === 'SUPERVISOR') {
+                            questiontable.row.add([item.criteria, item.question, `<select class="entry-input-select" id="criteria" name="criteria">
+                                <option value="-">CRITERIA</option>
+                                <option value="E">EXCELLENT</option>
+                                <option value="G">GOOD</option>
+                                <option value="S">SATISFACTORY</option>
+                                <option value="N">NEED WORK</option>
+                                <option value="U">UNSATISFACTORY</option>
+                                <option value="0">NO OPINION</option>
+                            </select>`, '']).draw(false);
+                        }
+
+                        if (item.subjecttype === 'ADMIN') {
+
+                            questiontableadmin.row.add([item.criteria, item.subcriteria, item.question,
+                                `<select class="entry-input-select" id="criteria" name="criteria">
+                                <option value="-">CRITERIA</option>
+                                <option value="5">OUTSTANDING</option>
+                                <option value="4">VERY SATISFACTORY</option>
+                                <option value="3">SATISFACTORY</option>
+                                <option value="2">INADEQUATE</option>
+                                <option value="1">POOR</option>
+                            </select>`, '']).draw(false);
+                        }
+
 
                         index += 1;
                     })
@@ -66,12 +167,134 @@
                 }
             });
 
-            questionModal.style.display = "block";
+
+            if (subject == 'SUPERVISOR') {
+                questionModal.style.display = "block";
+            }
+            if (subject == 'ADMIN') {
+                adminquestionModal.style.display = "block";
+            }
+            if (subject == 'EMPLOYEE') {
+                employeequestionModal.style.display = "block";
+            }
+        })
+
+        $(document).on('change', '#criteria', function (e) {
+            e.preventDefault();
+            var criteria_value = this.value;
+
+            if (criteria_value == 'N' || criteria_value == 'U' || criteria_value == '2' || criteria_value == '1') {
+                $(this).addClass('comment-edit').css('border', '2px solid red');
+                warning('Comment', 'We need your explanation of why you gave this criterion a low rating. Please select the comment section that matches the question.');
+            }
+            else {
+                $(this).addClass('comment-edit').css('border', '2px solid gray');
+            }
+
+            console.log(`Value: ${criteria_value}`);
         })
 
         $(document).on('click', '#submitBtn', function () {
             var data = $("#modal-question-table tr");
             var comment = $("#comment").val();
+            var dataRaw = [];
+            var message = '';
+            let userid = '<%= userid %>';
+
+
+
+            console.log(data.length);
+            for (x = 1; x < data.length; x++) {
+                // console.log(header[x].innerText);
+                // console.log(data[x].innerText);
+                var innerData = data[x].innerText;
+                innerData = innerData.split("\t");
+                var table = document.getElementById("modal-question-table");
+                var select = table.getElementsByTagName("select")[x - 1];
+                var value = select.value;
+                var selection = value;
+                var question_comment = innerData[3];
+
+                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${innerData[3]}`);
+
+                if (selection == 'N') {
+                    if (question_comment == '') {
+                        message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade `;
+                    }
+
+                }
+                if (selection == 'U') {
+                    if (question_comment == '') {
+                        message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade `;
+                    }
+                }
+
+                if (selection == '-') {
+                    message += `criteria "${innerData[0]}" question "${innerData[1]}"`;
+                    dataRaw = [];
+                }
+                else {
+
+                    if (innerData[3] == '') { question_comment = 'NO COMMENT' }
+
+                    dataRaw.push({
+                        criteria: innerData[0],
+                        question: innerData[1],
+                        comment: innerData[3],
+                        grade: selection,
+                    })
+                }
+
+            }
+
+            if (comment == '') { message += 'We need your bad and good comment.' }
+
+            if (message != '') { warning('No Grade', `${message}`); }
+            else {
+                console.log(dataRaw);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/selection/generatereport',
+                    data: {
+                        supervisorid: supervisorid,
+                        userid: userid,
+                        comment: comment,
+                        data: dataRaw,
+                    },
+                    success: function (result) {
+                        console.log(result.msg);
+                        if (result.msg != 'badwords') {
+                            if (result.msg != 'success') {
+                                success('Thank You', 'Thank you for participating');
+
+                                setTimeout(() => {
+                                    Logout();
+                                }, 2000)
+                            }
+                            else {
+                                success('Done', 'Thank you for participating, please proceed to another subject.')
+                                setTimeout(() => {
+                                    questionModal.style.display = "none";
+                                }, 2000)
+                            }
+                        }
+                        else {
+                            warning('Bad Words', 'Please refrain from using foul language in your comments.');
+                        }
+
+                        LoadTable();
+                    },
+                    error: function (error) {
+                        error(error);
+                    }
+                })
+            }
+        })
+
+        $(document).on('click', '#submitadminBtn', function () {
+            var data = $("#modal-question-table-admin tr");
+            var comment = $("#admincomment").val();
             var dataRaw = [];
             var message = '';
             let userid = '<%= userid %>';
@@ -82,7 +305,7 @@
                 // console.log(data[x].innerText);
                 var innerData = data[x].innerText;
                 innerData = innerData.split("\t");
-                var table = document.getElementById("modal-question-table");
+                var table = document.getElementById("modal-question-table-admin");
                 var select = table.getElementsByTagName("select")[x - 1];
                 var value = select.value;
                 var selection = value;
@@ -116,21 +339,27 @@
                         data: dataRaw,
                     },
                     success: function (result) {
-                        LoadTable();
-                        if (result.msg != 'success') {
-                            success('Thank You', 'Thank you for participating');
+                        console.log(result.msg);
+                        if (result.msg != 'badwords') {
+                            if (result.msg != 'success') {
+                                success('Thank You', 'Thank you for participating');
 
-                            setTimeout(() => {
-                                Logout();
-                            }, 2000)
+                                setTimeout(() => {
+                                    Logout();
+                                }, 2000)
+                            }
+                            else {
+                                success('Done', 'Thank you for participating, please proceed to another subject.')
+                                setTimeout(() => {
+                                    adminquestionModal.style.display = "none";
+                                }, 2000)
+                            }
                         }
                         else {
-                            success('Done', 'Thank you for participating, please proceed to another subject.')
-                            setTimeout(() => {
-                                questionModal.style.display = "none";
-                            }, 2000)
+                            warning('Bad Words', 'Please refrain from using foul language in your comments.');
                         }
 
+                        LoadTable();
                     },
                     error: function (error) {
                         error(error);
@@ -144,7 +373,7 @@
             let userid = '<%= userid %>';
             let department = '<%= department%>';
 
-            var table = $('#supervisor-table').DataTable({
+            var supervisor = $('#supervisor-table').DataTable({
                 'destroy': true,
                 'processing': true,
                 'serverSide': true,
@@ -171,6 +400,7 @@
                                 id: item.supervisorid,
                                 image: `<img src="data:image/png;base64,${item.image}" alt="#" />`,
                                 fullname: item.fullname,
+                                type: item.type,
                                 status: item.status,
                             })
 
@@ -187,6 +417,7 @@
                     { data: 'id' },
                     { data: 'image' },
                     { data: 'fullname' },
+                    { data: 'type' },
                     { data: 'status' },
                 ],
                 initComplete: function () {

@@ -83,7 +83,7 @@ router.post('/getsummary', (req, res) => {
     let id = req.body.supervisorid;
     let year = helper.GetCurrentYear();
     let department = req.body.department;
-    let sql = `call evaluation.GetEvaluationSymmaru('${year}', '${id}', '${department}'); `
+    let sql = `call evaluation.GetEvaluationSummary('${year}', '${id}', '${department}'); `
 
     GetSummary(sql)
       .then(result => {
@@ -111,7 +111,7 @@ router.post('/getyearsummary', (req, res) => {
     let id = req.body.supervisorid;
     let year = req.body.year;
     let department = req.body.department;
-    let sql = `call evaluation.GetEvaluationSymmaru('${year}', '${id}', '${department}'); `
+    let sql = `call evaluation.GetEvaluationSummary('${year}', '${id}', '${department}'); `
 
     GetSummary(sql)
       .then(result => {

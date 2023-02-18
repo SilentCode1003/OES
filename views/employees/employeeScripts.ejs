@@ -3,18 +3,66 @@
 
         LoadTable();
 
+        $.ajax({
+            type: "GET",
+            url: "/department/load",
+            success: function (result) {
+                console.log(result.data);
+                var data = result.data;
+
+                $.each(data, function (key, item) {
+                    var options = new Option(item.department, item.department);
+                    $(options).html(item.department);
+                    $('#departmentlist').append(options);
+                    console.log(item.department);
+                });
+            },
+            error: function (result) {
+                alert('error: ' + result.data);
+            }
+        });
+
+        $(document).on('change', '#departmentlist', function () {
+            var department = $('#departmentlist').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/position/getposition",
+                data: {
+                    department: department
+                },
+                success: function (result) {
+                    console.log(result.data);
+                    var data = result.data;
+                    $('#positionlist').empty();
+
+                    $.each(data, function (key, item) {
+                        var options = new Option(item.position, item.position);
+                        $(options).html(item.position);
+                        $('#positionlist').append(options);
+                        console.log(item.position);
+                    });
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+        })
+
         $(document).on('click', '#addBtn', function () {
             let employeeid = $('#employeeid').val();
             let firstname = $('#firstname').val();
             let middlename = $('#middlename').val();
             let lastname = $('#lastname').val();
             let department = $('#departmentlist').val();
+            let position = $('#positionlist').val();
             var message = '';
 
             if (employeeid == '') { message += 'EMPLOYEE ID '; }
             if (firstname == '') { message += 'FIRST NAME '; }
             if (lastname == '') { message += 'LAST NAME'; }
             if (department == '-') { message += 'DEPARTMENT '; }
+            if (position == '-') { message += 'POSITION '; }
 
             if (message != '') { warning('Empty', `Please fillup ${message}`) }
             else {
@@ -27,6 +75,7 @@
                         middlename: middlename,
                         lastname: lastname,
                         department: department,
+                        position: position,
                     },
                     success: function (result) {
                         LoadTable();
@@ -185,9 +234,11 @@
                     { data: 'employeeid' },
                     { data: 'fullname' },
                     { data: 'department' },
+                    { data: 'position' },
                     { data: 'status' },
                     { data: 'createdby' },
                     { data: 'createddate' },
+                    { data: 'action' },
                 ],
                 initComplete: function () {
                     console.log('init complete');

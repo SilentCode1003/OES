@@ -191,14 +191,21 @@ function Create_ParticipantDetails(participantid, fullname, department) {
         resolve('exist')
       }
       else {
-        let sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department='${department}'`;
+        let sql_supervisor = ``;
+
+        if (department == 'IT') {
+          sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('IT','CABLING','ADMIN')`;
+        }
+        //further extension of filters
+
         mysql.Select(sql_supervisor, 'MasterSupervisor', (err, result) => {
           if (err) reject(err);
 
           result.forEach((key, item) => {
             details += `${key.employeeid}<br>`;
             subjectid.push({
-              employeeid: key.employeeid
+              employeeid: key.employeeid,
+              type: key.type,
             })
           });
 
@@ -231,6 +238,7 @@ function Create_ParticipantDetails(participantid, fullname, department) {
                   participantid,
                   year,
                   key.employeeid,
+                  key.type,
                   status,
                   createdby,
                   createddate

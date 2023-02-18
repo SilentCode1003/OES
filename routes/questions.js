@@ -14,7 +14,7 @@ function isAuth(req, res, next) {
 
 const mysql = require('./repository/evaluationdb');
 const helper = require('./repository/customhelper');
-const dictionary = require('./repository/dictionary')
+const dictionary = require('./repository/dictionary');
 
 /* GET home page. */
 router.get('/', isAuth, function (req, res, next) {
@@ -54,13 +54,14 @@ router.get('/load', (req, res) => {
 
 router.post('/save', (req, res) => {
     try {
-        let criterianame = req.body.criterianame;
+        let criterianame = req.body.criteria;
+        let subcriterianame = req.body.subcriteria;
         let question = req.body.question;
         let createdby = req.session.fullname;
         let createddate = helper.GetCurrentDatetime();
         let master_criteria = [];
 
-        let sql_check = `SELECT * FROM master_criteria_questions where mcq_criteria='${criterianame}' and mcq_question='${question}'`;
+        let sql_check = `SELECT * FROM master_criteria_questions where mcq_criteria='${criterianame}' and mcq_subcriteria='${subcriterianame}' and mcq_question='${question}'`;
         mysql.Select(sql_check, 'MasterCriteriaQuestions', (err, result) => {
             if (err) console.error(err);
 
@@ -72,6 +73,7 @@ router.post('/save', (req, res) => {
             else {
                 master_criteria.push([
                     criterianame,
+                    subcriterianame,
                     question,
                     createdby,
                     createddate,
@@ -92,6 +94,34 @@ router.post('/save', (req, res) => {
         })
 
 
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+router.post('/getquestions', (req, res) => {
+    try {
+        let subject = req.body.subject;
+        let sql = `select 
+        mc_criterianame as criteria,
+        mcq_subcriteria as subcriteria,
+        mcq_question as question,
+        mc_type as subjecttype
+        from master_criteria
+        inner join master_criteria_questions on master_criteria.mc_criterianame = master_criteria_questions.mcq_criteria
+        where mc_type='${subject}'
+        order by master_criteria.mc_criterianame`;
+
+        mysql.SelectResult(sql, (err, result) => {
+            if (err) console.error(err);
+
+            res.json({
+                msg: 'success',
+                data: result
+            })
+        })
     } catch (error) {
         res.json({
             msg: error

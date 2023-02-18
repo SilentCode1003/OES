@@ -23,6 +23,7 @@ var resultsRouter = require('./routes/results');
 var departmentRouter = require('./routes/department');
 var positionRouter = require('./routes/position');
 var subjectRouter = require('./routes/subject');
+var subcriteriaRouter = require('./routes/subcriteria');
 
 
 var app = express();
@@ -75,6 +76,7 @@ app.use('/results', resultsRouter);
 app.use('/department', departmentRouter);
 app.use('/position', positionRouter);
 app.use('/subject', subjectRouter);
+app.use('/subcriteria', subcriteriaRouter);
 
 
 // catch 404 and forward to error handler

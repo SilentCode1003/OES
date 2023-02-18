@@ -23,6 +23,8 @@ exports.GetValue = (abr) => {
     if (abr == 'REM') return 'REMOVE';
     if (abr == 'UPD') return 'UPDATE';
     if (abr == 'INST') return 'INST';
+    if (abr == 'RSGD') return 'RESIGNED';
+    if (abr == 'RGLR') return 'REGULAR';
 }
 
 //#region STATUS CODE
@@ -117,8 +119,17 @@ exports.UPD = () => {
 exports.INST = () => {
     return 'INST';
 }
-//#endregion
 
+exports.RSGD = () => {
+    return 'RSGD';
+}
+
+exports.RGLR = () => {
+    return 'RGLR';
+}
+
+
+//#endregion
 
 //#region 
 exports.GetHex = (string) => {
