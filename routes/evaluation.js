@@ -61,6 +61,7 @@ router.get('/loadsummary', (req, res) => {
           employeeid: key.employeeid,
           fullname: `${key.firstname} ${key.lastname}`,
           department: key.department,
+          position: key.position,
         });
       })
 
@@ -341,6 +342,54 @@ router.post('/loaddepartmentrankings', (req, res) => {
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
+
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/getevaluationsummarydetails', (req, res) => {
+  try {
+    let employeeid = req.body.employeeid;
+    let department = req.body.department;
+    let currentyear = helper.GetCurrentYear();
+
+    let sql = `call evaluation.GetEvaluationSummaryDetails('${employeeid}', '${currentyear}', '${department}')`;
+    mysql.StoredProcedureResult(sql, (err, result) => {
+      if (err) console.error(err);
+
+      console.log(result);
+
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/getevaluationsummary', (req, res) => {
+  try {
+    let employeeid = req.body.employeeid;
+    let department = req.body.department;
+    let currentyear = helper.GetCurrentYear();
+
+    let sql = `call evaluation.GetAdminEvaluationSummary('${employeeid}', '${currentyear}', '${department}')`;
+    mysql.StoredProcedureResult(sql, (err, result) => {
+      if (err) console.error(err);
+
+      console.log(result);
 
       res.json({
         msg: 'success',

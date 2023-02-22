@@ -196,6 +196,12 @@ function Create_ParticipantDetails(participantid, fullname, department) {
         if (department == 'IT') {
           sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('IT','CABLING','ADMIN')`;
         }
+        if (department == 'ADMIN') {
+          sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('ADMIN')`;
+        }
+        if (department == 'CABLING') {
+          sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('IT','CABLING','ADMIN')`;
+        }
         //further extension of filters
 
         mysql.Select(sql_supervisor, 'MasterSupervisor', (err, result) => {

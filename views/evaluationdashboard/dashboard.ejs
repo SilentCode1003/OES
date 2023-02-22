@@ -1,19 +1,20 @@
 <div class="row">
-    <div class="col-xl-4 col-lg-4 col-sm-4">
+    <div class="col-xl-6 col-lg-6 col-sm-6">
         <h3>EVALUATION SUBJECTS</h3>
         <!-- <select class="entry-input" name="yearlist" id="yearlist">
             <option value="-">YEAR</option>
         </select> -->
-        <table id="summary-table">
+        <table id="summary-table" class="question-table">
             <thead>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>DEPARTMENT</th>
+                <th class="criteria">ID</th>
+                <th class="criteria">NAME</th>
+                <th class="criteria">DEPARTMENT</th>
+                <th class="criteria">POSITION</th>
             </thead>
             <tbody></tbody>
         </table>
     </div>
-    <div class="col-xl-8 col-lg-8 col-sm-8">
+    <div class="col-xl-6 col-lg-6 col-sm-6">
         <div class="card shadow mb-8">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
@@ -139,11 +140,194 @@
             </div>
         </div>
 
-
-
         <!-- <div id="modal-button-container" class="center-content">
             <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
             <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
         </div> -->
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="adminsummaryModal" class="modal card shadow mb-4">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-button-container">
+            <span id="adminsummaryModalSpan" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+
+                    <table id="admin-modal-summary-table">
+                        <thead>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>O</th>
+                            <th>V</th>
+                            <th>S</th>
+                            <th>I</th>
+                            <th>P</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="entry-input">
+                        <button class="approve-btn" id="viewsummary" name="viewsummary">VIEW</button>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="admin-comment-table">
+                        <thead>
+                            <th>ALLIAS</th>
+                            <th>COMMENT</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="entry-input">
+                        <button class="approve-btn" id="viewcomment" name="viewcomment">VIEW</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="modal-button-container" class="center-content">
+            <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
+            <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
+        </div> -->
+</div>
+
+<!-- The Modal -->
+<div id="printsummaryModal" class="modal card shadow mb-4">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-button-container">
+            <span id="printsummarySpan" class="close">&times;</span>
+        </div>
+        <!-- AREA TO PRINT ONLY -->
+        <div id="PrintArea" name="PrintArea" class="print-container">
+            <div class="modal-header">
+
+            </div>
+            <div class="modal-body">
+                <div class="outer">
+                    <div class="inner">
+                        <div class="row">
+                            <div class="col-xl-1 col-lg-1 col-sm-1">
+                                <img class="logo" style="width: 100; height: auto; border-radius: 80px;"
+                                    src="/images/img/logo.jpg" alt="...">
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-sm">
+
+                                <div class="modal-print-background">
+                                    <div class="modal-print-background modal-company-header">
+                                        <strong><span class="report-header">5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES
+                                                CORP.</span></strong>
+                                    </div>
+                                    <div class="modal-print-background">
+                                        <span class="report-subheader">Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
+                                            Bi&ntilde;an
+                                            Laguna</span>
+                                    </div>
+                                    <div class="modal-print-background">
+                                        <span class="report-subheader">Contact No. : (8)952-15-60 , (8)273-44-69</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="outer">
+                        <div class="inner">
+                            <strong>NAME OF EVALUATEE: </strong><span id="sujectname">JOSEPH ORENCIO</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="outer">
+                        <div class="inner">
+                            <strong>JOB TITLE: </strong><span id="subkecttile">SOFTWARE DEVELOPER</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="outer">
+                        <div class="inner">
+                            <strong>DEPARTMENT: </strong><span id="department">ADMIN</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xl-1 col-lg-1 col-sm-1">
+
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-sm-10">
+                        <table id="modal-summary-table-admin" class="question-table">
+                            <thead>
+                                <th class="criteria">CRITERIA</th>
+                                <th class="question">QUESTION</th>
+                                <th>O</th>
+                                <th>V</th>
+                                <th>S</th>
+                                <th>I</th>
+                                <th>P</th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="col-xl-1 col-lg-1 col-sm-1">
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xl-1 col-lg-1 col-sm-1">
+
+                </div>
+                <div class="col-xl-10 col-lg-10 col-sm-10" style="color: black;">
+                    <strong><span>O - Outstanding</span></strong>
+                    <strong><span>V - Very Satisfactory</span></strong>
+                    <strong><span>S - Satisfactory</span></strong>
+                    <strong><span>I - Inadequate</span></strong>
+                    <strong><span>P - Poor</span></strong>
+                </div>
+                <div class="col-xl-1 col-lg-1 col-sm-1">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-1 col-lg-1 col-sm-1">
+
+                </div>
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <table id="rating-table">
+                        <thead>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th style="width: 40px; text-align: center;">O</th>
+                            <th style="width: 40px; text-align: center;">V</th>
+                            <th style="width: 40px; text-align: center;">S</th>
+                            <th style="width: 40px; text-align: center;">I</th>
+                            <th style="width: 40px; text-align: center;">P</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="modal-button-container" class="center-content">
+            <button class="approve-btn" id="printBtn" name="printBtn">PRINT</button>
+        </div>
     </div>
 </div>

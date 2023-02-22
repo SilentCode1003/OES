@@ -1,5 +1,10 @@
 <script>
-    var employeeid = '';
+    let employeeid = '';
+    let department = '';
+    let supervisorid = '';
+    let supervisorame = '';
+    let position = '';
+
     LoadParticipants()
     LoadSummary();
     LoadRankings();
@@ -11,9 +16,31 @@
         summaryModal.style.display = "none";
     }
 
+    var printsummaryModal = document.getElementById("printsummaryModal");
+    var printsummarySpan = document.getElementById("printsummarySpan");
+
+    printsummarySpan.onclick = function () {
+        printsummaryModal.style.display = "none";
+    }
+
+    var adminsummaryModal = document.getElementById("adminsummaryModal");
+    var adminsummaryModalSpan = document.getElementById("adminsummaryModalSpan");
+
+    adminsummaryModalSpan.onclick = function () {
+        adminsummaryModal.style.display = "none";
+    }
+
     window.onclick = function () {
         if (event.target == summaryModal) {
             summaryModal.style.display = "none";
+        }
+
+        if (event.target == printsummaryModal) {
+            printsummaryModal.style.display = "none";
+        }
+
+        if (event.target == adminsummaryModal) {
+            adminsummaryModal.style.display = "none";
         }
     }
 
@@ -25,57 +52,66 @@
         });
 
         supervisorid = dataRow[0];
+        supervisorame = dataRow[1]
         department = dataRow[2];
-
+        position = dataRow[3];
         employeeid = supervisorid;
 
-        var summary = $('#modal-summary-table').DataTable({
-            'destroy': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollCollapse': true,
-        });
+        //#region SUPERVISOR
+        if (department == 'IT') {
+            var summary = $('#modal-summary-table').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
 
-        var details = $('#modal-details-table').DataTable({
-            'destroy': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollCollapse': true,
-        });
+            var details = $('#modal-details-table').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
 
 
-        details.clear().draw();
+            details.clear().draw();
 
-        $.ajax({
-            type: "POST",
-            url: "/evaluation/getsummary",
-            data: {
-                supervisorid: supervisorid,
-                department: department
-            },
-            success: function (result) {
-                summary.clear().draw();
-                var data = result.data;
-                var index = 0;
+            $.ajax({
+                type: "POST",
+                url: "/evaluation/getsummary",
+                data: {
+                    supervisorid: supervisorid,
+                    department: department
+                },
+                success: function (result) {
+                    summary.clear().draw();
+                    var data = result.data;
+                    var index = 0;
 
-                console.log(result.data);
-                $.each(data, (key, item) => {
-                    // console.log(datajson);
-                    summary.row.add([item.employeeid, item.employeename, item.E, item.G, item.S, item.N, item.U, item.O,]).draw(false);
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        summary.row.add([item.employeeid, item.employeename, item.E, item.G, item.S, item.N, item.U, item.O,]).draw(false);
 
-                    index += 1;
-                })
-            },
-            error: function (result) {
-                error('error: ' + result);
-            }
-        });
+                        index += 1;
+                    })
+                },
+                error: function (result) {
+                    error('error: ' + result);
+                }
+            });
 
-        LoadComments(employeeid);
+            LoadComments(employeeid);
 
-        summaryModal.style.display = "block";
+            summaryModal.style.display = "block";
+        }
+        //#endregion
+        if (department == 'ADMIN') {
+            adminsummaryModal.style.display = "block";
+        }
+
     })
 
     $('#modal-summary-table').on('click', 'th', function (e) {
@@ -115,6 +151,91 @@
         });
     });
 
+    $(document).on('click', '#viewsummary', function (e) {
+        //#region ADMIN
+        if (department == 'ADMIN') {
+            document.getElementById('sujectname').innerText = supervisorame;
+            document.getElementById('subkecttile').innerText = position;
+            document.getElementById('department').innerText = department;
+
+            var summary = $('#modal-summary-table-admin').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
+
+            var items = $('#rating-table').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/evaluation/getevaluationsummarydetails",
+                data: {
+                    employeeid: supervisorid,
+                    department: department
+                },
+                success: function (result) {
+
+                    summary.clear().draw();
+                    var data = result.data;
+
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        summary.row.add([item.criteria, item.question, item.outstanding, item.verysatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
+                    })
+                },
+                error: function (result) {
+                    error('error: ' + result);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/evaluation/getevaluationsummary",
+                data: {
+                    employeeid: supervisorid,
+                    department: department
+                },
+                success: function (result) {
+
+                    items.clear().draw();
+                    var data = result.data;
+
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        items.row.add([item.employeeid, item.employeename, item.outstanding, item.vertsatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
+                    })
+                },
+                error: function (result) {
+                    error('error: ' + result);
+                }
+            });
+
+
+
+            printsummaryModal.style.display = "block";
+        }
+        //#endregion
+    })
+
+    $(document).on('click', '#printBtn', function () {
+        console.log('clicked!');
+        var printContents = document.getElementById('PrintArea').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload();
+    })
 
     function LoadRankings() {
         Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -224,7 +345,7 @@
         $.ajax({
             type: 'POST',
             url: '/evaluation/loaddepartmentrankings',
-            data:{
+            data: {
                 department: 'IT'
             },
             success: function (result) {
@@ -327,7 +448,7 @@
         $.ajax({
             type: 'POST',
             url: '/evaluation/loaddepartmentrankings',
-            data:{
+            data: {
                 department: 'CABLING'
             },
             success: function (result) {
@@ -544,6 +665,7 @@
                 { data: 'employeeid' },
                 { data: 'fullname' },
                 { data: 'department' },
+                { data: 'position' },
             ],
             initComplete: function () {
                 console.log('init complete');

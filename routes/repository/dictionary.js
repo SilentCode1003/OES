@@ -164,4 +164,37 @@ exports.GetHex = (string) => {
         return 'L';
     }
 }
+
+exports.ReverseHex = (string) => {
+    if (string == 'A') {
+        return '1';
+    }
+    if (string == 'S') {
+        return '2';
+    }
+    if (string == 'E') {
+        return '3';
+    }
+    if (string == 'P') {
+        return '4';
+    }
+    if (string == 'I') {
+        return '5';
+    }
+    if (string == 'T') {
+        return '6';
+    }
+    if (string == 'O') {
+        return '7';
+    }
+    if (string == 'N') {
+        return '8';
+    }
+    if (string == 'U') {
+        return '9';
+    }
+    if (string == 'L') {
+        return '0';
+    }
+}
 //#endregion

@@ -388,7 +388,7 @@ exports.CreateImage = (base64, filepath) => {
 }
 //#endregion
 
-//#region 
+//#region ALLIAS
 
 exports.GenerateCode = (string) => {
     let str = string;
@@ -397,6 +397,17 @@ exports.GenerateCode = (string) => {
 
     characters.forEach(c => {
         _combination += dictionary.GetHex(c);
+    })
+    return _combination;
+}
+
+exports.GenerateNumber = (string) => {
+    let str = string;
+    let characters = str.split("");
+    var _combination = '';
+
+    characters.forEach(c => {
+        _combination += dictionary.ReverseHex(c);
     })
     return _combination;
 }

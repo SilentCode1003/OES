@@ -100,7 +100,6 @@
             });
 
             supervisorid = dataRow[0];
-            document.getElementById('subjectname').innerText = dataRow[2];
             subject = dataRow[3];
             console.log(dataRow);
             document.getElementById('comment').value = "";
@@ -127,6 +126,7 @@
                 data: { subject: subject },
                 success: function (result) {
                     questiontable.clear().draw();
+                    questiontableadmin.clear().draw();
                     var data = result.data;
                     var index = 0;
 
@@ -169,9 +169,11 @@
 
 
             if (subject == 'SUPERVISOR') {
+                document.getElementById('subjectname').innerText = dataRow[2];
                 questionModal.style.display = "block";
             }
             if (subject == 'ADMIN') {
+                document.getElementById('adminsubjectname').innerText = dataRow[2];
                 adminquestionModal.style.display = "block";
             }
             if (subject == 'EMPLOYEE') {
@@ -195,9 +197,11 @@
         })
 
         $(document).on('click', '#submitBtn', function () {
-            var data = $("#modal-question-table tr");
-            var comment = $("#comment").val();
-            var dataRaw = [];
+            let data = $("#modal-question-table tr");
+            let comment = $("#comment").val();
+            let goodcomment = $("#goodcomment").val();
+            let improvementcomment = $("#improvementcomment").val();
+            let dataRaw = [];
             var message = '';
             let userid = '<%= userid %>';
 
@@ -240,7 +244,7 @@
                     dataRaw.push({
                         criteria: innerData[0],
                         question: innerData[1],
-                        comment: innerData[3],
+                        comment: innerData[3] == '' ? 'NO COMMENT' : innerData[3],
                         grade: selection,
                     })
                 }
@@ -260,6 +264,8 @@
                         supervisorid: supervisorid,
                         userid: userid,
                         comment: comment,
+                        goodcomment: goodcomment,
+                        improvementcomment: improvementcomment,
                         data: dataRaw,
                     },
                     success: function (result) {
@@ -309,8 +315,21 @@
                 var select = table.getElementsByTagName("select")[x - 1];
                 var value = select.value;
                 var selection = value;
+                var question_comment = innerData[4];
 
-                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection}`);
+                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${innerData[4]}`);
+
+                if (selection == 'N') {
+                    if (question_comment == '') {
+                        message += `criteria "${innerData[0]}" question "${innerData[2]}" , need to comment since system detects low grade `;
+                    }
+
+                }
+                if (selection == 'U') {
+                    if (question_comment == '') {
+                        message += `criteria "${innerData[0]}" question "${innerData[2]}" , need to comment since system detects low grade `;
+                    }
+                }
 
                 if (selection == '-') {
                     message += `criteria "${innerData[0]}" question "${innerData[1]}"`;
@@ -319,11 +338,14 @@
                 else {
                     dataRaw.push({
                         criteria: innerData[0],
-                        question: innerData[1],
+                        question: innerData[2],
+                        comment: innerData[4] == '' ? 'NO COMMENT' : innerData[4],
                         grade: selection,
                     })
                 }
             }
+
+            if (comment == '') { message += 'We need your bad and good comment.' }
 
             if (message != '') { warning('No Grade', `${message}`); }
             else {
