@@ -105,6 +105,14 @@ exports.Select = (sql, table, callback) => {
             if (table == 'MasterSubcriteria') {
                 callback(null, model.MasterSubcriteria(results));
             }
+
+            if (table == 'TransactionNeedImprovementComment') {
+                callback(null, model.TransactionNeedImprovementComment(results));
+            }
+
+            if (table == 'TransactionGoodComment') {
+                callback(null, model.TransactionGoodComment(results));
+            }
         });
 
     } catch (error) {
@@ -429,6 +437,38 @@ exports.InsertTable = (tablename, data, callback) => {
             tec_allias,
             tec_comment,
             tec_status) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
+    if (tablename == 'transaction_good_comment') {
+        let sql = `INSERT INTO transaction_good_comment(
+            tgc_year,
+            tgc_employeeid,
+            tgc_allias,
+            tgc_comment,
+            tgc_commentdate) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
+    if (tablename == 'transaction_needimprovement_comment') {
+        let sql = `INSERT INTO transaction_needimprovement_comment(
+            tnc_year,
+            tnc_employeeid,
+            tnc_allias,
+            tnc_comment,
+            tnc_commentdate) VALUES ?`;
 
         this.Insert(sql, data, (err, result) => {
             if (err) {

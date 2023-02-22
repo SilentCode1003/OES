@@ -251,4 +251,40 @@ exports.TransactionEvaluationComment = (data) => {
 
     return dataResult;
 }
+
+exports.TransactionNeedImprovementComment = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            transactionid: key.tnc_transactionid,
+            year: key.tnc_year,
+            employeeid: key.tnc_employeeid,
+            allias: key.tnc_allias,
+            comment: key.tnc_comment,
+            commentdate: key.tnc_commentdate,
+        })
+    });
+
+    return dataResult;
+}
+
+exports.TransactionGoodComment = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            transactionid: key.tgc_transactionid,
+            year: key.tgc_year,
+            employeeid: key.tgc_employeeid,
+            allias: key.tgc_allias,
+            comment: key.tgc_comment,
+            commentdate: key.tgc_commentdate,
+        })
+    });
+
+    return dataResult;
+}
 //#endregion

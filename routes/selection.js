@@ -30,20 +30,23 @@ router.post('/generatereport', (req, res) => {
     let userid = req.body.userid;
     let data = req.body.data;
     let comment = req.body.comment;
+    let goodcomment = req.body.goodcomment;
+    let improvementcomment = req.body.improvementcomment;
     let transaction_evaluation = [];
     let transaction_evaluation_comment = [];
+    let transaction_evaluation_goodcomment = [];
+    let transaction_evaluation_improvementcomment = [];
+    let currentdate = helper.GetCurrentDate();
     let year = helper.GetCurrentYear();
     let status = 'DONE';
     let active = 'ACTIVE'
     let alias = helper.GenerateCode(userid);
 
-    console.log(data);
+    // console.log(data);
+    // console.log(alias);
+    // console.log(filter.isProfane(`${comment}`));
 
-    console.log(alias);
-
-    console.log(filter.isProfane(`${comment}`));
-
-    if (filter.isProfane(`${comment}`)) {
+    if (filter.isProfane(`${comment}`) || filter.isProfane(`${goodcomment}`) || filter.isProfane(`${improvementcomment}`)) {
       console.log('Foul words detected!');
       return res.json({
         msg: 'badwords'
@@ -59,72 +62,127 @@ router.post('/generatereport', (req, res) => {
         status,
       ])
 
+      transaction_evaluation_goodcomment.push([
+        year,
+        supervisorid,
+        alias,
+        goodcomment,
+        currentdate,
+      ])
+
+      transaction_evaluation_improvementcomment.push([
+        year,
+        supervisorid,
+        alias,
+        improvementcomment,
+        currentdate,
+      ])
+
+      var badcomment = '';
       data.forEach((key, item) => {
-        transaction_evaluation.push([
-          year,
-          userid,
-          supervisorid,
-          alias,
-          key.criteria,
-          key.question,
-          key.grade,
-          key.comment,
-          status,
-        ]);
+
+        if (filter.isProfane(`${key.comment}`)) {
+          badcomment += `${key.criteria} ${key.question} with comment of "${key.comment}"\n`;
+        }
+        else {
+          transaction_evaluation.push([
+            year,
+            userid,
+            supervisorid,
+            alias,
+            key.criteria,
+            key.question,
+            key.grade,
+            key.comment,
+            status,
+          ]);
+        }
       });
 
-      Insert_TransactionEvaluation(transaction_evaluation)
-        .then(result => {
-          console.log(result);
+      if (badcomment != '') {
+        console.log('Foul words detected!');
+        return res.json({
+          msg: 'badcomment',
+          data: badcomment
+        })
+      }
+      else {
+        Insert_TransactionEvaluation(transaction_evaluation)
+          .then(result => {
+            console.log(result);
 
-          Insert_TransactionEvaluationComment(transaction_evaluation_comment)
-            .then(result => {
-              console.log(result);
-              Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
-                .then(result => {
-                  console.log(result)
+            Insert_TransactionEvaluationComment(transaction_evaluation_comment)
+              .then(result => {
+                console.log(result);
 
-                  let sql = `select * from transaction_participant_subjects 
+                Insert_TransactionGoodComment(transaction_evaluation_goodcomment)
+                  .then(result => {
+                    console.log(result);
+
+                    Insert_TransactionNeedImprovementComment(transaction_evaluation_improvementcomment)
+                      .then(result => {
+                        console.log(result);
+
+                        Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
+                          .then(result => {
+                            console.log(result)
+
+                            let sql = `select * from transaction_participant_subjects 
               where ps_year='${year}'
               and ps_participantid='${userid}'
               and ps_status='${active}'`;
 
-                  mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
-                    if (err) console.error(err);
+                            mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
+                              if (err) console.error(err);
 
-                    if (result.length != 0) {
-                      return res.json({
-                        msg: 'success'
+                              if (result.length != 0) {
+                                return res.json({
+                                  msg: 'success'
+                                })
+                              } else {
+
+                                Update_ParticipantDetails(status, year, userid)
+                                  .then(result => {
+                                    console.log(result);
+                                    res.json({
+                                      msg: 'done'
+                                    })
+                                  })
+                                  .catch(error => {
+                                    res.json({
+                                      msg: error
+                                    })
+                                  })
+                              }
+                            })
+                          })
+                          .catch(error => {
+                            res.json({
+                              msg: error
+                            })
+                          })
                       })
-                    } else {
-
-                      Update_ParticipantDetails(status, year, userid)
-                        .then(result => {
-                          console.log(result);
-                          res.json({
-                            msg: 'done'
-                          })
+                      .catch(error => {
+                        res.json({
+                          msg: error
                         })
-                        .catch(error => {
-                          res.json({
-                            msg: error
-                          })
-                        })
-                    }
+                      })
                   })
-                })
-                .catch(error => {
-                  res.json({
-                    msg: error
+                  .catch(error => {
+                    res.json({
+                      msg: error
+                    })
                   })
-                })
-            })
-        })
-        .catch(error => {
-          res.json({
-            msg: error
+              })
           })
-        })
+          .catch(error => {
+            res.json({
+              msg: error
+            })
+          })
+      }
+
+
     }
   } catch (error) {
     res.json({
@@ -179,6 +237,26 @@ function Update_ParticipantDetails(status, year, participantid) {
     and pd_participantid='${participantid}'`;
 
     mysql.Update(sql, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  })
+}
+
+function Insert_TransactionNeedImprovementComment(data) {
+  return new Promise((resolve, reject) => {
+    mysql.InsertTable('transaction_needimprovement_comment', data, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  })
+}
+
+function Insert_TransactionGoodComment(data) {
+  return new Promise((resolve, reject) => {
+    mysql.InsertTable('transaction_good_comment', data, (err, result) => {
       if (err) reject(err);
 
       resolve(result);

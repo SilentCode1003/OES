@@ -102,7 +102,6 @@
             supervisorid = dataRow[0];
             subject = dataRow[3];
             console.log(dataRow);
-            document.getElementById('comment').value = "";
 
             var questiontable = $('#modal-question-table').DataTable({
                 'destroy': true,
@@ -169,10 +168,16 @@
 
 
             if (subject == 'SUPERVISOR') {
+                document.getElementById('comment').value = "";
+                document.getElementById('goodcomment').value = "";
+                document.getElementById('improvementcomment').value = "";
                 document.getElementById('subjectname').innerText = dataRow[2];
                 questionModal.style.display = "block";
             }
             if (subject == 'ADMIN') {
+                document.getElementById('admincomment').value = "";
+                document.getElementById('admingoodcomment').value = "";
+                document.getElementById('adminimprovementcomment').value = "";
                 document.getElementById('adminsubjectname').innerText = dataRow[2];
                 adminquestionModal.style.display = "block";
             }
@@ -192,6 +197,8 @@
             else {
                 $(this).addClass('comment-edit').css('border', '2px solid gray');
             }
+
+            this.focus();
 
             console.log(`Value: ${criteria_value}`);
         })
@@ -251,7 +258,9 @@
 
             }
 
-            if (comment == '') { message += 'We need your bad and good comment.' }
+            if (comment == '') { message += 'We need your comment.' }
+            if (goodcomment == '') { message += 'We need your good comment.' }
+            if (improvementcomment == '') { message += 'We need your bad comment.' }
 
             if (message != '') { warning('No Grade', `${message}`); }
             else {
@@ -270,7 +279,15 @@
                     },
                     success: function (result) {
                         console.log(result.msg);
-                        if (result.msg != 'badwords') {
+                        if (result.msg == 'badcomment' || result.msg == 'badwords') {
+                            if (result.msg == 'badwords') {
+                                warning('Bad Words', 'Please refrain from using foul language in your comments.');
+                            }
+                            if (result.msg == 'badcomment') {
+                                warning('Bad Words', `${result.data}`);
+                            }
+                        }
+                        else {
                             if (result.msg != 'success') {
                                 success('Thank You', 'Thank you for participating');
 
@@ -285,9 +302,6 @@
                                 }, 2000)
                             }
                         }
-                        else {
-                            warning('Bad Words', 'Please refrain from using foul language in your comments.');
-                        }
 
                         LoadTable();
                     },
@@ -299,8 +313,10 @@
         })
 
         $(document).on('click', '#submitadminBtn', function () {
-            var data = $("#modal-question-table-admin tr");
-            var comment = $("#admincomment").val();
+            let data = $("#modal-question-table-admin tr");
+            let comment = $("#admincomment").val();
+            let goodcomment = $("#admingoodcomment").val();
+            let improvementcomment = $("#adminimprovementcomment").val();
             var dataRaw = [];
             var message = '';
             let userid = '<%= userid %>';
@@ -319,13 +335,13 @@
 
                 console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${innerData[4]}`);
 
-                if (selection == 'N') {
+                if (selection == '2') {
                     if (question_comment == '') {
                         message += `criteria "${innerData[0]}" question "${innerData[2]}" , need to comment since system detects low grade `;
                     }
 
                 }
-                if (selection == 'U') {
+                if (selection == '1') {
                     if (question_comment == '') {
                         message += `criteria "${innerData[0]}" question "${innerData[2]}" , need to comment since system detects low grade `;
                     }
@@ -345,7 +361,9 @@
                 }
             }
 
-            if (comment == '') { message += 'We need your bad and good comment.' }
+            if (comment == '') { message += 'We need your comment.' }
+            if (goodcomment == '') { message += 'We need your good comment.' }
+            if (improvementcomment == '') { message += 'We need your bad comment.' }
 
             if (message != '') { warning('No Grade', `${message}`); }
             else {
@@ -358,11 +376,22 @@
                         supervisorid: supervisorid,
                         userid: userid,
                         comment: comment,
+                        goodcomment: goodcomment,
+                        improvementcomment: improvementcomment,
                         data: dataRaw,
                     },
                     success: function (result) {
                         console.log(result.msg);
-                        if (result.msg != 'badwords') {
+
+                        if (result.msg == 'badcomment' || result.msg == 'badwords') {
+                            if (result.msg == 'badwords') {
+                                warning('Bad Words', 'Please refrain from using foul language in your comments.');
+                            }
+                            if (result.msg == 'badcomment') {
+                                warning('Bad Words', `${result.data}`);
+                            }
+                        }
+                        else {
                             if (result.msg != 'success') {
                                 success('Thank You', 'Thank you for participating');
 
@@ -377,10 +406,6 @@
                                 }, 2000)
                             }
                         }
-                        else {
-                            warning('Bad Words', 'Please refrain from using foul language in your comments.');
-                        }
-
                         LoadTable();
                     },
                     error: function (error) {
