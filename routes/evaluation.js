@@ -403,6 +403,80 @@ router.post('/getevaluationsummary', (req, res) => {
   }
 })
 
+router.post('/getallcomments', (req, res) => {
+  try {
+    let employeeid = req.body.employeeid;
+    let sql = `select 
+      tec_allias as allias,
+      tgc_comment as goodcomment,
+      tnc_comment as needimprovement,
+      tec_comment as summarycomment
+      from transaction_evaluation_comment
+      inner join transaction_good_comment on transaction_evaluation_comment.tec_allias = transaction_good_comment.tgc_allias
+      inner join transaction_needimprovement_comment on transaction_good_comment.tgc_allias = transaction_needimprovement_comment.tnc_allias
+      where tec_supervisorid='${employeeid}'
+      group by tec_allias
+      order by tec_allias`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.error(err);
+
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/getquestioncomment', (req, res) => {
+  try {
+    let employeeid = req.body.employeeid;
+    let department = req.body.department;
+    let sql = '';
+
+    if (department == 'ADMIN') {
+      sql = `select te_alias as allias,
+      te_criteria as criteria,
+      te_question as question,
+      te_comment as comment
+      from transaction_evaluation 
+      where te_grade in('1','2') 
+      and te_subjectid='${employeeid}'
+      order by te_criteria`;
+    }
+
+    if (department == 'IT') {
+      sql = `select te_alias as allias,
+      te_criteria as criteria,
+      te_question as question,
+      te_comment as comment
+      from transaction_evaluation 
+      where te_grade in('N','U')
+      and te_subjectid='${employeeid}'
+      order by te_criteria`;
+    }
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.error(err);
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
 function GetSummary(sql) {
   return new Promise((resolve, reject) => {
     mysql.StoredProcedureResult(sql, (err, result) => {
