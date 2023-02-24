@@ -113,6 +113,10 @@ exports.Select = (sql, table, callback) => {
             if (table == 'TransactionGoodComment') {
                 callback(null, model.TransactionGoodComment(results));
             }
+
+            if (table == 'MasterAccesstype') {
+                callback(null, model.MasterAccesstype(results));
+            }
         });
 
     } catch (error) {
@@ -469,6 +473,20 @@ exports.InsertTable = (tablename, data, callback) => {
             tnc_allias,
             tnc_comment,
             tnc_commentdate) VALUES ?`;
+
+        this.Insert(sql, data, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            callback(null, result)
+        })
+    }
+
+    if (tablename == 'master_accesstype') {
+        let sql = `INSERT INTO master_accesstype(
+            ma_accesstype,
+            ma_createdby,
+            ma_createddate) VALUES ?`;
 
         this.Insert(sql, data, (err, result) => {
             if (err) {

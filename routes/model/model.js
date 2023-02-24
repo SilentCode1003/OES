@@ -287,4 +287,20 @@ exports.TransactionGoodComment = (data) => {
 
     return dataResult;
 }
+
+exports.MasterAccesstype = (data) => {
+    let dataResult = [];
+
+    data.forEach((key, item) => {
+
+        dataResult.push({
+            accesscode: key.ma_accesscode,
+            accesstype: key.ma_accesstype,
+            createdby: key.ma_createdby,
+            createddate: key.ma_createddate,
+        })
+    });
+
+    return dataResult;
+}
 //#endregion
