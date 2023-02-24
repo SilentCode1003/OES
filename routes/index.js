@@ -200,7 +200,7 @@ function Create_ParticipantDetails(participantid, fullname, department) {
           sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('ADMIN')`;
         }
         if (department == 'CABLING') {
-          sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('IT','CABLING','ADMIN')`;
+          sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('CABLING','ADMIN')`;
         }
         //further extension of filters
 

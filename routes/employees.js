@@ -141,6 +141,8 @@ router.post('/excelsave', (req, res) => {
                 key.middlename,
                 key.lastname,
                 key.department,
+                key.position,
+                key.type,
                 key.image,
                 key.status,
                 key.createdby,

@@ -27,12 +27,12 @@ router.post('/loadparticipants', (req, res) => {
     let year = helper.GetCurrentYear();
     let department = req.body.department;
     let sql = `select te_alias as allias, pd_status as status
-    from participant_details PD
-    inner join transaction_evaluation PE on pd_participantid = te_participantid
-    inner join master_employee on te_participantid = me_employeeid
-    where pd_year='${year}'
-    and me_department='${department}'
-    group by pd_participantid`;
+            from participant_details
+            inner join transaction_evaluation on participant_details.pd_participantid = transaction_evaluation.te_participantid
+            inner join master_employee on transaction_evaluation.te_participantid = master_employee.me_employeeid
+            where pd_year='${year}'
+            and me_department='${department}'
+            group by pd_participantid`;
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
@@ -331,14 +331,28 @@ router.post('/loaddepartmentrankings', (req, res) => {
   try {
     let department = req.body.department;
     let year = helper.GetCurrentYear();
-    let sql = `select distinct te_subjectid as subjectid,
-    concat(master_supervisor.ms_lastname) as supervisorname, 
-    if((select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E') = 0,0,(select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E')) as excellentpoints 
-    from transaction_evaluation 
-    inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
-    where te_year='${year}'
-    and ms_department='${department}'
-    group by te_subjectid`;
+    let sql = '';
+
+    if (department != 'ADMIN') {
+      sql = `select distinct te_subjectid as subjectid,
+          concat(master_supervisor.ms_lastname) as supervisorname, 
+          if((select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E') = 0,0,(select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='E')) as excellentpoints 
+          from transaction_evaluation 
+          inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+          where te_year='${year}'
+          and ms_department='${department}'
+          group by te_subjectid`;
+    }
+    else {
+      sql = `select distinct te_subjectid as subjectid,
+          concat(master_supervisor.ms_lastname) as supervisorname, 
+          if((select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='5') = 0,0,(select count(*) from transaction_evaluation where te_subjectid = subjectid and te_grade='5')) as excellentpoints 
+          from transaction_evaluation 
+          inner join master_supervisor on transaction_evaluation.te_subjectid = master_supervisor.ms_employeeid
+          where te_year='${year}'
+          and ms_department='${department}'
+          group by te_subjectid`;
+    }
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
@@ -360,8 +374,15 @@ router.post('/getevaluationsummarydetails', (req, res) => {
     let employeeid = req.body.employeeid;
     let department = req.body.department;
     let currentyear = helper.GetCurrentYear();
+    let sql = '';
 
-    let sql = `call evaluation.GetEvaluationSummaryDetails('${employeeid}', '${currentyear}', '${department}')`;
+    if (department == 'ADMIN') {
+      sql = `call evaluation.GetEvaluationSummaryDetails('${employeeid}', '${currentyear}', '${department}')`;
+    }
+    if (department == 'IT' || department == 'CABLING') {
+      sql = `call evaluation.GetSupervisorEvaluationSummaryDetails('${employeeid}', '${currentyear}', '${department == 'IT' || department == 'CABLING' ? 'SUPERVISOR' : department}')`;
+    }
+
     mysql.StoredProcedureResult(sql, (err, result) => {
       if (err) console.error(err);
 
@@ -384,8 +405,16 @@ router.post('/getevaluationsummary', (req, res) => {
     let employeeid = req.body.employeeid;
     let department = req.body.department;
     let currentyear = helper.GetCurrentYear();
+    let sql = '';
 
-    let sql = `call evaluation.GetAdminEvaluationSummary('${employeeid}', '${currentyear}', '${department}')`;
+    if (department == 'ADMIN') {
+      sql = `call evaluation.GetAdminEvaluationSummary('${employeeid}', '${currentyear}', '${department}')`;
+    }
+    if (department == 'IT' || department == 'CABLING') {
+      sql = `call evaluation.GetSupervisorEvaluationSummary('${employeeid}', '${currentyear}', '${department}');`;
+    }
+
+
     mysql.StoredProcedureResult(sql, (err, result) => {
       if (err) console.error(err);
 
@@ -451,7 +480,7 @@ router.post('/getquestioncomment', (req, res) => {
       order by te_criteria`;
     }
 
-    if (department == 'IT') {
+    if (department == 'IT' || department == 'CABLING') {
       sql = `select te_alias as allias,
       te_criteria as criteria,
       te_question as question,
