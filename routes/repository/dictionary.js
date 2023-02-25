@@ -25,6 +25,9 @@ exports.GetValue = (abr) => {
     if (abr == 'INST') return 'INST';
     if (abr == 'RSGD') return 'RESIGNED';
     if (abr == 'RGLR') return 'REGULAR';
+    if (abr == 'ADMIN') return 'ADMIN';
+    if (abr == 'IT') return 'IT';
+    if (abr == 'CABLING') return 'CABLING';
 }
 
 //#region STATUS CODE
@@ -126,6 +129,18 @@ exports.RSGD = () => {
 
 exports.RGLR = () => {
     return 'RGLR';
+}
+
+exports.ADMIN = () => {
+    return 'ADMIN';
+}
+
+exports.IT = () => {
+    return 'IT';
+}
+
+exports.CABLING = () => {
+    return 'CABLING';
 }
 
 

@@ -1,15 +1,11 @@
 <div class="row">
     <div class="col-xl-6 col-lg-6 col-sm-6">
-        <h3>EVALUATION SUBJECTS</h3>
-        <!-- <select class="entry-input" name="yearlist" id="yearlist">
-            <option value="-">YEAR</option>
-        </select> -->
-        <table id="summary-table">
+        <table id="subject-table" class="">
             <thead>
-                <th class="criteria">ID</th>
-                <th class="criteria">NAME</th>
-                <th class="criteria">DEPARTMENT</th>
-                <th class="criteria">POSITION</th>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>DEPARTMENT</th>
+                <th>POSITION</th>
             </thead>
             <tbody></tbody>
         </table>
@@ -123,86 +119,15 @@
         </div>
     </div>
 </div>
-
-<hr class="hr-black">
-
+<hr>
 <div class="row">
-
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                <h6 class="m-0 font-weight-bold ">IT TEAMLEAD RANKING</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-bar chart-content">
-                    <canvas id="ITrankingBarChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                <h6 class="m-0 font-weight-bold ">CABLING TEAMLEAD RANKING</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-bar chart-content">
-                    <canvas id="CablingrankingBarChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                <h6 class="m-0 font-weight-bold ">ADMIN OFFICERS RANKING</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-bar chart-content">
-                    <canvas id="AdminrankingBarChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<hr class="hr-black">
-<div class="row">
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>IT ACTIVE PARTICIPANTS</h3>
-        <table id="it-participants-table">
+    <div class="col-xl-12 col-lg-12 col-sm-12">
+        <table>
             <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>CABLING ACTIVE PARTICIPANTS</h3>
-        <table id="cabling-participants-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>ADMIN ACTIVE PARTICIPANTS</h3>
-        <table id="admin-participants-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
+                <th>EVALUATEE</th>
+                <th>GOOD COMMENT</th>
+                <th>NEEDS IMPROVEMENT</th>
+                <th>COMMENT</th>
             </thead>
             <tbody></tbody>
         </table>
@@ -383,7 +308,7 @@
                 <div class="col-xl-6 col-lg-6 col-sm-6">
                     <table id="supervisor-comment-table">
                         <thead>
-                            <th>ALLIAS</th>
+                            <th>NAME</th>
                             <th>GOOD COMMENT</th>
                             <th>NEED IMPROVEMENT COMMENT</th>
                             <th>COMMENT</th>
@@ -416,7 +341,7 @@
                 <div class="col-xl-6 col-lg-6 col-sm-6">
                     <table id="supervisor-comment-question-table">
                         <thead>
-                            <th>ALLIAS</th>
+                            <th>NAME</th>
                             <th>CRITERIA</th>
                             <th>QUESTION</th>
                             <th>COMMENT</th>

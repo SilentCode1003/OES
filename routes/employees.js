@@ -76,7 +76,7 @@ router.post('/save', (req, res) => {
         let lastname = req.body.lastname;
         let department = req.body.department;
         let position = req.body.position;
-        let status = dictionary.GetValue(dictionary.RGLR());
+        let status = dictionary.GetValue(dictionary.ACT());
         let createdby = req.session.fullname;
         let createddate = helper.GetCurrentDatetime();
         let type = 'EMPLOYEE';
@@ -176,3 +176,112 @@ router.post('/excelsave', (req, res) => {
         })
     }
 })
+
+router.get('/getemployeecount', (req, res) => {
+    try {
+        let status = dictionary.GetValue(dictionary.ACT());
+        let sql = `select count(*) totalemployees from master_employee where me_status='${status}'`;
+
+        this.GetEmployeeCount(sql)
+            .then(result => {
+                res.json({
+                    msg: 'success',
+                    data: result
+                })
+            })
+            .catch(error => {
+                res.json({
+                    msg: error
+                })
+            })
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+router.get('/getitcount', (req, res) => {
+    try {
+        let department = dictionary.GetValue(dictionary.IT());
+        let status = dictionary.GetValue(dictionary.ACT());
+        let sql = `select count(*) totalemployees from master_employee where me_status='${status}' and me_department='${department}'`;
+
+        this.GetEmployeeCount(sql)
+            .then(result => {
+                res.json({
+                    msg: 'success',
+                    data: result
+                })
+            })
+            .catch(error => {
+                res.json({
+                    msg: error
+                })
+            })
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+router.get('/getadmincount', (req, res) => {
+    try {
+        let department = dictionary.GetValue(dictionary.ADMIN());
+        let status = dictionary.GetValue(dictionary.ACT());
+        let sql = `select count(*) totalemployees from master_employee where me_status='${status}' and me_department='${department}'`;
+
+        this.GetEmployeeCount(sql)
+            .then(result => {
+                res.json({
+                    msg: 'success',
+                    data: result
+                })
+            })
+            .catch(error => {
+                res.json({
+                    msg: error
+                })
+            })
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+router.get('/getcablingcount', (req, res) => {
+    try {
+        let department = dictionary.GetValue(dictionary.CABLING());
+        let status = dictionary.GetValue(dictionary.ACT());
+        let sql = `select count(*) totalemployees from master_employee where me_status='${status}' and me_department='${department}'`;
+
+        this.GetEmployeeCount(sql)
+            .then(result => {
+                res.json({
+                    msg: 'success',
+                    data: result
+                })
+            })
+            .catch(error => {
+                res.json({
+                    msg: error
+                })
+            })
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+exports.GetEmployeeCount = (cmd) => {
+    return new Promise((resolve, reject) => {
+        mysql.SelectResult(cmd, (err, result) => {
+            if (err) reject(err);
+
+            resolve(result[0].totalemployees);
+        })
+    })
+}

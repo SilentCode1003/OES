@@ -7,10 +7,6 @@ function isAuth(req, res, next) {
         next();
     }
 
-    else if (req.session.isAuth && req.session.accounttype == "HR") {
-        next();
-    }
-
     else if (req.session.isAuth && req.session.accounttype == "SUPERADMIN") {
         next();
     }
@@ -25,7 +21,7 @@ const helper = require('./repository/customhelper');
 
 /* GET home page. */
 router.get('/', isAuth, function (req, res, next) {
-    res.render('dashboard', {
+    res.render('ownerdashboard', {
         title: process.env._TITLE,
         user: req.session.username,
         userid: req.session.userid,

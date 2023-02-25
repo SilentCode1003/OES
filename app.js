@@ -25,7 +25,7 @@ var positionRouter = require('./routes/position');
 var subjectRouter = require('./routes/subject');
 var subcriteriaRouter = require('./routes/subcriteria');
 var accesstypeRouter = require('./routes/accesstype');
-
+var ownerdashboardRouter = require('./routes/ownerdashboard');
 
 var app = express();
 
@@ -79,6 +79,7 @@ app.use('/position', positionRouter);
 app.use('/subject', subjectRouter);
 app.use('/subcriteria', subcriteriaRouter);
 app.use('/accesstype', accesstypeRouter);
+app.use('/ownerdashboard', ownerdashboardRouter);
 
 
 // catch 404 and forward to error handler

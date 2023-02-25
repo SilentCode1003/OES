@@ -435,6 +435,8 @@ router.post('/getevaluationsummary', (req, res) => {
 router.post('/getallcomments', (req, res) => {
   try {
     let employeeid = req.body.employeeid;
+    let accounttype = req.session.accounttype;
+    let position = req.body.position;
     let sql = `select 
       tec_allias as allias,
       tgc_comment as goodcomment,
@@ -447,12 +449,54 @@ router.post('/getallcomments', (req, res) => {
       group by tec_allias
       order by tec_allias`;
 
+    console.log(position);
+
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.error(err);
+      var data = [];
+      var index = 1;
+      var result_length = result.length;
 
-      res.json({
-        msg: 'success',
-        data: result
+      result.forEach((key, item) => {
+        GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {
+          if (accounttype == 'SUPERADMIN') {
+
+            if (position == 'President' || position == 'Department Head') {
+              data.push({
+                allias: key.allias,
+                goodcomment: key.goodcomment,
+                needimprovement: key.needimprovement,
+                summarycomment: key.summarycomment,
+              })
+            }
+            else {
+              data.push({
+                allias: employeename,
+                goodcomment: key.goodcomment,
+                needimprovement: key.needimprovement,
+                summarycomment: key.summarycomment,
+              })
+            }
+          }
+          else {
+            data.push({
+              allias: key.allias,
+              goodcomment: key.goodcomment,
+              needimprovement: key.needimprovement,
+              summarycomment: key.summarycomment,
+            })
+          }
+
+          if (index == result_length) {
+            res.json({
+              msg: 'success',
+              data: data
+            })
+          }
+
+          console.log(`${result_length} ${index}`);
+          index += 1;
+        });
       })
     })
 
@@ -467,6 +511,8 @@ router.post('/getquestioncomment', (req, res) => {
   try {
     let employeeid = req.body.employeeid;
     let department = req.body.department;
+    let accounttype = req.session.accounttype;
+    let position = req.body.position;
     let sql = '';
 
     if (department == 'ADMIN') {
@@ -493,9 +539,49 @@ router.post('/getquestioncomment', (req, res) => {
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.error(err);
-      res.json({
-        msg: 'success',
-        data: result
+      var data = [];
+      var index = 1;
+      var result_length = result.length;
+
+      result.forEach((key, item) => {
+        GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {
+          if (accounttype == 'SUPERADMIN') {
+            if (position == 'President' || position == 'Department Head') {
+              data.push({
+                allias: key.allias,
+                criteria: key.criteria,
+                question: key.question,
+                comment: key.comment,
+              })
+            }
+            else {
+              data.push({
+                allias: employeename,
+                criteria: key.criteria,
+                question: key.question,
+                comment: key.comment,
+              })
+            }
+          }
+          else {
+            data.push({
+              allias: key.allias,
+              criteria: key.criteria,
+              question: key.question,
+              comment: key.comment,
+            })
+          }
+
+          if (index == result_length) {
+            res.json({
+              msg: 'success',
+              data: data
+            })
+          }
+
+          console.log(`${result_length} ${index}`);
+          index += 1;
+        });
       })
     })
 
@@ -505,6 +591,86 @@ router.post('/getquestioncomment', (req, res) => {
     })
   }
 })
+
+router.get('/getactiveparticipant', (req, res) => {
+  try {
+    let currentyear = helper.GetCurrentYear();
+    let sql = `select count(*) totalparticipants from participant_details where pd_year='${currentyear}'`;
+
+    GetActiveCount(sql)
+      .then(result => {
+        res.json({
+          msg: 'success',
+          data: result
+        })
+      }).catch(error => {
+        res.json({
+          msg: error
+        })
+      });
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.get('/getinactiveparticipant', (req, res) => {
+  try {
+    let status = dictionary.GetValue(dictionary.ACT());
+    let currentyear = helper.GetCurrentYear();
+    let employeeCount = `select count(*) totalemployees from master_employee where me_status='${status}'`;
+    let participants = `select count(*) totalparticipants from participant_details where pd_year='${currentyear}'`;
+
+    GetEmployeeCount(employeeCount).then(result => {
+      var totalemployees = parseFloat(result);
+      GetActiveCount(participants).then(result => {
+        var activeparticipant = parseFloat(result);
+        var total = totalemployees - activeparticipant;
+        res.json({
+          msg: 'success',
+          data: total
+        })
+
+      }).catch(error => {
+        res.json({
+          msg: error
+        })
+      })
+    }).catch(error => {
+      res.json({
+        msg: error
+      })
+    })
+
+
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+function GetActiveCount(cmd) {
+  return new Promise((resolve, reject) => {
+    mysql.SelectResult(cmd, (err, result) => {
+      if (err) reject(err);
+      resolve(result[0].totalparticipants);
+    })
+  })
+}
+
+function GetEmployeeCount(cmd) {
+  return new Promise((resolve, reject) => {
+    mysql.SelectResult(cmd, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result[0].totalemployees);
+    })
+  })
+}
 
 function GetSummary(sql) {
   return new Promise((resolve, reject) => {
@@ -525,6 +691,17 @@ function GetSummary(sql) {
       })
 
       resolve(data)
+    })
+  })
+}
+
+function GetEmployeeName(id) {
+  return new Promise((resolve, reject) => {
+    let sql = `SELECT concat(master_employee.me_firstname,' ', master_employee.me_middlename,' ',master_employee.me_lastname) as employeename FROM evaluation.master_employee where me_employeeid='${id}'`;
+    return mysql.SelectResult(sql, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result[0].employeename);
     })
   })
 }

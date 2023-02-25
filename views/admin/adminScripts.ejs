@@ -3,18 +3,39 @@
 
         LoadTable();
 
+        $.ajax({
+            type: "GET",
+            url: "/accesstype/load",
+            success: function (result) {
+                console.log(result.data);
+                var data = result.data;
+
+                $.each(data, function (key, item) {
+                    var options = new Option(item.accesstype, item.accesstype);
+                    $(options).html(item.accesstype);
+                    $('#accesstypelist').append(options);
+                    console.log(item.accesstype);
+                });
+            },
+            error: function (result) {
+                alert('error: ' + result.data);
+            }
+        });
+
         $(document).on('click', '#addBtn', function () {
             let firstname = $('#firstname').val();
             let middlename = $('#middlename').val();
             let lastname = $('#lastname').val();
             let username = $('#username').val();
             let password = $('#password').val();
+            let accesstype = $('#accesstypelist').val();
             var message = '';
 
             if (firstname == '') { message += 'FIRST NAME ' }
             if (lastname == '') { message += 'LAST NAME ' }
             if (username == '') { message += 'USERNAME ' }
             if (password == '') { message += 'PASSWORD ' }
+            if (accesstype == '') { message += 'ACCESS TYPE ' }
 
             if (message != '') { warning('Empty', `Please fillup ${message}`) }
             else {
@@ -26,7 +47,8 @@
                         middlename: middlename,
                         lastname: lastname,
                         username: username,
-                        password: password
+                        password: password,
+                        accesstype: accesstype,
                     },
                     success: function (result) {
                         LoadTable();

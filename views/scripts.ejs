@@ -42,7 +42,16 @@
     if (accounttype == 'USER') {
         $("#admin").toggle(0, function () {
         });
+        $("#hr").toggle(0, function () {
+        });
+        $("#superadmin").toggle(0, function () {
+        });
     }
+
+    if (accounttype == 'HR') {
+        $("#superadmin").toggle(0, function () {
+        });
+    } 
 
     $(document).on('click', "#logoutBtn", function () {
         $.ajax({
@@ -81,6 +90,7 @@
             icon: "success",
         });
     }
+   
     function warning(title, text) {
         swal({
             title: title,
@@ -88,6 +98,7 @@
             icon: "warning",
         });
     }
+   
     function info(title, text) {
         swal({
             title: title,
@@ -95,6 +106,7 @@
             icon: "info",
         });
     }
+    
     function error(err) {
         swal({
             title: "Error!",

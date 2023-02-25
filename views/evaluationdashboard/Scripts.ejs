@@ -1492,6 +1492,80 @@
                 hideload();
             }
         })
+
+         //#region widget
+         $.ajax({
+                type: "GET",
+                url: "/employees/getemployeecount",
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById('employee').textContent = result.data;
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/evaluation/getactiveparticipant",
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById('participant').textContent = result.data;
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/evaluation/getinactiveparticipant",
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById('inactiveparticipant').textContent = result.data;
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/employees/getitcount",
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById('itemployee').textContent = result.data;
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+             $.ajax({
+                type: "GET",
+                url: "/employees/getcablingcount",
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById('cablingemployee').textContent = result.data;
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+             $.ajax({
+                type: "GET",
+                url: "/employees/getadmincount",
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById('adminemployee').textContent = result.data;
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+            //#endregion
     }
 
     function LoadComments(employeeid) {
