@@ -12,7 +12,7 @@ function isAuth(req, res, next) {
     }
 
     else if (req.session.isAuth && req.session.accounttype == "SUPERADMIN") {
-        next();
+        res.redirect('/ownerdashboard');
     }
 
     else {
