@@ -739,7 +739,6 @@
             location.reload();
         })
 
-
         function LoadTable() {
             //#region Tables
             showloader();
@@ -845,6 +844,109 @@
                     alert('error: ' + result.data);
                 }
             });
+            //#endregion
+
+            //#region INACTIVES
+
+            $.ajax({
+                type: 'POST',
+                url: '/evaluation/getinactivenames',
+                data: {
+                    department: 'IT'
+                },
+                success: function (result) {
+                    var summary = $('#it-inactive-table').DataTable({
+                        'destroy': true,
+                        'paging': false,
+                        'searching': false,
+                        'info': false,
+                        'scrollY': 400,
+                        'scrollCollapse': true,
+                    });
+
+                    summary.clear().draw();
+                    var data = result.data;
+                    var index = 0;
+
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        summary.row.add([item.fullname]).draw(false);
+
+                        index += 1;
+                    })
+                },
+                error: function (msg) {
+                    warning('Error', msg);
+                }
+            })
+
+            $.ajax({
+                type: 'POST',
+                url: '/evaluation/getinactivenames',
+                data: {
+                    department: 'CABLING'
+                },
+                success: function (result) {
+                    var summary = $('#cabling-participants-table').DataTable({
+                        'destroy': true,
+                        'paging': false,
+                        'searching': false,
+                        'info': false,
+                        'scrollY': 400,
+                        'scrollCollapse': true,
+                    });
+
+                    summary.clear().draw();
+                    var data = result.data;
+                    var index = 0;
+
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        summary.row.add([item.fullname]).draw(false);
+
+                        index += 1;
+                    })
+                },
+                error: function (msg) {
+                    warning('Error', msg);
+                }
+            })
+
+            $.ajax({
+                type: 'POST',
+                url: '/evaluation/getinactivenames',
+                data: {
+                    department: 'ADMIN'
+                },
+                success: function (result) {
+                    var summary = $('#admin-participants-table').DataTable({
+                        'destroy': true,
+                        'paging': false,
+                        'searching': false,
+                        'info': false,
+                        'scrollY': 400,
+                        'scrollCollapse': true,
+                    });
+
+                    summary.clear().draw();
+                    var data = result.data;
+                    var index = 0;
+
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        summary.row.add([item.fullname]).draw(false);
+
+                        index += 1;
+                    })
+                },
+                error: function (msg) {
+                    warning('Error', msg);
+                }
+            })
+
             //#endregion
         };
 
@@ -1086,5 +1188,10 @@
 
         }
 
+        var employeediv = document.getElementById("employee");
+
+        employeediv.addEventListener("click", function () {
+            console.log('clicked!');
+        })
     })
 </script>

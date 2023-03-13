@@ -39,7 +39,7 @@ router.get('/load', (req, res) => {
         mysql.Select(sql, 'MasterEmployee', (err, result) => {
             if (err) console.error(err);
             var data = [];
-            var action = '<button class="approve-btn" id="updateBtn" name="updateBtn">UPDATE</button>';
+            var action = '<button class="approve-btn" id="updateBtn" name="updateBtn">UPDATE</button><br><button class="approve-btn" id="removeBtn" name="removeBtn">DELETE</button>';
 
             result.forEach((key, item) => {
                 var fullname = `${key.firstname} ${key.middlename} ${key.lastname}`;
@@ -269,6 +269,60 @@ router.get('/getcablingcount', (req, res) => {
                     msg: error
                 })
             })
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+router.post('/delete', (req, res) => {
+    try {
+        let employeeid = req.body.employeeid;
+        let sql = `delete from master_employee where me_employeeid='${employeeid}'`;
+
+        mysql.SelectResult(sql, (err, result) => {
+            if (err) console.error(err);
+
+            console.log(result);
+
+            res.json({
+                msg: 'success'
+            });
+        });
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+router.post('/update', (req, res) => {
+    try {
+        let employeeid = req.body.employeeid;
+        let firstname = req.body.firstname;
+        let middlename = req.body.middlename == '' ? 'N/A' : req.body.middlename;
+        let lastname = req.body.lastname;
+        let department = req.body.department;
+        let position = req.body.position;
+
+        let sql = `update master_employee set 
+        me_firstname='${firstname}',
+        me_middlename='${middlename}',
+        me_lastname='${lastname}',
+        me_department='${department}',
+        me_position='${position}'
+        where me_employeeid='${employeeid}'`;
+
+        mysql.Update(sql, (err, result) => {
+            if (err) console.error(err);
+
+            console.log(result);
+
+            res.json({
+                msg: 'success'
+            })
+        });
     } catch (error) {
         res.json({
             msg: error

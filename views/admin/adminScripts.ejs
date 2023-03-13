@@ -1,7 +1,24 @@
 <script>
     $(document).ready(function () {
+        let id = '';
+        let fullname = '';
+        let username = '';
+        let password = '';
 
         LoadTable();
+
+        var updateModal = document.getElementById("updateModal");
+        var updateModalSpan = document.getElementById("updateModalSpan");
+
+        updateModalSpan.onclick = function () {
+            updateModal.style.display = "none";
+        }
+
+        window.onclick = function () {
+            if (event.target == updateModal) {
+                updateModal.style.display = "none";
+            }
+        }
 
         $.ajax({
             type: "GET",
@@ -9,6 +26,7 @@
             success: function (result) {
                 console.log(result.data);
                 var data = result.data;
+                $('#accesstypelist').empty();
 
                 $.each(data, function (key, item) {
                     var options = new Option(item.accesstype, item.accesstype);
@@ -21,6 +39,21 @@
                 alert('error: ' + result.data);
             }
         });
+
+        $('#admin-table').on('click', 'tr', function () {
+            var data = [];
+
+            $(this).closest('tr').find('td').each(function () {
+                data.push($(this).text());
+            });
+
+            console.log(data);
+
+            id = data[0];
+            fullname = data[1];
+            username = data[2];
+            password = data[3];
+        })
 
         $(document).on('click', '#addBtn', function () {
             let firstname = $('#firstname').val();
@@ -66,6 +99,115 @@
             }
         })
 
+        $(document).on('click', '#updateBtn', function (e) {
+            e.preventDefault();
+            var employeename = fullname;
+            var nameArr = employeename.split(' ');
+            var firstname = nameArr[0];
+            var middlename = nameArr[1];
+            var lastname = nameArr[2];
+            const _firstname = document.getElementById('modalfirstname');
+            const _middlename = document.getElementById('modalmiddlename');
+            const _lastname = document.getElementById('modallastname');
+            const _username = document.getElementById('modalusername');
+            const _password = document.getElementById('modalpassword');
+
+            _firstname.value = firstname;
+            _middlename.value = middlename;
+            _lastname.value = lastname;
+            _username.value = username;
+            _password.value = password;
+
+            console.log(nameArr);
+
+            $.ajax({
+                type: "GET",
+                url: "/accesstype/load",
+                success: function (result) {
+                    console.log(result.data);
+                    var data = result.data;
+
+                    $.each(data, function (key, item) {
+                        var options = new Option(item.accesstype, item.accesstype);
+                        $(options).html(item.accesstype);
+                        $('#modalaccesstypelist').append(options);
+                        console.log(item.accesstype);
+                    });
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+            updateModal.style.display = "block";
+        })
+
+        $(document).on('click', '#removeBtn', function (e) {
+            e.preventDefault();
+            var employeeid = id;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/delete',
+                data: {
+                    employeeid: employeeid
+                },
+                success: function (result) {
+                    success('Successfull', 'Data delete successfully.');
+                    LoadTable();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        })
+
+        $(document).on('click', '#saveBtn', function () {
+            var employeeid = id;
+            var firstname = $('#modalfirstname').val();
+            var middlename = $('#modalmiddlename').val();
+            var lastname = $('#modallastname').val();
+            var _username = $('#modalusername').val();
+            var _password = $('#modalpassword').val();
+            var message = '';
+
+            if (employeeid == '') { message += 'EMPLOYEE ID '; }
+            if (firstname == '') { message += 'FIRST NAME '; }
+            if (lastname == '') { message += 'LAST NAME'; }
+            if (_username == '-') { message += 'USERNAME '; }
+            if (_password == '-') { message += 'PASSWORD '; }
+
+            if (message != '') { warning('Empty', `Please fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/update',
+                    data: {
+                        employeeid: employeeid,
+                        firstname: firstname,
+                        middlename: middlename,
+                        lastname: lastname,
+                        username: _username,
+                        password: _password,
+                    },
+                    success: function (result) {
+                        LoadTable();
+                        if (result.msg != 'success') {
+                            warning('Exist', 'Data Already Exist!')
+                        } else {
+                            success('Success', 'Data Saved!')
+                            updateModal.style.display = "none";
+                            LoadTable();
+                        }
+                    },
+                    error: function (error) {
+                        error(error.msg);
+                    }
+                })
+            }
+
+        })
+
         function LoadTable() {
             showloader();
 
@@ -87,12 +229,14 @@
                     className: 'td-indent',
                 }],
                 'columns': [
+                    { data: 'userid' },
                     { data: 'fullname' },
                     { data: 'username' },
                     { data: 'password' },
                     { data: 'createdby' },
                     { data: 'createddate' },
                     { data: 'status' },
+                    { data: 'action' },
                 ],
                 initComplete: function () {
                     console.log('init complete');

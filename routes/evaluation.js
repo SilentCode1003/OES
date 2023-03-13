@@ -653,6 +653,32 @@ router.get('/getinactiveparticipant', (req, res) => {
   }
 })
 
+router.post('/getinactivenames', (req, res) => {
+  try {
+    let department = req.body.department;
+    let sql = `SELECT concat(me_firstname, ' ', me_middlename, ' ', me_lastname) as fullname
+    FROM master_employee
+    LEFT JOIN participant_details ON me_employeeid = pd_participantid
+    WHERE pd_detailid IS NULL
+    AND me_department='${department}'`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.error(err);
+      var data = [];
+
+      res.json({
+        msg: 'success',
+        data: result
+      })
+    })
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
 function GetActiveCount(cmd) {
   return new Promise((resolve, reject) => {
     mysql.SelectResult(cmd, (err, result) => {

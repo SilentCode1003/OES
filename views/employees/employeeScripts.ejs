@@ -1,7 +1,24 @@
 <script>
     $(document).ready(function () {
+        let id = '';
+        let fullname = '';
+        let department = '';
+        let position = '';
 
         LoadTable();
+
+        var updateModal = document.getElementById("updateModal");
+        var updateModalSpan = document.getElementById("updateModalSpan");
+
+        updateModalSpan.onclick = function () {
+            updateModal.style.display = "none";
+        }
+
+        window.onclick = function () {
+            if (event.target == updateModal) {
+                updateModal.style.display = "none";
+            }
+        }
 
         $.ajax({
             type: "GET",
@@ -22,6 +39,21 @@
             }
         });
 
+        $('#employee-table').on('click', 'tr', function () {
+            var data = [];
+
+            $(this).closest('tr').find('td').each(function () {
+                data.push($(this).text());
+            });
+
+            console.log(data);
+
+            id = data[0];
+            fullname = data[1];
+            department = data[2];
+            position = data[3];
+        })
+
         $(document).on('change', '#departmentlist', function () {
             var department = $('#departmentlist').val();
 
@@ -40,6 +72,33 @@
                         var options = new Option(item.position, item.position);
                         $(options).html(item.position);
                         $('#positionlist').append(options);
+                        console.log(item.position);
+                    });
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+        })
+
+        $(document).on('change', '#modaldepartmentlist', function () {
+            var department = $('#modaldepartmentlist').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/position/getposition",
+                data: {
+                    department: department
+                },
+                success: function (result) {
+                    console.log(result.data);
+                    var data = result.data;
+                    $('#modalpositionlist').empty();
+
+                    $.each(data, function (key, item) {
+                        var options = new Option(item.position, item.position);
+                        $(options).html(item.position);
+                        $('#modalpositionlist').append(options);
                         console.log(item.position);
                     });
                 },
@@ -96,6 +155,111 @@
         $(document).on('click', '#uploadBtn', function () {
             showloader();
             UploadProcess();
+        })
+
+        $(document).on('click', '#updateBtn', function (e) {
+            e.preventDefault();
+            var employeename = fullname;
+            var nameArr = employeename.split(' ');
+            var firstname = nameArr[0];
+            var middlename = nameArr[1];
+            var lastname = nameArr[2];
+            const _firstname = document.getElementById('modalfirstname');
+            const _middlename = document.getElementById('modalmiddlename');
+            const _lastname = document.getElementById('modallastname');
+
+            _firstname.value = firstname;
+            _middlename.value = middlename;
+            _lastname.value = lastname;
+
+            console.log(nameArr);
+
+            $.ajax({
+                type: "GET",
+                url: "/department/load",
+                success: function (result) {
+                    console.log(result.data);
+                    var data = result.data;
+
+                    $.each(data, function (key, item) {
+                        var options = new Option(item.department, item.department);
+                        $(options).html(item.department);
+                        $('#modaldepartmentlist').append(options);
+                        console.log(item.department);
+                    });
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+            updateModal.style.display = "block";
+        })
+
+        $(document).on('click', '#removeBtn', function (e) {
+            e.preventDefault();
+            var employeeid = id;
+
+            $.ajax({
+                type: 'POST',
+                url: '/employees/delete',
+                data: {
+                    employeeid: employeeid
+                },
+                success: function (result) {
+                    success('Successfull', 'Data delete successfully.');
+                    LoadTable();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        })
+
+        $(document).on('click', '#saveBtn', function () {
+            var employeeid = id;
+            var firstname = $('#modalfirstname').val();
+            var middlename = $('#modalmiddlename').val();
+            var lastname = $('#modallastname').val();
+            var department = $('#modaldepartmentlist').val();
+            var position = $('#modalpositionlist').val();
+            var message = '';
+
+            if (employeeid == '') { message += 'EMPLOYEE ID '; }
+            if (firstname == '') { message += 'FIRST NAME '; }
+            if (lastname == '') { message += 'LAST NAME'; }
+            if (department == '-') { message += 'DEPARTMENT '; }
+            if (position == '-') { message += 'POSITION '; }
+
+            if (message != '') { warning('Empty', `Please fillup ${message}`) }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/employees/update',
+                    data: {
+                        employeeid: employeeid,
+                        firstname: firstname,
+                        middlename: middlename,
+                        lastname: lastname,
+                        department: department,
+                        position: position,
+                    },
+                    success: function (result) {
+                        LoadTable();
+                        if (result.msg != 'success') {
+                            warning('Exist', 'Data Already Exist!')
+                        } else {
+                            success('Success', 'Data Saved!')
+                            updateModal.style.display = "none";
+                            LoadTable();
+                        }
+                    },
+                    error: function (error) {
+                        error(error.msg);
+                    }
+                })
+            }
+
         })
 
         function UploadProcess() {
@@ -211,7 +375,6 @@
                 }
             });
         }
-
 
         function LoadTable() {
             showloader();

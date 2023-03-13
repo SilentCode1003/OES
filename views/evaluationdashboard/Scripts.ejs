@@ -1,1500 +1,1501 @@
 <script>
-    let employeeid = '';
-    let department = '';
-    let supervisorid = '';
-    let supervisorame = '';
-    let position = '';
+    $(document).ready(function () {
+        let employeeid = '';
+        let department = '';
+        let supervisorid = '';
+        let supervisorame = '';
+        let position = '';
 
-    LoadParticipants()
-    LoadSummary();
-    LoadRankings();
+        LoadParticipants()
+        LoadSummary();
+        LoadRankings();
 
-    var summaryModal = document.getElementById("summaryModal");
-    var questionModalSpan = document.getElementById("questionModalSpan");
+        var summaryModal = document.getElementById("summaryModal");
+        var questionModalSpan = document.getElementById("questionModalSpan");
 
-    questionModalSpan.onclick = function () {
-        summaryModal.style.display = "none";
-    }
-
-    var printsummaryModal = document.getElementById("printsummaryModal");
-    var printsummarySpan = document.getElementById("printsummarySpan");
-
-    printsummarySpan.onclick = function () {
-        printsummaryModal.style.display = "none";
-    }
-
-    var adminsummaryModal = document.getElementById("adminsummaryModal");
-    var adminsummaryModalSpan = document.getElementById("adminsummaryModalSpan");
-
-    adminsummaryModalSpan.onclick = function () {
-        adminsummaryModal.style.display = "none";
-    }
-
-    var printsummarycommentModal = document.getElementById("printsummarycommentModal");
-    var printsummarycommentModalSpan = document.getElementById("printsummarycommentModalSpan");
-
-    printsummarycommentModalSpan.onclick = function () {
-        printsummarycommentModal.style.display = "none";
-    }
-
-    var printquestioncommentModal = document.getElementById("printquestioncommentModal");
-    var printquestioncommentModalSpan = document.getElementById("printquestioncommentModalSpan");
-
-    printquestioncommentModalSpan.onclick = function () {
-        printquestioncommentModal.style.display = "none";
-    }
-
-    var supervisorsummaryModal = document.getElementById("supervisorsummaryModal");
-    var supervisorsummaryModalSpan = document.getElementById("supervisorsummaryModalSpan");
-
-    supervisorsummaryModalSpan.onclick = function () {
-        supervisorsummaryModal.style.display = "none";
-    }
-
-    var printsupervisorsummaryModal = document.getElementById("printsupervisorsummaryModal");
-    var printsupervisorsummaryModalSpan = document.getElementById("printsupervisorsummaryModalSpan");
-
-    printsupervisorsummaryModalSpan.onclick = function () {
-        printsupervisorsummaryModal.style.display = "none";
-    }
-
-    var printsummarysupervisorcommentModal = document.getElementById("printsummarysupervisorcommentModal");
-    var printsummarysupervisorcommentModalSpan = document.getElementById("printsummarysupervisorcommentModalSpan");
-
-    printsummarysupervisorcommentModalSpan.onclick = function () {
-        printsummarysupervisorcommentModal.style.display = "none";
-    }
-
-    var printsupervisorquestioncommentModal = document.getElementById("printsupervisorquestioncommentModal");
-    var printsupervisorquestioncommentModalSpan = document.getElementById("printsupervisorquestioncommentModalSpan");
-
-    printsupervisorquestioncommentModalSpan.onclick = function () {
-        printsupervisorquestioncommentModal.style.display = "none";
-    }
-
-    window.onclick = function () {
-        if (event.target == summaryModal) {
+        questionModalSpan.onclick = function () {
             summaryModal.style.display = "none";
         }
 
-        if (event.target == printsummaryModal) {
+        var printsummaryModal = document.getElementById("printsummaryModal");
+        var printsummarySpan = document.getElementById("printsummarySpan");
+
+        printsummarySpan.onclick = function () {
             printsummaryModal.style.display = "none";
         }
 
-        if (event.target == adminsummaryModal) {
+        var adminsummaryModal = document.getElementById("adminsummaryModal");
+        var adminsummaryModalSpan = document.getElementById("adminsummaryModalSpan");
+
+        adminsummaryModalSpan.onclick = function () {
             adminsummaryModal.style.display = "none";
         }
 
-        if (event.target == printsummarycommentModal) {
+        var printsummarycommentModal = document.getElementById("printsummarycommentModal");
+        var printsummarycommentModalSpan = document.getElementById("printsummarycommentModalSpan");
+
+        printsummarycommentModalSpan.onclick = function () {
             printsummarycommentModal.style.display = "none";
         }
 
-        if (event.target == printquestioncommentModal) {
+        var printquestioncommentModal = document.getElementById("printquestioncommentModal");
+        var printquestioncommentModalSpan = document.getElementById("printquestioncommentModalSpan");
+
+        printquestioncommentModalSpan.onclick = function () {
             printquestioncommentModal.style.display = "none";
         }
 
-        if (event.target == supervisorsummaryModal) {
+        var supervisorsummaryModal = document.getElementById("supervisorsummaryModal");
+        var supervisorsummaryModalSpan = document.getElementById("supervisorsummaryModalSpan");
+
+        supervisorsummaryModalSpan.onclick = function () {
             supervisorsummaryModal.style.display = "none";
         }
 
-        if (event.target == printsupervisorsummaryModal) {
+        var printsupervisorsummaryModal = document.getElementById("printsupervisorsummaryModal");
+        var printsupervisorsummaryModalSpan = document.getElementById("printsupervisorsummaryModalSpan");
+
+        printsupervisorsummaryModalSpan.onclick = function () {
             printsupervisorsummaryModal.style.display = "none";
         }
 
-        if (event.target == printsummarysupervisorcommentModal) {
+        var printsummarysupervisorcommentModal = document.getElementById("printsummarysupervisorcommentModal");
+        var printsummarysupervisorcommentModalSpan = document.getElementById("printsummarysupervisorcommentModalSpan");
+
+        printsummarysupervisorcommentModalSpan.onclick = function () {
             printsummarysupervisorcommentModal.style.display = "none";
         }
 
-        if (event.target == printsupervisorquestioncommentModal) {
+        var printsupervisorquestioncommentModal = document.getElementById("printsupervisorquestioncommentModal");
+        var printsupervisorquestioncommentModalSpan = document.getElementById("printsupervisorquestioncommentModalSpan");
+
+        printsupervisorquestioncommentModalSpan.onclick = function () {
             printsupervisorquestioncommentModal.style.display = "none";
         }
-    }
 
-    $('#summary-table').on('click', 'tr', function () {
-        var dataRow = [];
-        $(this).closest('tr').find('td').each(function () {
-            dataRow.push([$(this).text()]);
-
-        });
-
-        supervisorid = dataRow[0];
-        supervisorame = dataRow[1]
-        department = dataRow[2];
-        position = dataRow[3];
-        employeeid = supervisorid;
-
-        if (department == 'IT' || department == 'CABLING') {
-            // var summary = $('#modal-summary-table').DataTable({
-            //     'destroy': true,
-            //     'paging': false,
-            //     'searching': false,
-            //     'info': false,
-            //     'scrollCollapse': true,
-            // });
-
-            // var details = $('#modal-details-table').DataTable({
-            //     'destroy': true,
-            //     'paging': false,
-            //     'searching': false,
-            //     'info': false,
-            //     'scrollCollapse': true,
-            // });
-
-
-            // details.clear().draw();
-
-            // $.ajax({
-            //     type: "POST",
-            //     url: "/evaluation/getsummary",
-            //     data: {
-            //         supervisorid: supervisorid,
-            //         department: department
-            //     },
-            //     success: function (result) {
-            //         summary.clear().draw();
-            //         var data = result.data;
-            //         var index = 0;
-
-            //         console.log(result.data);
-            //         $.each(data, (key, item) => {
-            //             // console.log(datajson);
-            //             summary.row.add([item.employeeid, item.employeename, item.E, item.G, item.S, item.N, item.U, item.O,]).draw(false);
-
-            //             index += 1;
-            //         })
-            //     },
-            //     error: function (result) {
-            //         error('error: ' + result);
-            //     }
-            // });
-
-            // LoadComments(employeeid);
-
-            // summaryModal.style.display = "block";
-
-            var summary = $('#supervisor-modal-summary-table').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
-
-            var details = $('#supervisor-comment-table').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'info': false,
-                'scrollY': 200,
-                'scrollCollapse': true,
-            });
-
-            var questions = $('#supervisor-comment-question-table').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'info': false,
-                'scrollY': 400,
-                'scrollCollapse': true,
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getevaluationsummary",
-                data: {
-                    employeeid: supervisorid,
-                    department: department
-                },
-                success: function (result) {
-
-                    summary.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.employeeid, item.employeename, item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getallcomments",
-                data: {
-                    employeeid: supervisorid,
-                },
-                success: function (result) {
-
-                    details.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        details.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getquestioncomment",
-                data: {
-                    employeeid: supervisorid,
-                    department: department,
-                },
-                success: function (result) {
-
-                    questions.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        questions.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            LoadGrades(employeeid, department)
-
-
-            supervisorsummaryModal.style.display = "block";
-        }
-
-        if (department == 'ADMIN') {
-            var summary = $('#admin-modal-summary-table').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
-
-            var details = $('#admin-comment-table').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'info': false,
-                'scrollY': 200,
-                'scrollCollapse': true,
-            });
-
-            var questions = $('#admin-comment-question-table').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'info': false,
-                'scrollY': 400,
-                'scrollCollapse': true,
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getevaluationsummary",
-                data: {
-                    employeeid: supervisorid,
-                    department: department
-                },
-                success: function (result) {
-
-                    summary.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.employeeid, item.employeename, item.outstanding, item.vertsatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getallcomments",
-                data: {
-                    employeeid: supervisorid,
-                },
-                success: function (result) {
-
-                    details.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        details.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getquestioncomment",
-                data: {
-                    employeeid: supervisorid,
-                    department: department,
-                },
-                success: function (result) {
-
-                    questions.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        questions.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            LoadGrades(employeeid, department)
-
-
-            adminsummaryModal.style.display = "block";
-        }
-
-    })
-
-    $('#modal-summary-table').on('click', 'th', function (e) {
-        var grade = $(this).text();
-
-        var summary = $('#modal-details-table').DataTable({
-            'destroy': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollCollapse': true,
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "/evaluation/getevaluationdetails",
-            data: {
-                employeeid: employeeid,
-                grade: grade,
-            },
-            success: function (result) {
-                summary.clear().draw();
-                var data = result.data;
-                var index = 0;
-
-                console.log(result.data);
-                $.each(data, (key, item) => {
-                    // console.log(datajson);
-                    summary.row.add([item.criteria, item.question, item.grade, item.count]).draw(false);
-
-                    index += 1;
-                })
-            },
-            error: function (result) {
-                error('error: ' + result);
+        window.onclick = function () {
+            if (event.target == summaryModal) {
+                summaryModal.style.display = "none";
             }
-        });
-    });
 
-    $(document).on('click', '#viewsummary', function () {
-        //#region ADMIN
-        if (department == 'ADMIN') {
-            document.getElementById('sujectname').innerText = supervisorame;
-            document.getElementById('subkecttile').innerText = position;
-            document.getElementById('department').innerText = department;
+            if (event.target == printsummaryModal) {
+                printsummaryModal.style.display = "none";
+            }
 
-            var summary = $('#modal-summary-table-admin').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
+            if (event.target == adminsummaryModal) {
+                adminsummaryModal.style.display = "none";
+            }
 
-            var items = $('#rating-table').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
+            if (event.target == printsummarycommentModal) {
+                printsummarycommentModal.style.display = "none";
+            }
 
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getevaluationsummarydetails",
-                data: {
-                    employeeid: supervisorid,
-                    department: department
-                },
-                success: function (result) {
+            if (event.target == printquestioncommentModal) {
+                printquestioncommentModal.style.display = "none";
+            }
 
-                    summary.clear().draw();
-                    var data = result.data;
+            if (event.target == supervisorsummaryModal) {
+                supervisorsummaryModal.style.display = "none";
+            }
 
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.criteria, item.question, item.outstanding, item.verysatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
+            if (event.target == printsupervisorsummaryModal) {
+                printsupervisorsummaryModal.style.display = "none";
+            }
 
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getevaluationsummary",
-                data: {
-                    employeeid: supervisorid,
-                    department: department
-                },
-                success: function (result) {
+            if (event.target == printsummarysupervisorcommentModal) {
+                printsummarysupervisorcommentModal.style.display = "none";
+            }
 
-                    items.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        items.row.add([item.employeeid, item.employeename, item.outstanding, item.vertsatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            printsummaryModal.style.display = "block";
-        }
-        //#endregion
-
-        //#region IT
-        if (department == 'IT' || department == 'CABLING') {
-            document.getElementById('supervisorsujectname').innerText = supervisorame;
-            document.getElementById('supervisorsubkecttile').innerText = position;
-            document.getElementById('supervisordepartment').innerText = department;
-
-            var summary = $('#modal-summary-table-supervisor').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
-
-            var items = $('#rating-table-supervisor').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getevaluationsummarydetails",
-                data: {
-                    employeeid: supervisorid,
-                    department: department
-                },
-                success: function (result) {
-
-                    summary.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.criteria, item.question, item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getevaluationsummary",
-                data: {
-                    employeeid: supervisorid,
-                    department: department
-                },
-                success: function (result) {
-
-                    items.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        items.row.add([item.employeeid, item.employeename, item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            printsupervisorsummaryModal.style.display = "block";
-        }
-        //#endregion
-    })
-
-    $(document).on('click', '#viewcomment', function () {
-        if (department == 'ADMIN') {
-            document.getElementById('sujectnamecomment').innerText = supervisorame;
-            document.getElementById('subkecttilecomment').innerText = position;
-            document.getElementById('departmentcomment').innerText = department;
-
-            var summary = $('#modal-summary-table-admin-comment').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getallcomments",
-                data: {
-                    employeeid: supervisorid,
-                },
-                success: function (result) {
-
-                    summary.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            printsummarycommentModal.style.display = "block";
+            if (event.target == printsupervisorquestioncommentModal) {
+                printsupervisorquestioncommentModal.style.display = "none";
+            }
         }
 
-        if (department == 'IT' || department == 'CABLING') {
+        $('#summary-table').on('click', 'tr', function () {
+            var dataRow = [];
+            $(this).closest('tr').find('td').each(function () {
+                dataRow.push([$(this).text()]);
 
-            document.getElementById('supervisorsujectnamecomment').innerText = supervisorame;
-            document.getElementById('supervisorsubkecttilecomment').innerText = position;
-            document.getElementById('supervisordepartmentcomment').innerText = department;
-
-            var summary = $('#modal-summary-table-supervisor-comment').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
             });
 
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getallcomments",
-                data: {
-                    employeeid: supervisorid,
-                },
-                success: function (result) {
+            supervisorid = dataRow[0];
+            supervisorame = dataRow[1]
+            department = dataRow[2];
+            position = dataRow[3];
+            employeeid = supervisorid;
 
-                    summary.clear().draw();
-                    var data = result.data;
+            if (department == 'IT' || department == 'CABLING') {
+                // var summary = $('#modal-summary-table').DataTable({
+                //     'destroy': true,
+                //     'paging': false,
+                //     'searching': false,
+                //     'info': false,
+                //     'scrollCollapse': true,
+                // });
 
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            printsummarysupervisorcommentModal.style.display = "block";
-        }
+                // var details = $('#modal-details-table').DataTable({
+                //     'destroy': true,
+                //     'paging': false,
+                //     'searching': false,
+                //     'info': false,
+                //     'scrollCollapse': true,
+                // });
 
 
-    })
+                // details.clear().draw();
 
-    $(document).on('click', '#viewquestioncomment', function () {
-        if (department == 'ADMIN') {
-            document.getElementById('sujectnamequestioncomment').innerText = supervisorame;
-            document.getElementById('subkecttilequestioncomment').innerText = position;
-            document.getElementById('departmentquestioncomment').innerText = department;
+                // $.ajax({
+                //     type: "POST",
+                //     url: "/evaluation/getsummary",
+                //     data: {
+                //         supervisorid: supervisorid,
+                //         department: department
+                //     },
+                //     success: function (result) {
+                //         summary.clear().draw();
+                //         var data = result.data;
+                //         var index = 0;
 
-            var summary = $('#modal-summary-table-admin-quesiton-comment').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
+                //         console.log(result.data);
+                //         $.each(data, (key, item) => {
+                //             // console.log(datajson);
+                //             summary.row.add([item.employeeid, item.employeename, item.E, item.G, item.S, item.N, item.U, item.O,]).draw(false);
 
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getquestioncomment",
-                data: {
-                    employeeid: supervisorid,
-                    department: department,
-                },
-                success: function (result) {
+                //             index += 1;
+                //         })
+                //     },
+                //     error: function (result) {
+                //         error('error: ' + result);
+                //     }
+                // });
 
-                    summary.clear().draw();
-                    var data = result.data;
+                // LoadComments(employeeid);
 
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
+                // summaryModal.style.display = "block";
 
-            printquestioncommentModal.style.display = "block";
-        }
-        if(department == 'IT' || department == 'CABLING'){
-            document.getElementById('supervisorsujectnamequestioncomment').innerText = supervisorame;
-            document.getElementById('supervisorsubkecttilequestioncomment').innerText = position;
-            document.getElementById('supervisordepartmentquestioncomment').innerText = department;
+                var summary = $('#supervisor-modal-summary-table').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
 
-            var summary = $('#modal-summary-table-supervisor-quesiton-comment').DataTable({
-                'destroy': true,
-                'paging': false,
-                'searching': false,
-                'info': false,
-                'scrollCollapse': true,
-            });
+                var details = $('#supervisor-comment-table').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'info': false,
+                    'scrollY': 200,
+                    'scrollCollapse': true,
+                });
 
-            $.ajax({
-                type: "POST",
-                url: "/evaluation/getquestioncomment",
-                data: {
-                    employeeid: supervisorid,
-                    department: department,
-                },
-                success: function (result) {
+                var questions = $('#supervisor-comment-question-table').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'info': false,
+                    'scrollY': 400,
+                    'scrollCollapse': true,
+                });
 
-                    summary.clear().draw();
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        summary.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-
-            printsupervisorquestioncommentModal.style.display = "block";
-        }
-
-    })
-
-    $(document).on('click', '#printBtn', function () {
-        console.log('clicked!');
-        var printContents = document.getElementById('PrintArea').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload();
-    })
-
-    $(document).on('click', '#printCommentBtn', function () {
-        console.log('clicked!');
-        var printContents = document.getElementById('printComment').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload();
-    })
-
-    $(document).on('click', '#printQuestionCommentBtn', function () {
-        console.log('clicked!');
-        var printContents = document.getElementById('printQuestionComment').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload();
-    })
-
-    $(document).on('click', '#printsupervisorBtn', function () {
-        console.log('clicked!');
-        var printContents = document.getElementById('PrintAreaSupervisor').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload();
-    })
-
-    $(document).on('click', '#printSupervisorCommentBtn', function () {
-        console.log('clicked!');
-        var printContents = document.getElementById('printSupervisorComment').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload();
-    })
-
-    $(document).on('click', '#printSupervisorQuestionCommentBtn', function () {
-        console.log('clicked!');
-        var printContents = document.getElementById('printSupervisorQuestionComment').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload();
-    })
-
-    function LoadRankings() {
-        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        Chart.defaults.global.defaultFontColor = '#858796';
-
-        //admin ranking
-        $.ajax({
-            type: 'POST',
-            url: '/evaluation/loaddepartmentrankings',
-            data: {
-                department: 'ADMIN'
-            },
-            success: function (result) {
-                console.log(result);
-                let supervisorname = [];
-                let excellentpoints = [];
-
-                $.each(result.data, (key, item) => {
-                    supervisorname.push(item.supervisorname);
-                    excellentpoints.push(item.excellentpoints);
-                })
-
-                var ctx = document.getElementById("AdminrankingBarChart");
-                var myBarChart = new Chart(ctx, {
-                    type: 'bar',
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummary",
                     data: {
-                        labels: supervisorname,
-                        datasets: [{
-                            label: "Outstanding",
-                            backgroundColor: "#ff3300",
-                            hoverBackgroundColor: "#2e59d9",
-                            borderColor: "#4e73df",
-                            data: excellentpoints,
-                        }],
+                        employeeid: supervisorid,
+                        department: department
                     },
-                    options: {
-                        maintainAspectRatio: false,
-                        layout: {
-                            padding: {
-                                left: 10,
-                                right: 25,
-                                top: 25,
-                                bottom: 0
-                            }
-                        },
-                        scales: {
-                            xAxes: [{
-                                time: {
-                                    unit: 'integer'
-                                },
-                                gridLines: {
-                                    display: false,
-                                    drawBorder: false
-                                },
-                                ticks: {
-                                    maxTicksLimit: 10
-                                },
-                                maxBarThickness: 25,
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    min: 0,
-                                    max: 2300,
-                                    maxTicksLimit: 9,
-                                    padding: 10,
-                                    // Include a dollar sign in the ticks
-                                    callback: function (value, index, values) {
-                                        return number_format(value);
-                                    }
-                                },
-                                gridLines: {
-                                    color: "rgb(234, 236, 244)",
-                                    zeroLineColor: "rgb(234, 236, 244)",
-                                    drawBorder: false,
-                                    borderDash: [2],
-                                    zeroLineBorderDash: [2]
-                                }
-                            }],
-                        },
-                        legend: {
-                            display: false
-                        },
-                        tooltips: {
-                            titleMarginBottom: 10,
-                            titleFontColor: '#6e707e',
-                            titleFontSize: 14,
-                            backgroundColor: "rgb(255,255,255)",
-                            bodyFontColor: "#858796",
-                            borderColor: '#dddfeb',
-                            borderWidth: 1,
-                            xPadding: 15,
-                            yPadding: 15,
-                            displayColors: false,
-                            caretPadding: 10,
-                            callbacks: {
-                                label: function (tooltipItem, chart) {
-                                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                    return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
-                                }
-                            }
-                        },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.employeeid, item.employeename, item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
                     }
                 });
-            },
-            error: function (error) {
-                error(error);
-            }
-        })
-        //it ranking
-        $.ajax({
-            type: 'POST',
-            url: '/evaluation/loaddepartmentrankings',
-            data: {
-                department: 'IT'
-            },
-            success: function (result) {
-                console.log(result);
-                let supervisorname = [];
-                let excellentpoints = [];
 
-                $.each(result.data, (key, item) => {
-                    supervisorname.push(item.supervisorname);
-                    excellentpoints.push(item.excellentpoints);
-                })
-
-                var ctx = document.getElementById("ITrankingBarChart");
-                var myBarChart = new Chart(ctx, {
-                    type: 'bar',
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getallcomments",
                     data: {
-                        labels: supervisorname,
-                        datasets: [{
-                            label: "Excellent",
-                            backgroundColor: "#ff3300",
-                            hoverBackgroundColor: "#2e59d9",
-                            borderColor: "#4e73df",
-                            data: excellentpoints,
-                        }],
+                        employeeid: supervisorid,
                     },
-                    options: {
-                        maintainAspectRatio: false,
-                        layout: {
-                            padding: {
-                                left: 10,
-                                right: 25,
-                                top: 25,
-                                bottom: 0
-                            }
-                        },
-                        scales: {
-                            xAxes: [{
-                                time: {
-                                    unit: 'integer'
-                                },
-                                gridLines: {
-                                    display: false,
-                                    drawBorder: false
-                                },
-                                ticks: {
-                                    maxTicksLimit: 10
-                                },
-                                maxBarThickness: 25,
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    min: 0,
-                                    max: 2300,
-                                    maxTicksLimit: 9,
-                                    padding: 10,
-                                    // Include a dollar sign in the ticks
-                                    callback: function (value, index, values) {
-                                        return number_format(value);
-                                    }
-                                },
-                                gridLines: {
-                                    color: "rgb(234, 236, 244)",
-                                    zeroLineColor: "rgb(234, 236, 244)",
-                                    drawBorder: false,
-                                    borderDash: [2],
-                                    zeroLineBorderDash: [2]
-                                }
-                            }],
-                        },
-                        legend: {
-                            display: false
-                        },
-                        tooltips: {
-                            titleMarginBottom: 10,
-                            titleFontColor: '#6e707e',
-                            titleFontSize: 14,
-                            backgroundColor: "rgb(255,255,255)",
-                            bodyFontColor: "#858796",
-                            borderColor: '#dddfeb',
-                            borderWidth: 1,
-                            xPadding: 15,
-                            yPadding: 15,
-                            displayColors: false,
-                            caretPadding: 10,
-                            callbacks: {
-                                label: function (tooltipItem, chart) {
-                                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                    return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
-                                }
-                            }
-                        },
+                    success: function (result) {
+
+                        details.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            details.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
                     }
                 });
-            },
-            error: function (error) {
-                error(error);
-            }
-        })
-        //cabling ranking
-        $.ajax({
-            type: 'POST',
-            url: '/evaluation/loaddepartmentrankings',
-            data: {
-                department: 'CABLING'
-            },
-            success: function (result) {
-                console.log(result);
-                let supervisorname = [];
-                let excellentpoints = [];
 
-                $.each(result.data, (key, item) => {
-                    supervisorname.push(item.supervisorname);
-                    excellentpoints.push(item.excellentpoints);
-                })
-
-                var ctx = document.getElementById("CablingrankingBarChart");
-                var myBarChart = new Chart(ctx, {
-                    type: 'bar',
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getquestioncomment",
                     data: {
-                        labels: supervisorname,
-                        datasets: [{
-                            label: "Excellent",
-                            backgroundColor: "#ff3300",
-                            hoverBackgroundColor: "#2e59d9",
-                            borderColor: "#4e73df",
-                            data: excellentpoints,
-                        }],
+                        employeeid: supervisorid,
+                        department: department,
                     },
-                    options: {
-                        maintainAspectRatio: false,
-                        layout: {
-                            padding: {
-                                left: 10,
-                                right: 25,
-                                top: 25,
-                                bottom: 0
-                            }
-                        },
-                        scales: {
-                            xAxes: [{
-                                time: {
-                                    unit: 'integer'
-                                },
-                                gridLines: {
-                                    display: false,
-                                    drawBorder: false
-                                },
-                                ticks: {
-                                    maxTicksLimit: 10
-                                },
-                                maxBarThickness: 25,
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    min: 0,
-                                    max: 2300,
-                                    maxTicksLimit: 9,
-                                    padding: 10,
-                                    // Include a dollar sign in the ticks
-                                    callback: function (value, index, values) {
-                                        return number_format(value);
-                                    }
-                                },
-                                gridLines: {
-                                    color: "rgb(234, 236, 244)",
-                                    zeroLineColor: "rgb(234, 236, 244)",
-                                    drawBorder: false,
-                                    borderDash: [2],
-                                    zeroLineBorderDash: [2]
-                                }
-                            }],
-                        },
-                        legend: {
-                            display: false
-                        },
-                        tooltips: {
-                            titleMarginBottom: 10,
-                            titleFontColor: '#6e707e',
-                            titleFontSize: 14,
-                            backgroundColor: "rgb(255,255,255)",
-                            bodyFontColor: "#858796",
-                            borderColor: '#dddfeb',
-                            borderWidth: 1,
-                            xPadding: 15,
-                            yPadding: 15,
-                            displayColors: false,
-                            caretPadding: 10,
-                            callbacks: {
-                                label: function (tooltipItem, chart) {
-                                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                    return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
-                                }
-                            }
-                        },
+                    success: function (result) {
+
+                        questions.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            questions.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
                     }
                 });
-            },
-            error: function (error) {
-                error(error);
+
+                LoadGrades(employeeid, department)
+
+
+                supervisorsummaryModal.style.display = "block";
             }
+
+            if (department == 'ADMIN') {
+                var summary = $('#admin-modal-summary-table').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                var details = $('#admin-comment-table').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'info': false,
+                    'scrollY': 200,
+                    'scrollCollapse': true,
+                });
+
+                var questions = $('#admin-comment-question-table').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'info': false,
+                    'scrollY': 400,
+                    'scrollCollapse': true,
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummary",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department
+                    },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.employeeid, item.employeename, item.outstanding, item.vertsatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getallcomments",
+                    data: {
+                        employeeid: supervisorid,
+                    },
+                    success: function (result) {
+
+                        details.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            details.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getquestioncomment",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department,
+                    },
+                    success: function (result) {
+
+                        questions.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            questions.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                LoadGrades(employeeid, department)
+
+
+                adminsummaryModal.style.display = "block";
+            }
+
         })
 
-        function number_format(number, decimals, dec_point, thousands_sep) {
-            // *     example: number_format(1234.56, 2, ',', ' ');
-            // *     return: '1 234,56'
-            number = (number + '').replace(',', '').replace(' ', '');
-            var n = !isFinite(+number) ? 0 : +number,
-                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                s = '',
-                toFixedFix = function (n, prec) {
-                    var k = Math.pow(10, prec);
-                    return '' + Math.round(n * k) / k;
-                };
-            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-            if (s[0].length > 3) {
-                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-            }
-            if ((s[1] || '').length < prec) {
-                s[1] = s[1] || '';
-                s[1] += new Array(prec - s[1].length + 1).join('0');
-            }
-            return s.join(dec);
-        }
-    }
+        $('#modal-summary-table').on('click', 'th', function (e) {
+            var grade = $(this).text();
 
-    function LoadGrades(employeeid, department) {
-        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        Chart.defaults.global.defaultFontColor = '#858796';
+            var summary = $('#modal-details-table').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
 
-        if (department == 'ADMIN') {
             $.ajax({
                 type: "POST",
-                url: "/evaluation/getevaluationsummary",
+                url: "/evaluation/getevaluationdetails",
                 data: {
                     employeeid: employeeid,
-                    department: department
+                    grade: grade,
                 },
                 success: function (result) {
+                    summary.clear().draw();
                     var data = result.data;
+                    var index = 0;
 
                     console.log(result.data);
                     $.each(data, (key, item) => {
                         // console.log(datajson);
-                        var ctx = document.getElementById("ratingBarChart");
-                        var myBarChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['Outstanding', 'Very Satisfactory', 'Satisfactory', 'Inadequate', 'Poor'],
-                                datasets: [{
-                                    label: "Excellent",
-                                    backgroundColor: "#ff3300",
-                                    hoverBackgroundColor: "#2e59d9",
-                                    borderColor: "#4e73df",
-                                    data: [item.outstanding, item.vertsatisfactory, item.satisfactory, item.inadequate, item.poor],
-                                }],
-                            },
-                            options: {
-                                maintainAspectRatio: false,
-                                layout: {
-                                    padding: {
-                                        left: 10,
-                                        right: 25,
-                                        top: 25,
-                                        bottom: 0
-                                    }
-                                },
-                                scales: {
-                                    xAxes: [{
-                                        time: {
-                                            unit: 'integer'
-                                        },
-                                        gridLines: {
-                                            display: false,
-                                            drawBorder: false
-                                        },
-                                        ticks: {
-                                            maxTicksLimit: 6
-                                        },
-                                        maxBarThickness: 25,
-                                    }],
-                                    yAxes: [{
-                                        ticks: {
-                                            min: 0,
-                                            max: 2300,
-                                            maxTicksLimit: 9,
-                                            padding: 10,
-                                            // Include a dollar sign in the ticks
-                                            callback: function (value, index, values) {
-                                                return number_format(value);
-                                            }
-                                        },
-                                        gridLines: {
-                                            color: "rgb(234, 236, 244)",
-                                            zeroLineColor: "rgb(234, 236, 244)",
-                                            drawBorder: false,
-                                            borderDash: [2],
-                                            zeroLineBorderDash: [2]
-                                        }
-                                    }],
-                                },
-                                legend: {
-                                    display: false
-                                },
-                                tooltips: {
-                                    titleMarginBottom: 10,
-                                    titleFontColor: '#6e707e',
-                                    titleFontSize: 14,
-                                    backgroundColor: "rgb(255,255,255)",
-                                    bodyFontColor: "#858796",
-                                    borderColor: '#dddfeb',
-                                    borderWidth: 1,
-                                    xPadding: 15,
-                                    yPadding: 15,
-                                    displayColors: false,
-                                    caretPadding: 10,
-                                    callbacks: {
-                                        label: function (tooltipItem, chart) {
-                                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
-                                        }
-                                    }
-                                },
-                            }
-                        });
+                        summary.row.add([item.criteria, item.question, item.grade, item.count]).draw(false);
+
+                        index += 1;
                     })
                 },
                 error: function (result) {
                     error('error: ' + result);
                 }
             });
-        }
+        });
 
-        if (department == 'IT' || department == 'CABLING') {
+        $(document).on('click', '#viewsummary', function () {
+            //#region ADMIN
+            if (department == 'ADMIN') {
+                document.getElementById('sujectname').innerText = supervisorame;
+                document.getElementById('subkecttile').innerText = position;
+                document.getElementById('department').innerText = department;
+
+                var summary = $('#modal-summary-table-admin').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                var items = $('#rating-table').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummarydetails",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department
+                    },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.criteria, item.question, item.outstanding, item.verysatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummary",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department
+                    },
+                    success: function (result) {
+
+                        items.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            items.row.add([item.employeeid, item.employeename, item.outstanding, item.vertsatisfactory, item.satisfactory, item.inadequate, item.poor,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                printsummaryModal.style.display = "block";
+            }
+            //#endregion
+
+            //#region IT
+            if (department == 'IT' || department == 'CABLING') {
+                document.getElementById('supervisorsujectname').innerText = supervisorame;
+                document.getElementById('supervisorsubkecttile').innerText = position;
+                document.getElementById('supervisordepartment').innerText = department;
+
+                var summary = $('#modal-summary-table-supervisor').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                var items = $('#rating-table-supervisor').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummarydetails",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department
+                    },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.criteria, item.question, item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummary",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department
+                    },
+                    success: function (result) {
+
+                        items.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            items.row.add([item.employeeid, item.employeename, item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                printsupervisorsummaryModal.style.display = "block";
+            }
+            //#endregion
+        })
+
+        $(document).on('click', '#viewcomment', function () {
+            if (department == 'ADMIN') {
+                document.getElementById('sujectnamecomment').innerText = supervisorame;
+                document.getElementById('subkecttilecomment').innerText = position;
+                document.getElementById('departmentcomment').innerText = department;
+
+                var summary = $('#modal-summary-table-admin-comment').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getallcomments",
+                    data: {
+                        employeeid: supervisorid,
+                    },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                printsummarycommentModal.style.display = "block";
+            }
+
+            if (department == 'IT' || department == 'CABLING') {
+
+                document.getElementById('supervisorsujectnamecomment').innerText = supervisorame;
+                document.getElementById('supervisorsubkecttilecomment').innerText = position;
+                document.getElementById('supervisordepartmentcomment').innerText = department;
+
+                var summary = $('#modal-summary-table-supervisor-comment').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getallcomments",
+                    data: {
+                        employeeid: supervisorid,
+                    },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.allias, item.goodcomment, item.needimprovement, item.summarycomment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                printsummarysupervisorcommentModal.style.display = "block";
+            }
+
+
+        })
+
+        $(document).on('click', '#viewquestioncomment', function () {
+            if (department == 'ADMIN') {
+                document.getElementById('sujectnamequestioncomment').innerText = supervisorame;
+                document.getElementById('subkecttilequestioncomment').innerText = position;
+                document.getElementById('departmentquestioncomment').innerText = department;
+
+                var summary = $('#modal-summary-table-admin-quesiton-comment').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getquestioncomment",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department,
+                    },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                printquestioncommentModal.style.display = "block";
+            }
+            if (department == 'IT' || department == 'CABLING') {
+                document.getElementById('supervisorsujectnamequestioncomment').innerText = supervisorame;
+                document.getElementById('supervisorsubkecttilequestioncomment').innerText = position;
+                document.getElementById('supervisordepartmentquestioncomment').innerText = department;
+
+                var summary = $('#modal-summary-table-supervisor-quesiton-comment').DataTable({
+                    'destroy': true,
+                    'paging': false,
+                    'searching': false,
+                    'info': false,
+                    'scrollCollapse': true,
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getquestioncomment",
+                    data: {
+                        employeeid: supervisorid,
+                        department: department,
+                    },
+                    success: function (result) {
+
+                        summary.clear().draw();
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            summary.row.add([item.allias, item.criteria, item.question, item.comment,]).draw(false);
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+
+                printsupervisorquestioncommentModal.style.display = "block";
+            }
+
+        })
+
+        $(document).on('click', '#printBtn', function () {
+            console.log('clicked!');
+            var printContents = document.getElementById('PrintArea').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        })
+
+        $(document).on('click', '#printCommentBtn', function () {
+            console.log('clicked!');
+            var printContents = document.getElementById('printComment').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        })
+
+        $(document).on('click', '#printQuestionCommentBtn', function () {
+            console.log('clicked!');
+            var printContents = document.getElementById('printQuestionComment').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        })
+
+        $(document).on('click', '#printsupervisorBtn', function () {
+            console.log('clicked!');
+            var printContents = document.getElementById('PrintAreaSupervisor').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        })
+
+        $(document).on('click', '#printSupervisorCommentBtn', function () {
+            console.log('clicked!');
+            var printContents = document.getElementById('printSupervisorComment').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        })
+
+        $(document).on('click', '#printSupervisorQuestionCommentBtn', function () {
+            console.log('clicked!');
+            var printContents = document.getElementById('printSupervisorQuestionComment').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        })
+
+        function LoadRankings() {
+            Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            Chart.defaults.global.defaultFontColor = '#858796';
+
+            //admin ranking
             $.ajax({
-                type: "POST",
-                url: "/evaluation/getevaluationsummary",
+                type: 'POST',
+                url: '/evaluation/loaddepartmentrankings',
                 data: {
-                    employeeid: employeeid,
-                    department: department
-                },
-                success: function (result) {
-                    var data = result.data;
-
-                    console.log(result.data);
-                    $.each(data, (key, item) => {
-                        // console.log(datajson);
-                        var ctx = document.getElementById("supervisorratingBarChart");
-                        var myBarChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['Exellent', 'Good', 'Satisfactory', 'Needs Work', 'Unsatisfactory', 'No Opinion'],
-                                datasets: [{
-                                    label: "Excellent",
-                                    backgroundColor: "#ff3300",
-                                    hoverBackgroundColor: "#2e59d9",
-                                    borderColor: "#4e73df",
-                                    data: [item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion],
-                                }],
-                            },
-                            options: {
-                                maintainAspectRatio: false,
-                                layout: {
-                                    padding: {
-                                        left: 10,
-                                        right: 25,
-                                        top: 25,
-                                        bottom: 0
-                                    }
-                                },
-                                scales: {
-                                    xAxes: [{
-                                        time: {
-                                            unit: 'integer'
-                                        },
-                                        gridLines: {
-                                            display: false,
-                                            drawBorder: false
-                                        },
-                                        ticks: {
-                                            maxTicksLimit: 6
-                                        },
-                                        maxBarThickness: 25,
-                                    }],
-                                    yAxes: [{
-                                        ticks: {
-                                            min: 0,
-                                            max: 2300,
-                                            maxTicksLimit: 9,
-                                            padding: 10,
-                                            // Include a dollar sign in the ticks
-                                            callback: function (value, index, values) {
-                                                return number_format(value);
-                                            }
-                                        },
-                                        gridLines: {
-                                            color: "rgb(234, 236, 244)",
-                                            zeroLineColor: "rgb(234, 236, 244)",
-                                            drawBorder: false,
-                                            borderDash: [2],
-                                            zeroLineBorderDash: [2]
-                                        }
-                                    }],
-                                },
-                                legend: {
-                                    display: false
-                                },
-                                tooltips: {
-                                    titleMarginBottom: 10,
-                                    titleFontColor: '#6e707e',
-                                    titleFontSize: 14,
-                                    backgroundColor: "rgb(255,255,255)",
-                                    bodyFontColor: "#858796",
-                                    borderColor: '#dddfeb',
-                                    borderWidth: 1,
-                                    xPadding: 15,
-                                    yPadding: 15,
-                                    displayColors: false,
-                                    caretPadding: 10,
-                                    callbacks: {
-                                        label: function (tooltipItem, chart) {
-                                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
-                                        }
-                                    }
-                                },
-                            }
-                        });
-                    })
-                },
-                error: function (result) {
-                    error('error: ' + result);
-                }
-            });
-        }
-
-
-        function number_format(number, decimals, dec_point, thousands_sep) {
-            // *     example: number_format(1234.56, 2, ',', ' ');
-            // *     return: '1 234,56'
-            number = (number + '').replace(',', '').replace(' ', '');
-            var n = !isFinite(+number) ? 0 : +number,
-                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                s = '',
-                toFixedFix = function (n, prec) {
-                    var k = Math.pow(10, prec);
-                    return '' + Math.round(n * k) / k;
-                };
-            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-            if (s[0].length > 3) {
-                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-            }
-            if ((s[1] || '').length < prec) {
-                s[1] = s[1] || '';
-                s[1] += new Array(prec - s[1].length + 1).join('0');
-            }
-            return s.join(dec);
-        }
-
-    }
-
-    function LoadParticipants() {
-        showloader();
-
-        var table = $('#it-participants-table').DataTable({
-            'destroy': true,
-            'processing': true,
-            'serverSide': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollY': 400,
-            'scrollCollapse': true,
-            'serverMethod': 'POST',
-            'ajax': {
-                'type': 'POST',
-                'url': '/evaluation/loadparticipants',
-                'data': {
-                    department: 'IT'
-                }
-            },
-            'columnDefs': [{
-                targets: 1,
-                className: 'td-indent',
-            }],
-            'columns': [
-                { data: 'allias' },
-                { data: 'status' },
-            ],
-            initComplete: function () {
-                console.log('init complete');
-                hideload();
-            }
-        })
-
-        showloader();
-        var table2 = $('#cabling-participants-table').DataTable({
-            'destroy': true,
-            'processing': true,
-            'serverSide': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollY': 400,
-            'scrollCollapse': true,
-            'serverMethod': 'POST',
-            'ajax': {
-                'type': 'POST',
-                'url': '/evaluation/loadparticipants',
-                'data': {
-                    department: 'CABLING'
-                }
-            },
-            'columnDefs': [{
-                targets: 1,
-                className: 'td-indent',
-            }],
-            'columns': [
-                { data: 'allias' },
-                { data: 'status' },
-            ],
-            initComplete: function () {
-                console.log('init complete');
-                hideload();
-            }
-        })
-
-        showloader();
-        var table3 = $('#admin-participants-table').DataTable({
-            'destroy': true,
-            'processing': true,
-            'serverSide': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollY': 400,
-            'scrollCollapse': true,
-            'serverMethod': 'POST',
-            'ajax': {
-                'type': 'POST',
-                'url': '/evaluation/loadparticipants',
-                'data': {
                     department: 'ADMIN'
+                },
+                success: function (result) {
+                    console.log(result);
+                    let supervisorname = [];
+                    let excellentpoints = [];
+
+                    $.each(result.data, (key, item) => {
+                        supervisorname.push(item.supervisorname);
+                        excellentpoints.push(item.excellentpoints);
+                    })
+
+                    var ctx = document.getElementById("AdminrankingBarChart");
+                    var myBarChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: supervisorname,
+                            datasets: [{
+                                label: "Outstanding",
+                                backgroundColor: "#ff3300",
+                                hoverBackgroundColor: "#2e59d9",
+                                borderColor: "#4e73df",
+                                data: excellentpoints,
+                            }],
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 25,
+                                    top: 25,
+                                    bottom: 0
+                                }
+                            },
+                            scales: {
+                                xAxes: [{
+                                    time: {
+                                        unit: 'integer'
+                                    },
+                                    gridLines: {
+                                        display: false,
+                                        drawBorder: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 10
+                                    },
+                                    maxBarThickness: 25,
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 2300,
+                                        maxTicksLimit: 9,
+                                        padding: 10,
+                                        // Include a dollar sign in the ticks
+                                        callback: function (value, index, values) {
+                                            return number_format(value);
+                                        }
+                                    },
+                                    gridLines: {
+                                        color: "rgb(234, 236, 244)",
+                                        zeroLineColor: "rgb(234, 236, 244)",
+                                        drawBorder: false,
+                                        borderDash: [2],
+                                        zeroLineBorderDash: [2]
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                titleMarginBottom: 10,
+                                titleFontColor: '#6e707e',
+                                titleFontSize: 14,
+                                backgroundColor: "rgb(255,255,255)",
+                                bodyFontColor: "#858796",
+                                borderColor: '#dddfeb',
+                                borderWidth: 1,
+                                xPadding: 15,
+                                yPadding: 15,
+                                displayColors: false,
+                                caretPadding: 10,
+                                callbacks: {
+                                    label: function (tooltipItem, chart) {
+                                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                                    }
+                                }
+                            },
+                        }
+                    });
+                },
+                error: function (error) {
+                    error(error);
                 }
-            },
-            'columnDefs': [{
-                targets: 1,
-                className: 'td-indent',
-            }],
-            'columns': [
-                { data: 'allias' },
-                { data: 'status' },
-            ],
-            initComplete: function () {
-                console.log('init complete');
-                hideload();
+            })
+            //it ranking
+            $.ajax({
+                type: 'POST',
+                url: '/evaluation/loaddepartmentrankings',
+                data: {
+                    department: 'IT'
+                },
+                success: function (result) {
+                    console.log(result);
+                    let supervisorname = [];
+                    let excellentpoints = [];
+
+                    $.each(result.data, (key, item) => {
+                        supervisorname.push(item.supervisorname);
+                        excellentpoints.push(item.excellentpoints);
+                    })
+
+                    var ctx = document.getElementById("ITrankingBarChart");
+                    var myBarChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: supervisorname,
+                            datasets: [{
+                                label: "Excellent",
+                                backgroundColor: "#ff3300",
+                                hoverBackgroundColor: "#2e59d9",
+                                borderColor: "#4e73df",
+                                data: excellentpoints,
+                            }],
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 25,
+                                    top: 25,
+                                    bottom: 0
+                                }
+                            },
+                            scales: {
+                                xAxes: [{
+                                    time: {
+                                        unit: 'integer'
+                                    },
+                                    gridLines: {
+                                        display: false,
+                                        drawBorder: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 10
+                                    },
+                                    maxBarThickness: 25,
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 2300,
+                                        maxTicksLimit: 9,
+                                        padding: 10,
+                                        // Include a dollar sign in the ticks
+                                        callback: function (value, index, values) {
+                                            return number_format(value);
+                                        }
+                                    },
+                                    gridLines: {
+                                        color: "rgb(234, 236, 244)",
+                                        zeroLineColor: "rgb(234, 236, 244)",
+                                        drawBorder: false,
+                                        borderDash: [2],
+                                        zeroLineBorderDash: [2]
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                titleMarginBottom: 10,
+                                titleFontColor: '#6e707e',
+                                titleFontSize: 14,
+                                backgroundColor: "rgb(255,255,255)",
+                                bodyFontColor: "#858796",
+                                borderColor: '#dddfeb',
+                                borderWidth: 1,
+                                xPadding: 15,
+                                yPadding: 15,
+                                displayColors: false,
+                                caretPadding: 10,
+                                callbacks: {
+                                    label: function (tooltipItem, chart) {
+                                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                                    }
+                                }
+                            },
+                        }
+                    });
+                },
+                error: function (error) {
+                    error(error);
+                }
+            })
+            //cabling ranking
+            $.ajax({
+                type: 'POST',
+                url: '/evaluation/loaddepartmentrankings',
+                data: {
+                    department: 'CABLING'
+                },
+                success: function (result) {
+                    console.log(result);
+                    let supervisorname = [];
+                    let excellentpoints = [];
+
+                    $.each(result.data, (key, item) => {
+                        supervisorname.push(item.supervisorname);
+                        excellentpoints.push(item.excellentpoints);
+                    })
+
+                    var ctx = document.getElementById("CablingrankingBarChart");
+                    var myBarChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: supervisorname,
+                            datasets: [{
+                                label: "Excellent",
+                                backgroundColor: "#ff3300",
+                                hoverBackgroundColor: "#2e59d9",
+                                borderColor: "#4e73df",
+                                data: excellentpoints,
+                            }],
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 25,
+                                    top: 25,
+                                    bottom: 0
+                                }
+                            },
+                            scales: {
+                                xAxes: [{
+                                    time: {
+                                        unit: 'integer'
+                                    },
+                                    gridLines: {
+                                        display: false,
+                                        drawBorder: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 10
+                                    },
+                                    maxBarThickness: 25,
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 2300,
+                                        maxTicksLimit: 9,
+                                        padding: 10,
+                                        // Include a dollar sign in the ticks
+                                        callback: function (value, index, values) {
+                                            return number_format(value);
+                                        }
+                                    },
+                                    gridLines: {
+                                        color: "rgb(234, 236, 244)",
+                                        zeroLineColor: "rgb(234, 236, 244)",
+                                        drawBorder: false,
+                                        borderDash: [2],
+                                        zeroLineBorderDash: [2]
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                titleMarginBottom: 10,
+                                titleFontColor: '#6e707e',
+                                titleFontSize: 14,
+                                backgroundColor: "rgb(255,255,255)",
+                                bodyFontColor: "#858796",
+                                borderColor: '#dddfeb',
+                                borderWidth: 1,
+                                xPadding: 15,
+                                yPadding: 15,
+                                displayColors: false,
+                                caretPadding: 10,
+                                callbacks: {
+                                    label: function (tooltipItem, chart) {
+                                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                                    }
+                                }
+                            },
+                        }
+                    });
+                },
+                error: function (error) {
+                    error(error);
+                }
+            })
+
+            function number_format(number, decimals, dec_point, thousands_sep) {
+                // *     example: number_format(1234.56, 2, ',', ' ');
+                // *     return: '1 234,56'
+                number = (number + '').replace(',', '').replace(' ', '');
+                var n = !isFinite(+number) ? 0 : +number,
+                    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                    s = '',
+                    toFixedFix = function (n, prec) {
+                        var k = Math.pow(10, prec);
+                        return '' + Math.round(n * k) / k;
+                    };
+                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                if (s[0].length > 3) {
+                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                }
+                if ((s[1] || '').length < prec) {
+                    s[1] = s[1] || '';
+                    s[1] += new Array(prec - s[1].length + 1).join('0');
+                }
+                return s.join(dec);
             }
-        })
+        }
 
-    }
+        function LoadGrades(employeeid, department) {
+            Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            Chart.defaults.global.defaultFontColor = '#858796';
 
-    function LoadSummary() {
-        showloader();
+            if (department == 'ADMIN') {
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummary",
+                    data: {
+                        employeeid: employeeid,
+                        department: department
+                    },
+                    success: function (result) {
+                        var data = result.data;
 
-        var table = $('#summary-table').DataTable({
-            'destroy': true,
-            'processing': true,
-            'serverSide': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollY': 400,
-            'scrollCollapse': true,
-            'serverMethod': 'GET',
-            'ajax': {
-                'url': '/evaluation/loadsummary'
-            },
-            'columnDefs': [{
-                targets: 1,
-                className: 'td-indent',
-            }],
-            'columns': [
-                { data: 'employeeid' },
-                { data: 'fullname' },
-                { data: 'department' },
-                { data: 'position' },
-            ],
-            initComplete: function () {
-                console.log('init complete');
-                hideload();
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            var ctx = document.getElementById("ratingBarChart");
+                            var myBarChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['Outstanding', 'Very Satisfactory', 'Satisfactory', 'Inadequate', 'Poor'],
+                                    datasets: [{
+                                        label: "Excellent",
+                                        backgroundColor: "#ff3300",
+                                        hoverBackgroundColor: "#2e59d9",
+                                        borderColor: "#4e73df",
+                                        data: [item.outstanding, item.vertsatisfactory, item.satisfactory, item.inadequate, item.poor],
+                                    }],
+                                },
+                                options: {
+                                    maintainAspectRatio: false,
+                                    layout: {
+                                        padding: {
+                                            left: 10,
+                                            right: 25,
+                                            top: 25,
+                                            bottom: 0
+                                        }
+                                    },
+                                    scales: {
+                                        xAxes: [{
+                                            time: {
+                                                unit: 'integer'
+                                            },
+                                            gridLines: {
+                                                display: false,
+                                                drawBorder: false
+                                            },
+                                            ticks: {
+                                                maxTicksLimit: 6
+                                            },
+                                            maxBarThickness: 25,
+                                        }],
+                                        yAxes: [{
+                                            ticks: {
+                                                min: 0,
+                                                max: 2300,
+                                                maxTicksLimit: 9,
+                                                padding: 10,
+                                                // Include a dollar sign in the ticks
+                                                callback: function (value, index, values) {
+                                                    return number_format(value);
+                                                }
+                                            },
+                                            gridLines: {
+                                                color: "rgb(234, 236, 244)",
+                                                zeroLineColor: "rgb(234, 236, 244)",
+                                                drawBorder: false,
+                                                borderDash: [2],
+                                                zeroLineBorderDash: [2]
+                                            }
+                                        }],
+                                    },
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltips: {
+                                        titleMarginBottom: 10,
+                                        titleFontColor: '#6e707e',
+                                        titleFontSize: 14,
+                                        backgroundColor: "rgb(255,255,255)",
+                                        bodyFontColor: "#858796",
+                                        borderColor: '#dddfeb',
+                                        borderWidth: 1,
+                                        xPadding: 15,
+                                        yPadding: 15,
+                                        displayColors: false,
+                                        caretPadding: 10,
+                                        callbacks: {
+                                            label: function (tooltipItem, chart) {
+                                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                                            }
+                                        }
+                                    },
+                                }
+                            });
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
             }
-        })
 
-         //#region widget
-         $.ajax({
+            if (department == 'IT' || department == 'CABLING') {
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getevaluationsummary",
+                    data: {
+                        employeeid: employeeid,
+                        department: department
+                    },
+                    success: function (result) {
+                        var data = result.data;
+
+                        console.log(result.data);
+                        $.each(data, (key, item) => {
+                            // console.log(datajson);
+                            var ctx = document.getElementById("supervisorratingBarChart");
+                            var myBarChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['Exellent', 'Good', 'Satisfactory', 'Needs Work', 'Unsatisfactory', 'No Opinion'],
+                                    datasets: [{
+                                        label: "Excellent",
+                                        backgroundColor: "#ff3300",
+                                        hoverBackgroundColor: "#2e59d9",
+                                        borderColor: "#4e73df",
+                                        data: [item.excellent, item.good, item.satisfactory, item.needwork, item.unsatisfactory, item.noopinion],
+                                    }],
+                                },
+                                options: {
+                                    maintainAspectRatio: false,
+                                    layout: {
+                                        padding: {
+                                            left: 10,
+                                            right: 25,
+                                            top: 25,
+                                            bottom: 0
+                                        }
+                                    },
+                                    scales: {
+                                        xAxes: [{
+                                            time: {
+                                                unit: 'integer'
+                                            },
+                                            gridLines: {
+                                                display: false,
+                                                drawBorder: false
+                                            },
+                                            ticks: {
+                                                maxTicksLimit: 6
+                                            },
+                                            maxBarThickness: 25,
+                                        }],
+                                        yAxes: [{
+                                            ticks: {
+                                                min: 0,
+                                                max: 2300,
+                                                maxTicksLimit: 9,
+                                                padding: 10,
+                                                // Include a dollar sign in the ticks
+                                                callback: function (value, index, values) {
+                                                    return number_format(value);
+                                                }
+                                            },
+                                            gridLines: {
+                                                color: "rgb(234, 236, 244)",
+                                                zeroLineColor: "rgb(234, 236, 244)",
+                                                drawBorder: false,
+                                                borderDash: [2],
+                                                zeroLineBorderDash: [2]
+                                            }
+                                        }],
+                                    },
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltips: {
+                                        titleMarginBottom: 10,
+                                        titleFontColor: '#6e707e',
+                                        titleFontSize: 14,
+                                        backgroundColor: "rgb(255,255,255)",
+                                        bodyFontColor: "#858796",
+                                        borderColor: '#dddfeb',
+                                        borderWidth: 1,
+                                        xPadding: 15,
+                                        yPadding: 15,
+                                        displayColors: false,
+                                        caretPadding: 10,
+                                        callbacks: {
+                                            label: function (tooltipItem, chart) {
+                                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                                            }
+                                        }
+                                    },
+                                }
+                            });
+                        })
+                    },
+                    error: function (result) {
+                        error('error: ' + result);
+                    }
+                });
+            }
+
+
+            function number_format(number, decimals, dec_point, thousands_sep) {
+                // *     example: number_format(1234.56, 2, ',', ' ');
+                // *     return: '1 234,56'
+                number = (number + '').replace(',', '').replace(' ', '');
+                var n = !isFinite(+number) ? 0 : +number,
+                    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                    s = '',
+                    toFixedFix = function (n, prec) {
+                        var k = Math.pow(10, prec);
+                        return '' + Math.round(n * k) / k;
+                    };
+                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                if (s[0].length > 3) {
+                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                }
+                if ((s[1] || '').length < prec) {
+                    s[1] = s[1] || '';
+                    s[1] += new Array(prec - s[1].length + 1).join('0');
+                }
+                return s.join(dec);
+            }
+
+        }
+
+        function LoadParticipants() {
+            showloader();
+
+            var table = $('#it-participants-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'POST',
+                'ajax': {
+                    'type': 'POST',
+                    'url': '/evaluation/loadparticipants',
+                    'data': {
+                        department: 'IT'
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'allias' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+
+            showloader();
+            var table2 = $('#cabling-participants-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'POST',
+                'ajax': {
+                    'type': 'POST',
+                    'url': '/evaluation/loadparticipants',
+                    'data': {
+                        department: 'CABLING'
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'allias' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+
+            showloader();
+            var table3 = $('#admin-participants-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'POST',
+                'ajax': {
+                    'type': 'POST',
+                    'url': '/evaluation/loadparticipants',
+                    'data': {
+                        department: 'ADMIN'
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'allias' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+
+        }
+
+        function LoadSummary() {
+            showloader();
+
+            var table = $('#summary-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'GET',
+                'ajax': {
+                    'url': '/evaluation/loadsummary'
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'employeeid' },
+                    { data: 'fullname' },
+                    { data: 'department' },
+                    { data: 'position' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+
+            //#region widget
+            $.ajax({
                 type: "GET",
                 url: "/employees/getemployeecount",
                 success: function (result) {
@@ -1542,7 +1543,7 @@
                 }
             });
 
-             $.ajax({
+            $.ajax({
                 type: "GET",
                 url: "/employees/getcablingcount",
                 success: function (result) {
@@ -1554,7 +1555,7 @@
                 }
             });
 
-             $.ajax({
+            $.ajax({
                 type: "GET",
                 url: "/employees/getadmincount",
                 success: function (result) {
@@ -1566,39 +1567,49 @@
                 }
             });
             //#endregion
-    }
+        }
 
-    function LoadComments(employeeid) {
-        var summary = $('#comment-table').DataTable({
-            'destroy': true,
-            'paging': false,
-            'searching': false,
-            'info': false,
-            'scrollCollapse': true,
-        });
+        function LoadComments(employeeid) {
+            var summary = $('#comment-table').DataTable({
+                'destroy': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollCollapse': true,
+            });
 
-        $.ajax({
-            type: "POST",
-            url: "/evaluation/getcomments",
-            data: {
-                employeeid: employeeid,
-            },
-            success: function (result) {
-                summary.clear().draw();
-                var data = result.data;
-                var index = 0;
+            $.ajax({
+                type: "POST",
+                url: "/evaluation/getcomments",
+                data: {
+                    employeeid: employeeid,
+                },
+                success: function (result) {
+                    summary.clear().draw();
+                    var data = result.data;
+                    var index = 0;
 
-                console.log(result.data);
-                $.each(data, (key, item) => {
-                    // console.log(datajson);
-                    summary.row.add([item.allias, item.comment]).draw(false);
+                    console.log(result.data);
+                    $.each(data, (key, item) => {
+                        // console.log(datajson);
+                        summary.row.add([item.allias, item.comment]).draw(false);
 
-                    index += 1;
-                })
-            },
-            error: function (result) {
-                error('error: ' + result);
-            }
-        });
-    }
+                        index += 1;
+                    })
+                },
+                error: function (result) {
+                    error('error: ' + result);
+                }
+            });
+
+
+        }
+
+        var inactiveparticipantdiv = document.getElementById("inactiveparticipant");
+
+
+        inactiveparticipant.addEventListener("click", function () {
+            console.log('clicked!');
+        })
+    })
 </script>

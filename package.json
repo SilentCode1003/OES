@@ -15,6 +15,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "ejs": "~2.6.1",
+    "excel4node": "^1.8.0",
     "express": "~4.16.1",
     "express-session": "^1.17.3",
     "filipino-badwords-list": "^1.1.2",
