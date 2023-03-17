@@ -1,6 +1,7 @@
 <script>
     $(document).ready(function () {
         let base64String = "";
+        let employeeid = "";
         LoadTable();
 
         $.ajax({
@@ -48,7 +49,6 @@
                 }
             });
         })
-
 
         $(document).on('click', '#addBtn', function () {
             let supervisorid = $('#supervisorid').val();
@@ -112,6 +112,42 @@
             imageUploaded();
         })
 
+        $('#supervisor-table').on('click', 'tr', function () {
+            var data = [];
+
+            $(this).closest('tr').find('td').each(function () {
+                data.push($(this).text());
+            });
+
+            console.log(data);
+
+            employeeid = data[1];
+        })
+
+        $(document).on('click', '#updateBtn', function () {
+
+        })
+
+        $(document).on('click', '#removeBtn', function () {
+            var id = employeeid;
+
+            $.ajax({
+                type: 'POST',
+                url: '/supervisor/remove',
+                data: {
+                    employeeid: id
+                },
+                success: function (result) {
+                    success('Success', "Deleted Successfully")
+                    LoadTable();
+                },
+                error: function (err) {
+                    warning('Error', err)
+                }
+            })
+        })
+
+
         function imageUploaded() {
             const input = document.getElementById('imageInput');
             const file = input.files[0];
@@ -156,6 +192,7 @@
                                 supervisorid: item.supervisorid,
                                 fullname: item.fullname,
                                 status: item.status,
+                                action: item.action,
                             })
 
                         })
@@ -172,6 +209,7 @@
                     { data: 'supervisorid' },
                     { data: 'fullname' },
                     { data: 'status' },
+                    { data: 'action' },
                 ],
                 initComplete: function () {
                     console.log('init complete');

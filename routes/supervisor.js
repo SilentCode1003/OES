@@ -43,12 +43,15 @@ router.get('/load', (req, res) => {
             result.forEach((key, item) => {
                 var fullname = `${key.firstname} ${key.middlename == 'N/A' ? '' : key.middlename} ${key.lastname}`;
                 var jsondata = helper.ReadJSONFile(`${supervisorPath}${key.image}`)
+                var action = '<button class="approve-btn" id="updateBtn" name="updateBtn">UPDATE</button><br><button class="approve-btn" id="removeBtn" name="removeBtn">DELETE</button>';
+
                 jsondata.forEach((value, item) => {
                     data.push({
                         image: value.base64,
                         supervisorid: key.employeeid,
                         fullname: fullname,
                         status: key.status,
+                        action: action,
                     })
                 })
 
@@ -85,11 +88,11 @@ router.post('/save', (req, res) => {
         var filename = `${supervisorid}.json`;
         var datajson = [];
 
-        if(department == 'IT' || department == 'CABLING'){
+        if (department == 'IT' || department == 'CABLING') {
             type = 'SUPERVISOR';
         }
 
-        if(department == 'ADMIN'){
+        if (department == 'ADMIN') {
             type = 'ADMIN';
         }
 
@@ -182,6 +185,29 @@ router.post('/getsubjects', (req, res) => {
             })
         })
 
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
+})
+
+router.post('/remove', (req, res) => {
+    try {
+        let employeeid = req.body.employeeid;
+        let sql = `delete from master_supervisor where ms_employeeid='${employeeid}'`;
+
+        console.log(sql);
+
+        mysql.SelectResult(sql, (err, result) => {
+            if (err) console.error(err);
+
+            console.log(result);
+
+            res.json({
+                msg: 'success'
+            })
+        })
     } catch (error) {
         res.json({
             msg: error

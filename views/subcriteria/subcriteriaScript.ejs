@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function () {
+        let code = "";
         LoadTable();
 
         $.ajax({
@@ -8,7 +9,7 @@
             success: function (result) {
                 console.log(result.data);
                 var data = result.data;
-                
+
 
                 $.each(data, function (key, item) {
                     var options = new Option(item.criterianame, item.criterianame);
@@ -21,6 +22,19 @@
                 alert('error: ' + result.data);
             }
         });
+
+        var updateModal = document.getElementById("updateModal");
+        var updateModalSpan = document.getElementById("updateModalSpan");
+
+        updateModalSpan.onclick = function () {
+            updateModal.style.display = "none";
+        }
+
+        window.onclick = function () {
+            if (event.target == updateModal) {
+                updateModal.style.display = "none";
+            }
+        }
 
         $(document).on('click', '#addBtn', function () {
             var criteria = $('#criterialist').val();
@@ -58,6 +72,82 @@
             LoadTable();
         })
 
+        $('#subcriteria-table').on('click', 'tr', function () {
+            var data = [];
+
+            $(this).closest('tr').find('td').each(function () {
+                data.push($(this).text());
+            });
+
+            console.log(data);
+
+            code = data[0];
+        })
+
+
+        $(document).on('click', '#updateBtn', function (e) {
+            e.preventDefault();
+            // var employeename = fullname;
+            // var nameArr = employeename.split(' ');
+            // var firstname = nameArr[0];
+            // var middlename = nameArr[1];
+            // var lastname = nameArr[2];
+            // const _firstname = document.getElementById('modalfirstname');
+            // const _middlename = document.getElementById('modalmiddlename');
+            // const _lastname = document.getElementById('modallastname');
+            // const _username = document.getElementById('modalusername');
+            // const _password = document.getElementById('modalpassword');
+
+            // _firstname.value = firstname;
+            // _middlename.value = middlename;
+            // _lastname.value = lastname;
+            // _username.value = username;
+            // _password.value = password;
+
+            // console.log(nameArr);
+
+            $.ajax({
+                type: "GET",
+                url: "/criteria/load",
+                success: function (result) {
+                    console.log(result.data);
+                    var data = result.data;
+
+                    $.each(data, function (key, item) {
+                        var options = new Option(item.criterianame, item.criterianame);
+                        $(options).html(item.criterianame);
+                        $('#modalcriterialist').append(options);
+                        console.log(item.criterianame);
+                    });
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+            updateModal.style.display = "block";
+        })
+
+        $(document).on('click', '#removeBtn', function (e) {
+            e.preventDefault();
+            var subcriteriacode = code;
+
+            $.ajax({
+                type: 'POST',
+                url: '/subcriteria/delete',
+                data: {
+                    code: subcriteriacode
+                },
+                success: function (result) {
+                    success('Successfull', 'Data delete successfully.');
+                    LoadTable();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        })
+
         function LoadTable() {
             showloader();
             var table = $('#subcriteria-table').DataTable({
@@ -83,6 +173,7 @@
                     { data: 'subcriteria' },
                     { data: 'createdby' },
                     { data: 'createddate' },
+                    { data: 'action' },
                 ],
                 initComplete: function () {
                     console.log('init complete');

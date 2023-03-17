@@ -30,7 +30,44 @@
             <th>QUESTION</th>
             <th>CREATED BY</th>
             <th>CREATED DATE</th>
+            <th>ACTION</th>
         </thead>
         <tbody></tbody>
     </table>
+</div>
+
+<!-- The Modal -->
+<div id="updateModal" class="modal card shadow mb-4">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-button-container">
+            <span id="updateModalSpan" class="close">&times;</span>
+        </div>
+        <!-- AREA TO PRINT ONLY -->
+        <div id="printArea" name="printArea" class="print-container">
+            <div class="modal-body">
+                <div class="row center-content">
+                    <div class="col-xl-4 col-lg-3">
+                        <div class="entry-area">
+                            <select class="entry-input" name="modalcriteriallist" id="modalcriteriallist">
+                                <option value="-">CRITERIA</option>
+                            </select>
+                        </div>
+                        <div class="entry-area">
+                            <select class="entry-input" name="modalsubcriteriallist" id="modalsubcriteriallist">
+                                <option value="-">SUBCRITERIA</option>
+                            </select>
+                        </div>
+                        <div class="entry-area">
+                            <textarea name="question" id="question" cols="50" rows="10"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-button-container" class="center-content">
+            <button class="approve-btn" id="saveBtn" name="saveBtn">SAVE</button>
+        </div>
+    </div>
 </div>

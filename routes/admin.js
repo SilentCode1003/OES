@@ -48,12 +48,14 @@ router.get('/load', (req, res) => {
                     username: key.username,
                     password: key.password,
                     type: key.type,
-                    status: key.status,
                     createdby: key.createdby,
                     createddate: key.createddate,
+                    status: key.status,
                     action: action,
                 })
             });
+
+            console.log(data);
 
             res.json({
                 msg: 'success',
