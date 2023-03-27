@@ -41,54 +41,100 @@
         }
 
         $('#modal-question-table tbody').on('click', 'td', function (e) {
-            e.preventDefault();
-            console.log($(this).closest('tr').find('select').val());
+            // e.preventDefault();
+            // console.log($(this).closest('tr').find('select').val());
 
-            var selection = $(this).closest('tr').find('select').val();
+            // var selection = $(this).closest('tr').find('select').val();
 
-            // console.log(selection);
+            // // console.log(selection);
 
-            if ($(this).attr('edit_type') == 'button') {
-                return false;
+            // if ($(this).attr('edit_type') == 'button') {
+            //     return false;
+            // }
+
+            // if (selection == 'U' || selection == 'N') {
+            //     //make div editable
+            //     $(this).closest('td').attr('contenteditable', 'true');
+            //     //add bg css
+            //     $(this).addClass('edit-cost').css('padding', '5px');
+            // }
+            // else {
+            //     //make div editable
+            //     $(this).closest('td').attr('contenteditable', 'false');
+            //     //add bg css
+            //     $(this).addClass('edit-cost').css('padding', '-5px');
+            // }
+
+            var selection = '';
+
+            var radiobutton = $(this).closest('tr').find('input[type="radio"]');
+            var textarea = $(this).closest('tr').find('textarea');
+            var data_length = radiobutton.length;
+
+            for (x = 0; x < data_length; x++) {
+                if (radiobutton[x].checked) {
+                    selection = radiobutton[x].value;
+                    console.log(radiobutton[x].value);
+                }
             }
+
+            var textarea_val = textarea.val();
 
             if (selection == 'U' || selection == 'N') {
-                //make div editable
-                $(this).closest('td').attr('contenteditable', 'true');
-                //add bg css
-                $(this).addClass('edit-cost').css('padding', '5px');
+                textarea.attr('disabled', false);
             }
             else {
-                //make div editable
-                $(this).closest('td').attr('contenteditable', 'false');
-                //add bg css
-                $(this).addClass('edit-cost').css('padding', '-5px');
+                textarea.val(textarea_val.replace(textarea_val, ""));
+                textarea.attr('disabled', true);
             }
         });
 
         $('#modal-question-table-admin tbody').on('click', 'td', function (e) {
-            e.preventDefault();
-            console.log($(this).closest('tr').find('select').val());
+            // e.preventDefault();
+            // // console.log($(this).closest('tr').find('input').val());
+            // var selection = $(this).closest('tr').find('input').val();
+            var selection = '';
 
-            var selection = $(this).closest('tr').find('select').val();
+            var radiobutton = $(this).closest('tr').find('input[type="radio"]');
+            var textarea = $(this).closest('tr').find('textarea');
+            var data_length = radiobutton.length;
 
-            // console.log(selection);
-
-            if ($(this).attr('edit_type') == 'button') {
-                return false;
+            for (x = 0; x < data_length; x++) {
+                if (radiobutton[x].checked) {
+                    selection = radiobutton[x].value;
+                    console.log(radiobutton[x].value);
+                }
             }
+
+            // if (radiobutton.checked) {
+            //     const value = radiobutton.value;
+            //     console.log(value);
+            // }
+
+            // if ($(this).attr('edit_type') == 'button') {
+            //     return false;
+            // }
+
+            var textarea_val = textarea.val();
+
 
             if (selection == '2' || selection == '1') {
+                textarea.attr('disabled', false);
                 //make div editable
-                $(this).closest('td').attr('contenteditable', 'true');
+                // $(this).closest('td').attr('contenteditable', 'true');
                 //add bg css
-                $(this).addClass('edit-cost').css('padding', '5px');
+                // $(this).addClass('edit-cost').css('padding', '5px');
+                // $(this).addClass('comment-edit').css('border', '2px solid red');
+
             }
             else {
+                textarea.val(textarea_val.replace(textarea_val, ""));
+                textarea.attr('disabled', true);
                 //make div editable
-                $(this).closest('td').attr('contenteditable', 'false');
+                // $(this).closest('td').attr('contenteditable', 'false');
                 //add bg css
-                $(this).addClass('edit-cost').css('padding', '-5px');
+                // $(this).addClass('edit-cost').css('padding', '-5px');
+                // $(this).addClass('comment-edit').css('border', '2px solid gray');
             }
         });
 
@@ -133,30 +179,36 @@
                     $.each(data, (key, item) => {
                         // console.log(datajson);
                         if (item.subjecttype === 'SUPERVISOR') {
-                            questiontable.row.add([item.criteria, item.question, `<select class="entry-input-select" id="criteria" name="criteria">
-                                <option value="-">CRITERIA</option>
-                                <option value="E">EXCELLENT</option>
-                                <option value="G">GOOD</option>
-                                <option value="S">SATISFACTORY</option>
-                                <option value="N">NEED WORK</option>
-                                <option value="U">UNSATISFACTORY</option>
-                                <option value="0">NO OPINION</option>
-                            </select>`, '']).draw(false);
+                            // questiontable.row.add([item.criteria, item.question, `<select class="entry-input-select" id="criteria" name="criteria">
+                            //     <option value="-">CRITERIA</option>
+                            //     <option value="E">EXCELLENT</option>
+                            //     <option value="G">GOOD</option>
+                            //     <option value="S">SATISFACTORY</option>
+                            //     <option value="N">NEED WORK</option>
+                            //     <option value="U">UNSATISFACTORY</option>
+                            //     <option value="0">NO OPINION</option>
+                            // </select>`, '']).draw(false);
+
+                            questiontable.row.add([item.criteria, item.question, `<input type="radio" id="excellent${index}" name="rating${index}" value="E"><lable for="excellent${index}">Excellent</label><br>
+                                <input type="radio" id="Good${index}" name="rating${index}" value="G"><lable for="Good${index}">Good</label><br>
+                                <input type="radio" id="satisfactory${index}" name="rating${index}" value="S"><lable for="satisfactory${index}">Satisfactory</label><br>
+                                <input type="radio" id="needwork${index}" name="rating${index}" value="N"><lable for="needwork${index}">Need Work</label><br>
+                                <input type="radio" id="unsatisfactory${index}" name="rating${index}" value="U"><lable for="unsatisfactory${index}">Unsatisfactory</label><br>
+                                <input type="radio" id="noopinion${index}" name="rating${index}" value="0"><lable for="noopinion${index}">No Opinion</label>`,
+                            ` <textarea disabled name="questioncomment${index}" id="questioncomment${index}" cols="50" rows="5"
+                            placeholder="Comment"></textarea>`]).draw(false);
                         }
 
                         if (item.subjecttype === 'ADMIN') {
-
                             questiontableadmin.row.add([item.criteria, item.subcriteria, item.question,
-                                `<select class="entry-input-select" id="criteria" name="criteria">
-                                <option value="-">CRITERIA</option>
-                                <option value="5">OUTSTANDING</option>
-                                <option value="4">VERY SATISFACTORY</option>
-                                <option value="3">SATISFACTORY</option>
-                                <option value="2">INADEQUATE</option>
-                                <option value="1">POOR</option>
-                            </select>`, '']).draw(false);
+                            `<input type="radio" id="outstanding${index}" name="rating${index}" value="5"><lable for="outstanding${index}">Outstanding</label><br>
+                                <input type="radio" id="verysatisfactory${index}" name="rating${index}" value="4"><lable for="verysatisfactory${index}">Very Satisfactory</label><br>
+                                <input type="radio" id="satisfactory${index}" name="rating${index}" value="3"><lable for="satisfactory${index}">Satisfactory</label><br>
+                                <input type="radio" id="inadequate${index}" name="rating${index}" value="2"><lable for="inadequate${index}">Inadequate</label><br>
+                                <input type="radio" id="poor${index}" name="rating${index}" value="1"><lable for="poor${index}">Poor</label>`,
+                            ` <textarea disabled name="questioncomment${index}" id="questioncomment${index}" cols="50" rows="5"
+                            placeholder="Comment"></textarea>`]).draw(false);
                         }
-
 
                         index += 1;
                     })
@@ -218,15 +270,35 @@
             for (x = 1; x < data.length; x++) {
                 // console.log(header[x].innerText);
                 // console.log(data[x].innerText);
+                // var innerData = data[x].innerText;
+                // innerData = innerData.split("\t");
+                // var table = document.getElementById("modal-question-table");
+                // var select = table.getElementsByTagName("select")[x - 1];
+                // var value = select.value;
+                // var selection = value;
+                // var question_comment = innerData[3];
+
+                // console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${innerData[3]}`);
+
                 var innerData = data[x].innerText;
                 innerData = innerData.split("\t");
                 var table = document.getElementById("modal-question-table");
-                var select = table.getElementsByTagName("select")[x - 1];
-                var value = select.value;
-                var selection = value;
-                var question_comment = innerData[3];
+                var target_row = table.getElementsByTagName("tbody")[0].getElementsByTagName('tr')[x - 1];
+                var radiobutton = $(target_row).closest('tr').find('input[type="radio"]');
+                var textarea = $(target_row).closest('tr').find('textarea');
+                var data_length = radiobutton.length;
 
-                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${innerData[3]}`);
+                var selection = '';
+                for (xx = 0; xx < data_length; xx++) {
+                    if (radiobutton[xx].checked) {
+                        selection = radiobutton[xx].value;
+                        console.log(radiobutton[xx].value);
+                    }
+                }
+
+                var question_comment = textarea.val();
+
+                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${question_comment}`);
 
                 if (selection == 'N') {
                     if (question_comment == '') {
@@ -240,7 +312,7 @@
                     }
                 }
 
-                if (selection == '-') {
+                if (selection == '') {
                     message += `criteria "${innerData[0]}" question "${innerData[1]}"`;
                     dataRaw = [];
                 }
@@ -328,12 +400,32 @@
                 var innerData = data[x].innerText;
                 innerData = innerData.split("\t");
                 var table = document.getElementById("modal-question-table-admin");
-                var select = table.getElementsByTagName("select")[x - 1];
-                var value = select.value;
-                var selection = value;
-                var question_comment = innerData[4];
+                var target_row = table.getElementsByTagName("tbody")[0].getElementsByTagName('tr')[x - 1];
+                var radiobutton = $(target_row).closest('tr').find('input[type="radio"]');
+                var textarea = $(target_row).closest('tr').find('textarea');
+                // var trow = tbody.item(0).;
+                // var radiobutton = $(trow).closest('tr').find('input[type="radio"]');
+                var data_length = radiobutton.length;
+                // var select = table.getElementsByTagName("input")[x - 1];
+                // var rows = table.row(x - 1);
+                // var radiobutton = rows.data;
 
-                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${innerData[4]}`);
+                // console.log(tbody);
+                // console.log(radiobutton);
+                // console.log(radiobutton);
+                var selection = '';
+                for (xx = 0; xx < data_length; xx++) {
+                    if (radiobutton[xx].checked) {
+                        selection = radiobutton[xx].value;
+                        console.log(radiobutton[xx].value);
+                    }
+                }
+
+                // var value = select.value;
+                // var selection = value;
+                var question_comment = textarea.val();
+
+                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${question_comment}`);
 
                 if (selection == '2') {
                     if (question_comment == '') {
@@ -347,7 +439,7 @@
                     }
                 }
 
-                if (selection == '-') {
+                if (selection == '') {
                     message += `criteria "${innerData[0]}" question "${innerData[1]}"`;
                     dataRaw = [];
                 }

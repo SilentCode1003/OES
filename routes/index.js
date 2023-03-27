@@ -92,8 +92,9 @@ router.post('/loginuser', (req, res) => {
               req.session.department = data[0].department;
               req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
+              console.log(`${userid} ${req.session.fullname} ${req.session.department}`)
 
-              Create_ParticipantDetails(userid, req.session.fullname)
+              Create_ParticipantDetails(userid, req.session.fullname, req.session.department)
                 .then(result => {
                   console.log(result);
                 })
@@ -207,6 +208,7 @@ function Create_ParticipantDetails(participantid, fullname, department) {
         mysql.Select(sql_supervisor, 'MasterSupervisor', (err, result) => {
           if (err) reject(err);
 
+          console.log(result);
           result.forEach((key, item) => {
             details += `${key.employeeid}<br>`;
             subjectid.push({
