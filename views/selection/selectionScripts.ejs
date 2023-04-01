@@ -66,7 +66,7 @@
             // }
 
             var selection = '';
-
+            var target_row = $(this);
             var radiobutton = $(this).closest('tr').find('input[type="radio"]');
             var textarea = $(this).closest('tr').find('textarea');
             var data_length = radiobutton.length;
@@ -82,10 +82,13 @@
 
             if (selection == 'U' || selection == 'N') {
                 textarea.attr('disabled', false);
+                $(textarea).addClass("changing");
             }
             else {
                 textarea.val(textarea_val.replace(textarea_val, ""));
                 textarea.attr('disabled', true);
+                $(textarea).removeClass("changing");
+                $(target_row).removeClass("changing");
             }
         });
 
@@ -94,7 +97,7 @@
             // // console.log($(this).closest('tr').find('input').val());
             // var selection = $(this).closest('tr').find('input').val();
             var selection = '';
-
+            var target_row = $(this);
             var radiobutton = $(this).closest('tr').find('input[type="radio"]');
             var textarea = $(this).closest('tr').find('textarea');
             var data_length = radiobutton.length;
@@ -120,6 +123,7 @@
 
             if (selection == '2' || selection == '1') {
                 textarea.attr('disabled', false);
+                $(textarea).addClass("changing");
                 //make div editable
                 // $(this).closest('td').attr('contenteditable', 'true');
                 //add bg css
@@ -130,6 +134,8 @@
             else {
                 textarea.val(textarea_val.replace(textarea_val, ""));
                 textarea.attr('disabled', true);
+                $(textarea).removeClass("changing");
+                $(target_row).removeClass("changing");
                 //make div editable
                 // $(this).closest('td').attr('contenteditable', 'false');
                 //add bg css
@@ -298,27 +304,31 @@
 
                 var question_comment = textarea.val();
 
-                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${question_comment}`);
+                console.log(`criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${question_comment}\n`);
 
                 if (selection == 'N') {
                     if (question_comment == '') {
-                        message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade `;
+                        $(textarea).addClass("changing");
+                        message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade\n`;
                     }
 
                 }
                 if (selection == 'U') {
                     if (question_comment == '') {
-                        message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade `;
+                        $(textarea).addClass("changing");
+                        message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade\n`;
                     }
                 }
 
                 if (selection == '') {
                     message += `criteria "${innerData[0]}" question "${innerData[1]}"`;
+                    $(target_row).addClass("changing");
                     dataRaw = [];
                 }
                 else {
-
                     if (innerData[3] == '') { question_comment = 'NO COMMENT' }
+
+                    $(textarea).removeClass("changing");
 
                     dataRaw.push({
                         criteria: innerData[0],
@@ -330,9 +340,27 @@
 
             }
 
-            if (comment == '') { message += 'We need your comment.' }
-            if (goodcomment == '') { message += 'We need your good comment.' }
-            if (improvementcomment == '') { message += 'We need your bad comment.' }
+            if (comment == '') {
+                message += 'We need your comment.\n';
+                $("#comment").addClass("changing");
+            }
+            else {
+                $("#comment").removeClass("changing");
+            }
+
+            if (goodcomment == '') {
+                message += 'We need your good comment.\n';
+                $("#goodcomment").addClass("changing");
+            } else {
+                $("#goodcomment").removeClass("changing");
+            }
+
+            if (improvementcomment == '') {
+                message += 'We need your bad comment.\n';
+                $("#improvementcomment").addClass("changing");
+            } else {
+                $("#improvementcomment").removeClass("changing");
+            }
 
             if (message != '') { warning('No Grade', `${message}`); }
             else {
@@ -429,21 +457,26 @@
 
                 if (selection == '2') {
                     if (question_comment == '') {
+                        $(textarea).addClass("changing");
                         message += `criteria "${innerData[0]}" question "${innerData[2]}" , need to comment since system detects low grade `;
                     }
 
                 }
                 if (selection == '1') {
                     if (question_comment == '') {
+                        $(textarea).addClass("changing");
                         message += `criteria "${innerData[0]}" question "${innerData[2]}" , need to comment since system detects low grade `;
                     }
                 }
 
                 if (selection == '') {
+                    $(target_row).addClass("changing");
                     message += `criteria "${innerData[0]}" question "${innerData[1]}"`;
                     dataRaw = [];
                 }
                 else {
+                    $(textarea).removeClass("changing");
+
                     dataRaw.push({
                         criteria: innerData[0],
                         question: innerData[2],
@@ -453,9 +486,24 @@
                 }
             }
 
-            if (comment == '') { message += 'We need your comment.' }
-            if (goodcomment == '') { message += 'We need your good comment.' }
-            if (improvementcomment == '') { message += 'We need your bad comment.' }
+            if (comment == '') {
+                message += 'We need your comment.';
+                $("#admincomment").addClass("changing");
+            } else {
+                $("#admincomment").removeClass("changing");
+            }
+            if (goodcomment == '') {
+                message += 'We need your good comment.';
+                $("#admingoodcomment").addClass("changing");
+            } else {
+                $("#admingoodcomment").removeClass("changing");
+            }
+            if (improvementcomment == '') {
+                message += 'We need your bad comment.';
+                $("#adminimprovementcomment").addClass("changing");
+            } else {
+                $("#adminimprovementcomment").removeClass("changing");
+            }
 
             if (message != '') { warning('No Grade', `${message}`); }
             else {
