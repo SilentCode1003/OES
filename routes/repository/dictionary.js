@@ -28,6 +28,7 @@ exports.GetValue = (abr) => {
     if (abr == 'ADMIN') return 'ADMIN';
     if (abr == 'IT') return 'IT';
     if (abr == 'CABLING') return 'CABLING';
+    if (abr == 'D') return 'DONE';
 }
 
 //#region STATUS CODE
@@ -141,6 +142,10 @@ exports.IT = () => {
 
 exports.CABLING = () => {
     return 'CABLING';
+}
+
+exports.D = () => {
+    return 'D';
 }
 
 

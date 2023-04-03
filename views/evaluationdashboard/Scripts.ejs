@@ -483,6 +483,23 @@
                     }
                 });
 
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getrespondents",
+                    data: {
+                        subjectid: supervisorid
+                    },
+                    success: function (result) {
+                        console.log(result);
+
+                        document.getElementById('repondents').innerText = result.data[0];
+                        document.getElementById('totalrepondents').innerText = result.data[1];
+
+                    },
+                    error: function (err) {
+                        warning(err);
+                    }
+                })
                 printsummaryModal.style.display = "block";
             }
             //#endregion
@@ -554,6 +571,24 @@
                         error('error: ' + result);
                     }
                 });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/evaluation/getrespondents",
+                    data: {
+                        subjectid: supervisorid
+                    },
+                    success: function (result) {
+                        console.log(result);
+
+                        document.getElementById('supervisorrepondents').innerText = result.data[0];
+                        document.getElementById('supervisortotalrepondents').innerText = result.data[1];
+
+                    },
+                    error: function (err) {
+                        warning(err);
+                    }
+                })
 
                 printsupervisorsummaryModal.style.display = "block";
             }

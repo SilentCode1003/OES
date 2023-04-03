@@ -88,13 +88,14 @@ router.post('/loginuser', (req, res) => {
             if (result[0].status == status) {
               req.session.isAuth = true;
               req.session.accounttype = 'USER';
+              req.session.position = data[0].position;
               req.session.userid = userid;
               req.session.department = data[0].department;
               req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
               console.log(`${userid} ${req.session.fullname} ${req.session.department}`)
 
-              Create_ParticipantDetails(userid, req.session.fullname, req.session.department)
+              Create_ParticipantDetails(userid, req.session.fullname, req.session.department, req.session.position)
                 .then(result => {
                   console.log(result);
                 })
@@ -117,11 +118,12 @@ router.post('/loginuser', (req, res) => {
             req.session.isAuth = true;
             req.session.accounttype = 'USER';
             req.session.userid = userid;
+            req.session.position = data[0].position;
             req.session.department = data[0].department;
             req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
 
-            Create_ParticipantDetails(userid, req.session.fullname, req.session.department)
+            Create_ParticipantDetails(userid, req.session.fullname, req.session.department, req.session.position)
               .then(result => {
                 console.log(result);
               })
@@ -169,7 +171,7 @@ router.post('/logout', (req, res) => {
 
 //#region FUNCTIONS
 
-function Create_ParticipantDetails(participantid, fullname, department) {
+function Create_ParticipantDetails(participantid, fullname, department, position) {
 
   return new Promise((resolve, reject) => {
     let data = [];

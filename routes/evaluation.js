@@ -679,6 +679,61 @@ router.post('/getinactivenames', (req, res) => {
   }
 })
 
+router.post('/getrespondents', (req, res) => {
+  try {
+    let subjectid = req.body.subjectid;
+    let status = dictionary.GetValue(dictionary.D());
+    let sql_activerepondents = `select count(*) as respondent
+      from transaction_participant_subjects as ps
+      left join master_supervisor as ms on ps.ps_subjectname = ms.ms_employeeid
+      left join master_employee as me on ps.ps_participantid = me.me_employeeid
+      where ps_subjectname='${subjectid}'
+      and me_department in ('ADMIN','CABLING','IT')
+      and ps.ps_status='${status}'
+      order by ps_participantid`;
+
+    let sql_totalrespondents = `select count(*) as totalrespondent
+      from transaction_participant_subjects as ps
+      left join master_supervisor as ms on ps.ps_subjectname = ms.ms_employeeid
+      left join master_employee as me on ps.ps_participantid = me.me_employeeid
+      where ps_subjectname='${subjectid}'
+      and me_department in ('ADMIN','CABLING','IT')
+      order by ps_participantid`;
+
+    var data = [];
+
+    console.log(subjectid);
+
+    mysql.SelectResult(sql_activerepondents, (err, result) => {
+      if (err) console.error(err);
+
+      console.log(result[0].respondent);
+
+      var respondent = result[0].respondent;
+      mysql.SelectResult(sql_totalrespondents, (err, result) => {
+        if (err) console.error(err);
+
+        console.log(result[0].totalrespondent);
+        var totalrespondents = result[0].totalrespondent;
+        data.push(
+          respondent,
+          totalrespondents
+        )
+
+        res.json({
+          msg: 'success',
+          data: data
+        })
+      })
+    })
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
 function GetActiveCount(cmd) {
   return new Promise((resolve, reject) => {
     mysql.SelectResult(cmd, (err, result) => {
