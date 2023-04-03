@@ -362,6 +362,16 @@
                 $("#improvementcomment").removeClass("changing");
             }
 
+            if(comment.length < 10){
+                message += 'Nothing at all about your comment. To help the individual you are evaluating, we need your comment.\n'
+            }
+            if(goodcomment.length < 10){
+                message += 'Please let the person know what you think they are good at in your comment.\n'
+            }
+            if(improvementcomment.length < 10){
+                message += 'Please note any areas where the person needs to improve.\n'
+            }
+
             if (message != '') { warning('No Grade', `${message}`); }
             else {
                 console.log(dataRaw);
@@ -503,6 +513,16 @@
                 $("#adminimprovementcomment").addClass("changing");
             } else {
                 $("#adminimprovementcomment").removeClass("changing");
+            }
+
+            if(comment.length < 10){
+                message += 'Nothing at all about your comment. To help the individual you are evaluating, we need your comment.\n'
+            }
+            if(goodcomment.length < 10){
+                message += 'Please let the person know what you think they are good at in your comment.\n'
+            }
+            if(improvementcomment.length < 10){
+                message += 'Please note any areas where the person needs to improve.\n'
             }
 
             if (message != '') { warning('No Grade', `${message}`); }
