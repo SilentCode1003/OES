@@ -177,7 +177,7 @@ router.post('/getsubjects', (req, res) => {
                 })
             });
 
-            console.log(data);
+            // console.log(data);
 
             res.json({
                 msg: 'success',

@@ -418,7 +418,7 @@ router.post('/getevaluationsummary', (req, res) => {
     mysql.StoredProcedureResult(sql, (err, result) => {
       if (err) console.error(err);
 
-      console.log(result);
+      console.log(`Eval Summary: ${result}`);
 
       res.json({
         msg: 'success',
@@ -449,13 +449,13 @@ router.post('/getallcomments', (req, res) => {
       group by tec_allias
       order by tec_allias`;
 
-    console.log(position);
-
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.error(err);
       var data = [];
       var index = 1;
       var result_length = result.length;
+
+      console.log(`ALL COMMENTS: ${result}`);
 
       result.forEach((key, item) => {
         GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {
@@ -542,6 +542,8 @@ router.post('/getquestioncomment', (req, res) => {
       var data = [];
       var index = 1;
       var result_length = result.length;
+
+      console.log(`QUESTIONS: ${result}`);
 
       result.forEach((key, item) => {
         GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {

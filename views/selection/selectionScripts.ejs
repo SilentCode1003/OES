@@ -311,12 +311,17 @@
                         $(textarea).addClass("changing");
                         message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade\n`;
                     }
-
+                    if (question_comment.length < 10) {
+                        message += `[criteria: ${innerData[0]} question: ${innerData[1]}]: We need your comment`;
+                    }
                 }
                 if (selection == 'U') {
                     if (question_comment == '') {
                         $(textarea).addClass("changing");
                         message += `criteria "${innerData[0]}" question "${innerData[1]}" , need to comment since system detects low grade\n`;
+                    }
+                    if (question_comment.length < 10) {
+                        message += 'Nothing at all about your comment. To help the individual you are evaluating, we need your comment.\n'
                     }
                 }
 
@@ -326,14 +331,14 @@
                     dataRaw = [];
                 }
                 else {
-                    if (innerData[3] == '') { question_comment = 'NO COMMENT' }
+                    if (question_comment == '') { question_comment = 'NO COMMENT' }
 
                     $(textarea).removeClass("changing");
 
                     dataRaw.push({
                         criteria: innerData[0],
                         question: innerData[1],
-                        comment: innerData[3] == '' ? 'NO COMMENT' : innerData[3],
+                        comment: question_comment == '' ? 'NO COMMENT' : question_comment,
                         grade: selection,
                     })
                 }
@@ -362,13 +367,13 @@
                 $("#improvementcomment").removeClass("changing");
             }
 
-            if(comment.length < 10){
+            if (comment.length < 10) {
                 message += 'Nothing at all about your comment. To help the individual you are evaluating, we need your comment.\n'
             }
-            if(goodcomment.length < 10){
+            if (goodcomment.length < 10) {
                 message += 'Please let the person know what you think they are good at in your comment.\n'
             }
-            if(improvementcomment.length < 10){
+            if (improvementcomment.length < 10) {
                 message += 'Please note any areas where the person needs to improve.\n'
             }
 
@@ -389,11 +394,14 @@
                     },
                     success: function (result) {
                         console.log(result.msg);
-                        if (result.msg == 'badcomment' || result.msg == 'badwords') {
+                        if (result.msg == 'badcomment' || result.msg == 'badwords' || result.msg == 'notsentence') {
                             if (result.msg == 'badwords') {
                                 warning('Bad Words', 'Please refrain from using foul language in your comments.');
                             }
                             if (result.msg == 'badcomment') {
+                                warning('Bad Words', `${result.data}`);
+                            }
+                            if(result.msg == 'notsentence'){
                                 warning('Bad Words', `${result.data}`);
                             }
                         }
@@ -515,13 +523,13 @@
                 $("#adminimprovementcomment").removeClass("changing");
             }
 
-            if(comment.length < 10){
+            if (comment.length < 10) {
                 message += 'Nothing at all about your comment. To help the individual you are evaluating, we need your comment.\n'
             }
-            if(goodcomment.length < 10){
+            if (goodcomment.length < 10) {
                 message += 'Please let the person know what you think they are good at in your comment.\n'
             }
-            if(improvementcomment.length < 10){
+            if (improvementcomment.length < 10) {
                 message += 'Please note any areas where the person needs to improve.\n'
             }
 

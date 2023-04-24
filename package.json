@@ -25,6 +25,7 @@
     "mongoose": "^6.8.3",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
+    "natural": "^6.2.0",
     "node-linq": "^0.0.5",
     "sweetalert": "^2.1.2"
   }

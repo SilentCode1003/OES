@@ -7,6 +7,13 @@ const dictionary = require('./repository/dictionary');
 const Filter = require('bad-words');
 const filipinoBadwords = require('filipino-badwords-list');
 const filter = new Filter({ list: filipinoBadwords.array });
+const natural = require('natural');
+const tokenizer = new natural.SentenceTokenizer();
+
+const isSentence = (str) => {
+  const sentences = tokenizer.tokenize(str);
+  return sentences.length === 1 && sentences[0] === str;
+}
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -45,145 +52,177 @@ router.post('/generatereport', (req, res) => {
     // console.log(data);
     // console.log(alias);
     // console.log(filter.isProfane(`${comment}`));
+    var comment_msg = '';
+    var comment_data = '';
+    if (isSentence(comment)) {
+      comment_msg += `Your comment it is not a sentence\n`;
+      comment_data += `${comment}\n`
+    }
 
-    if (filter.isProfane(`${comment}`) || filter.isProfane(`${goodcomment}`) || filter.isProfane(`${improvementcomment}`)) {
-      console.log('Foul words detected!');
+    if (isSentence(goodcomment)) {
+      comment_msg += `Your comment it is not a sentence\n`;
+      comment_data += `${goodcomment}\n`
+    }
+
+    if (isSentence(improvementcomment)) {
+      comment_msg += `Your comment it is not a sentence\n`;
+      comment_data += `${improvementcomment}\n`
+    }
+
+    if (comment_msg != '') {
+      console.log('Not sentence');
       return res.json({
-        msg: 'badwords'
+        msg: 'notsentence',
+        data: comment_data
       })
     }
     else {
-      console.log('No, foul words detected!');
-      transaction_evaluation_comment.push([
-        year,
-        supervisorid,
-        alias,
-        comment,
-        status,
-      ])
 
-      transaction_evaluation_goodcomment.push([
-        year,
-        supervisorid,
-        alias,
-        goodcomment,
-        currentdate,
-      ])
-
-      transaction_evaluation_improvementcomment.push([
-        year,
-        supervisorid,
-        alias,
-        improvementcomment,
-        currentdate,
-      ])
-
-      var badcomment = '';
-      data.forEach((key, item) => {
-
-        if (filter.isProfane(`${key.comment}`)) {
-          badcomment += `${key.criteria} ${key.question} with comment of "${key.comment}"\n`;
-        }
-        else {
-          transaction_evaluation.push([
-            year,
-            userid,
-            supervisorid,
-            alias,
-            key.criteria,
-            key.question,
-            key.grade,
-            key.comment,
-            status,
-          ]);
-        }
-      });
-
-      if (badcomment != '') {
+      if (filter.isProfane(`${comment}`) || filter.isProfane(`${goodcomment}`) || filter.isProfane(`${improvementcomment}`)) {
         console.log('Foul words detected!');
         return res.json({
-          msg: 'badcomment',
-          data: badcomment
+          msg: 'badwords'
         })
       }
       else {
-        Insert_TransactionEvaluation(transaction_evaluation)
-          .then(result => {
-            console.log(result);
+        console.log('No, foul words detected!');
+        transaction_evaluation_comment.push([
+          year,
+          supervisorid,
+          alias,
+          comment,
+          status,
+        ])
 
-            Insert_TransactionEvaluationComment(transaction_evaluation_comment)
-              .then(result => {
-                console.log(result);
+        transaction_evaluation_goodcomment.push([
+          year,
+          supervisorid,
+          alias,
+          goodcomment,
+          currentdate,
+        ])
 
-                Insert_TransactionGoodComment(transaction_evaluation_goodcomment)
-                  .then(result => {
-                    console.log(result);
+        transaction_evaluation_improvementcomment.push([
+          year,
+          supervisorid,
+          alias,
+          improvementcomment,
+          currentdate,
+        ])
 
-                    Insert_TransactionNeedImprovementComment(transaction_evaluation_improvementcomment)
-                      .then(result => {
-                        console.log(result);
+        let badcomment = '';
+        var data_length = data.length;
+        var count = 0;
+        data.forEach((key, item) => {
+          console.log(key.comment)
+          if (filter.isProfane(`${key.comment}`)) {
+            badcomment += `${key.criteria} ${key.question} with comment of "${key.comment}"\n`;
+          }
+          else {
+            transaction_evaluation.push([
+              year,
+              userid,
+              supervisorid,
+              alias,
+              key.criteria,
+              key.question,
+              key.grade,
+              key.comment,
+              status,
+            ]);
+          }
+          count += 1;
+          if (data_length == count) {
 
-                        Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
-                          .then(result => {
-                            console.log(result)
-
-                            let sql = `select * from transaction_participant_subjects 
-              where ps_year='${year}'
-              and ps_participantid='${userid}'
-              and ps_status='${active}'`;
-
-                            mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
-                              if (err) console.error(err);
-
-                              if (result.length != 0) {
-                                return res.json({
-                                  msg: 'success'
-                                })
-                              } else {
-
-                                Update_ParticipantDetails(status, year, userid)
-                                  .then(result => {
-                                    console.log(result);
-                                    res.json({
-                                      msg: 'done'
-                                    })
-                                  })
-                                  .catch(error => {
-                                    res.json({
-                                      msg: error
-                                    })
-                                  })
-                              }
-                            })
-                          })
-                          .catch(error => {
-                            res.json({
-                              msg: error
-                            })
-                          })
-                      })
-                      .catch(error => {
-                        res.json({
-                          msg: error
-                        })
-                      })
-                  })
-                  .catch(error => {
-                    res.json({
-                      msg: error
-                    })
-                  })
+            console.log(badcomment);
+            if (badcomment != '') {
+              console.log('Foul words detected!');
+              return res.json({
+                msg: 'badcomment',
+                data: badcomment
               })
-          })
-          .catch(error => {
-            res.json({
-              msg: error
-            })
-          })
+            }
+            else {
+              Insert_TransactionEvaluation(transaction_evaluation)
+                .then(result => {
+                  console.log(result);
+
+                  Insert_TransactionEvaluationComment(transaction_evaluation_comment)
+                    .then(result => {
+                      console.log(result);
+
+                      Insert_TransactionGoodComment(transaction_evaluation_goodcomment)
+                        .then(result => {
+                          console.log(result);
+
+                          Insert_TransactionNeedImprovementComment(transaction_evaluation_improvementcomment)
+                            .then(result => {
+                              console.log(result);
+
+                              Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
+                                .then(result => {
+                                  console.log(result)
+
+                                  let sql = `select * from transaction_participant_subjects 
+                    where ps_year='${year}'
+                    and ps_participantid='${userid}'
+                    and ps_status='${active}'`;
+
+                                  mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
+                                    if (err) console.error(err);
+
+                                    if (result.length != 0) {
+                                      return res.json({
+                                        msg: 'success'
+                                      })
+                                    } else {
+
+                                      Update_ParticipantDetails(status, year, userid)
+                                        .then(result => {
+                                          console.log(result);
+                                          res.json({
+                                            msg: 'done'
+                                          })
+                                        })
+                                        .catch(error => {
+                                          res.json({
+                                            msg: error
+                                          })
+                                        })
+                                    }
+                                  })
+                                })
+                                .catch(error => {
+                                  res.json({
+                                    msg: error
+                                  })
+                                })
+                            })
+                            .catch(error => {
+                              res.json({
+                                msg: error
+                              })
+                            })
+                        })
+                        .catch(error => {
+                          res.json({
+                            msg: error
+                          })
+                        })
+                    })
+                })
+                .catch(error => {
+                  res.json({
+                    msg: error
+                  })
+                })
+            }
+          }
+
+        });
       }
-
-
     }
+
   } catch (error) {
     res.json({
       msg: error
