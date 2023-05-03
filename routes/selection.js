@@ -15,6 +15,11 @@ const isSentence = (str) => {
   return sentences.length === 1 && sentences[0] === str;
 }
 
+const isWord = (input) => {
+  const regex = /^[A-Za-z]+$/; // regex that matches only alphabetical characters
+  return regex.test(input);
+};
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('selection', {
@@ -29,7 +34,6 @@ router.get('/', function (req, res, next) {
 });
 
 module.exports = router;
-
 
 router.post('/generatereport', (req, res) => {
   try {
@@ -54,19 +58,22 @@ router.post('/generatereport', (req, res) => {
     // console.log(filter.isProfane(`${comment}`));
     var comment_msg = '';
     var comment_data = '';
-    if (isSentence(comment)) {
+    if (!isSentence(comment)) {
       comment_msg += `Your comment it is not a sentence\n`;
-      comment_data += `${comment}\n`
+      comment_data += `${comment}\n`;
+      console.log('isSentence: Comment');
     }
 
-    if (isSentence(goodcomment)) {
+    if (!isSentence(goodcomment)) {
       comment_msg += `Your comment it is not a sentence\n`;
       comment_data += `${goodcomment}\n`
+      console.log('isSentence: Good Comment');
     }
 
-    if (isSentence(improvementcomment)) {
+    if (!isSentence(improvementcomment)) {
       comment_msg += `Your comment it is not a sentence\n`;
       comment_data += `${improvementcomment}\n`
+      console.log('isSentence: Improvement Comment');
     }
 
     if (comment_msg != '') {
@@ -229,7 +236,6 @@ router.post('/generatereport', (req, res) => {
     })
   }
 })
-
 
 //#region FUNCTIONS
 function Insert_TransactionEvaluation(data) {

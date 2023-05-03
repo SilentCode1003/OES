@@ -377,7 +377,7 @@
                 message += 'Please note any areas where the person needs to improve.\n'
             }
 
-            if (message != '') { warning('No Grade', `${message}`); }
+            if (message != '') { warning('Comments', `${message}`); }
             else {
                 console.log(dataRaw);
 
@@ -402,7 +402,7 @@
                                 warning('Bad Words', `${result.data}`);
                             }
                             if(result.msg == 'notsentence'){
-                                warning('Bad Words', `${result.data}`);
+                                warning('Not a Sentence', `${result.data}`);
                             }
                         }
                         else {
