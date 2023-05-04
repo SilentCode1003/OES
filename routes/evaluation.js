@@ -455,13 +455,31 @@ router.post('/getallcomments', (req, res) => {
       var index = 1;
       var result_length = result.length;
 
-      console.log(`ALL COMMENTS: ${result}`);
+      console.log(`ALL COMMENTS: ${result} RESULT LENGTH: ${result_length}`);
 
-      result.forEach((key, item) => {
-        GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {
-          if (accounttype == 'SUPERADMIN') {
+      if (result_length != 0) {
+        result.forEach((key, item) => {
+          GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {
+            if (accounttype == 'SUPERADMIN') {
 
-            if (position == 'President' || position == 'Department Head') {
+              if (position == 'President' || position == 'Department Head') {
+                data.push({
+                  allias: key.allias,
+                  goodcomment: key.goodcomment,
+                  needimprovement: key.needimprovement,
+                  summarycomment: key.summarycomment,
+                })
+              }
+              else {
+                data.push({
+                  allias: employeename,
+                  goodcomment: key.goodcomment,
+                  needimprovement: key.needimprovement,
+                  summarycomment: key.summarycomment,
+                })
+              }
+            }
+            else {
               data.push({
                 allias: key.allias,
                 goodcomment: key.goodcomment,
@@ -469,35 +487,25 @@ router.post('/getallcomments', (req, res) => {
                 summarycomment: key.summarycomment,
               })
             }
-            else {
-              data.push({
-                allias: employeename,
-                goodcomment: key.goodcomment,
-                needimprovement: key.needimprovement,
-                summarycomment: key.summarycomment,
+
+            if (index == result_length) {
+              res.json({
+                msg: 'success',
+                data: data
               })
             }
-          }
-          else {
-            data.push({
-              allias: key.allias,
-              goodcomment: key.goodcomment,
-              needimprovement: key.needimprovement,
-              summarycomment: key.summarycomment,
-            })
-          }
 
-          if (index == result_length) {
-            res.json({
-              msg: 'success',
-              data: data
-            })
-          }
-
-          console.log(`${result_length} ${index}`);
-          index += 1;
-        });
-      })
+            console.log(`${result_length} ${index}`);
+            index += 1;
+          });
+        })
+      }
+      else {
+        res.json({
+          msg: 'success',
+          data: data
+        })
+      }
     })
 
   } catch (error) {
@@ -543,12 +551,30 @@ router.post('/getquestioncomment', (req, res) => {
       var index = 1;
       var result_length = result.length;
 
-      console.log(`QUESTIONS: ${result}`);
+      console.log(`QUESTIONS: ${result_length}`);
 
-      result.forEach((key, item) => {
-        GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {
-          if (accounttype == 'SUPERADMIN') {
-            if (position == 'President' || position == 'Department Head') {
+      if (result_length != 0) {
+        result.forEach((key, item) => {
+          GetEmployeeName(helper.GenerateNumber(key.allias)).then(employeename => {
+            if (accounttype == 'SUPERADMIN') {
+              if (position == 'President' || position == 'Department Head') {
+                data.push({
+                  allias: key.allias,
+                  criteria: key.criteria,
+                  question: key.question,
+                  comment: key.comment,
+                })
+              }
+              else {
+                data.push({
+                  allias: employeename,
+                  criteria: key.criteria,
+                  question: key.question,
+                  comment: key.comment,
+                })
+              }
+            }
+            else {
               data.push({
                 allias: key.allias,
                 criteria: key.criteria,
@@ -556,37 +582,26 @@ router.post('/getquestioncomment', (req, res) => {
                 comment: key.comment,
               })
             }
-            else {
-              data.push({
-                allias: employeename,
-                criteria: key.criteria,
-                question: key.question,
-                comment: key.comment,
+
+            if (index == result_length) {
+              res.json({
+                msg: 'success',
+                data: data
               })
             }
-          }
-          else {
-            data.push({
-              allias: key.allias,
-              criteria: key.criteria,
-              question: key.question,
-              comment: key.comment,
-            })
-          }
 
-          if (index == result_length) {
-            res.json({
-              msg: 'success',
-              data: data
-            })
-          }
-
-          console.log(`${result_length} ${index}`);
-          index += 1;
-        });
-      })
+            console.log(`${result_length} ${index}`);
+            index += 1;
+          });
+        })
+      }
+      else {
+        res.json({
+          msg: 'success',
+          data: data
+        })
+      }
     })
-
   } catch (error) {
     res.json({
       msg: error
