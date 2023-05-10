@@ -9,6 +9,7 @@
         LoadParticipants()
         LoadSummary();
         LoadRankings();
+        LoadDone();
 
         var summaryModal = document.getElementById("summaryModal");
         var questionModalSpan = document.getElementById("questionModalSpan");
@@ -1396,7 +1397,6 @@
 
         function LoadParticipants() {
             showloader();
-
             var table = $('#it-participants-table').DataTable({
                 'destroy': true,
                 'processing': true,
@@ -1421,6 +1421,7 @@
                 'columns': [
                     { data: 'allias' },
                     { data: 'status' },
+                    { data: 'remaining' },
                 ],
                 initComplete: function () {
                     console.log('init complete');
@@ -1453,6 +1454,7 @@
                 'columns': [
                     { data: 'allias' },
                     { data: 'status' },
+                    { data: 'remaining' },
                 ],
                 initComplete: function () {
                     console.log('init complete');
@@ -1485,6 +1487,7 @@
                 'columns': [
                     { data: 'allias' },
                     { data: 'status' },
+                    { data: 'remaining' },
                 ],
                 initComplete: function () {
                     console.log('init complete');
@@ -1565,6 +1568,18 @@
 
             $.ajax({
                 type: "GET",
+                url: "/evaluation/getdoneparticipant",
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById('doneparticipant').textContent = result.data;
+                },
+                error: function (result) {
+                    alert('error: ' + result.data);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
                 url: "/employees/getitcount",
                 success: function (result) {
                     console.log(result);
@@ -1637,6 +1652,104 @@
 
         }
 
+        function LoadDone() {
+            showloader();
+            var table = $('#it-participants-done-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'POST',
+                'ajax': {
+                    'type': 'POST',
+                    'url': '/evaluation/loaddoneparticipants',
+                    'data': {
+                        department: 'IT'
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'allias' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+
+            showloader();
+            var table2 = $('#cabling-participants-done-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'POST',
+                'ajax': {
+                    'type': 'POST',
+                    'url': '/evaluation/loaddoneparticipants',
+                    'data': {
+                        department: 'CABLING'
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'allias' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+
+            showloader();
+            var table3 = $('#admin-participants-done-table').DataTable({
+                'destroy': true,
+                'processing': true,
+                'serverSide': true,
+                'paging': false,
+                'searching': false,
+                'info': false,
+                'scrollY': 400,
+                'scrollCollapse': true,
+                'serverMethod': 'POST',
+                'ajax': {
+                    'type': 'POST',
+                    'url': '/evaluation/loaddoneparticipants',
+                    'data': {
+                        department: 'ADMIN'
+                    }
+                },
+                'columnDefs': [{
+                    targets: 1,
+                    className: 'td-indent',
+                }],
+                'columns': [
+                    { data: 'allias' },
+                    { data: 'status' },
+                ],
+                initComplete: function () {
+                    console.log('init complete');
+                    hideload();
+                }
+            })
+
+        }
         var inactiveparticipantdiv = document.getElementById("inactiveparticipant");
 
         inactiveparticipant.addEventListener("click", function () {

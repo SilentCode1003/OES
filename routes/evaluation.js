@@ -26,20 +26,35 @@ router.post('/loadparticipants', (req, res) => {
   try {
     let year = helper.GetCurrentYear();
     let department = req.body.department;
-    let sql = `select te_alias as allias, pd_status as status
-            from participant_details
-            inner join transaction_evaluation on participant_details.pd_participantid = transaction_evaluation.te_participantid
-            inner join master_employee on transaction_evaluation.te_participantid = master_employee.me_employeeid
-            where pd_year='${year}'
-            and me_department='${department}'
-            group by pd_participantid`;
+    let sql = `select 
+    pd_participantid as allias,
+    pd_status as status,
+    (select count(*) from transaction_participant_subjects where not ps_status='DONE' and ps_participantid = participant_details.pd_participantid) as remaining
+    from participant_details
+    inner join transaction_participant_subjects on participant_details.pd_participantid = transaction_participant_subjects.ps_participantid
+    inner join master_employee on transaction_participant_subjects.ps_participantid = master_employee.me_employeeid
+    where pd_year='${year}'
+    and me_department='${department}'
+    and not pd_status='DONE'
+    group by pd_participantid
+    order by pd_participantid`;
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.log(err);
 
+      let data = [];
+
+      result.forEach((key, item) => {
+        data.push({
+          allias: helper.GenerateCode(key.allias),
+          status: key.status,
+          remaining: key.remaining
+        })
+      })
+
       res.json({
         msg: 'success',
-        data: result
+        data: data
       })
     })
   } catch (error) {
@@ -670,6 +685,31 @@ router.get('/getinactiveparticipant', (req, res) => {
   }
 })
 
+router.get('/getdoneparticipant', (req, res) => {
+  try {
+    let status = dictionary.GetValue(dictionary.D());
+    let currentyear = helper.GetCurrentYear();
+    let sql = `select count(*) as totalparticipants from participant_details where pd_year='${currentyear}' and pd_status='${status}'`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.error('Error: ', err);
+
+      console.log(result[0].totalparticipants);
+
+      res.json({
+        msg: 'success',
+        data: result[0].totalparticipants
+      })
+    })
+
+
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
 router.post('/getinactivenames', (req, res) => {
   try {
     let department = req.body.department;
@@ -744,6 +784,46 @@ router.post('/getrespondents', (req, res) => {
       })
     })
 
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+})
+
+router.post('/loaddoneparticipants', (req, res) => {
+  try {
+    let year = helper.GetCurrentYear();
+    let department = req.body.department;
+    let sql = `select 
+    pd_participantid as allias,
+    pd_status as status
+    from participant_details
+    inner join transaction_participant_subjects on participant_details.pd_participantid = transaction_participant_subjects.ps_participantid
+    inner join master_employee on transaction_participant_subjects.ps_participantid = master_employee.me_employeeid
+    where pd_year='${year}'
+    and me_department='${department}'
+    and pd_status='DONE'
+    group by pd_participantid
+    order by pd_participantid`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) console.log(err);
+
+      let data = [];
+
+      result.forEach((key, item) => {
+        data.push({
+          allias: helper.GenerateCode(key.allias),
+          status: key.status,
+        })
+      })
+
+      res.json({
+        msg: 'success',
+        data: data
+      })
+    })
   } catch (error) {
     res.json({
       msg: error
