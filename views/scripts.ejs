@@ -1,6 +1,6 @@
 <!-- LOADER -->
 <div class="loader-wrapper">
-    <span class="loader"><span class="loader-inner"></span></span>
+  <span class="loader"><span class="loader-inner"></span></span>
 </div>
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
@@ -31,96 +31,122 @@
 <script src="/javascripts/xlsx.mini.min.js"></script>
 
 <!-- DATETIMEPICKER -->
-<link rel="stylesheet" type="text/css" href="/stylesheets/DateTimePicker.min.css" />
-<script type="text/javascript" src="/javascripts/DateTimePicker.min.js"></script>
-
-
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="/stylesheets/DateTimePicker.min.css"
+/>
+<script
+  type="text/javascript"
+  src="/javascripts/DateTimePicker.min.js"
+></script>
 
 <script>
-    let accounttype = '<%= accounttype%>';
+  let accounttype = "<%= accounttype%>";
 
-    if (accounttype == 'USER') {
-        $("#admin").toggle(0, function () {
-        });
-        // $("#hr").toggle(0, function () {
-        // });
-        // $("#superadmin").toggle(0, function () {
-        // });
-        // $("#accordionSidebar").toggle(0, function () {
-        // });
-    }
+  if (accounttype == "USER") {
+    $("#admin").toggle(0, function () {});
+    // $("#hr").toggle(0, function () {
+    // });
+    // $("#superadmin").toggle(0, function () {
+    // });
+    // $("#accordionSidebar").toggle(0, function () {
+    // });
+  }
 
-    if (accounttype == 'HR') {
-        $("#superadmin").toggle(0, function () {
-        });
-    } 
+  if (accounttype == "HR") {
+    $("#superadmin").toggle(0, function () {});
+  }
 
-    if (accounttype == 'SUPERADMIN') {
-        $("#hr").toggle(0, function () {
-        });
-    } 
+  if (accounttype == "SUPERADMIN") {
+    $("#hr").toggle(0, function () {});
+  }
 
-    $(document).on('click', "#logoutBtn", function () {
-        $.ajax({
-            type: "POST",
-            url: "/logout",
-            success: function (result) {
-                console.log(result);
-                if (result.msg == 'success') {
-                    success('Logout', 'Logout successfully...')
-                    location.replace("/");
-                }
-                else {
-                    error('ID & Password not match...');
-                }
-            },
-            error: function (result) {
-                error(result.msg);
-            }
-        });
+  $(document).on("click", "#logoutBtn", function () {
+    $.ajax({
+      type: "POST",
+      url: "/logout",
+      success: function (result) {
+        console.log(result);
+        if (result.msg == "success") {
+          success("Logout", "Logout successfully...");
+          location.replace("/");
+        } else {
+          error("ID & Password not match...");
+        }
+      },
+      error: function (result) {
+        error(result.msg);
+      },
     });
+  });
 
-    function showloader() {
-        console.log('show loader');
-        $(".loader-wrapper").show();
-    }
+  function showloader() {
+    console.log("show loader");
+    $(".loader-wrapper").show();
+  }
 
-    function hideload() {
-        console.log('hide loader');
-        $(".loader-wrapper").hide();
-    }
+  function hideload() {
+    console.log("hide loader");
+    $(".loader-wrapper").hide();
+  }
 
-    function success(title, text) {
-        swal({
-            title: title,
-            text: text,
-            icon: "success",
-        });
-    }
-   
-    function warning(title, text) {
-        swal({
-            title: title,
-            text: text,
-            icon: "warning",
-        });
-    }
-   
-    function info(title, text) {
-        swal({
-            title: title,
-            text: text,
-            icon: "info",
-        });
-    }
-    
-    function error(err) {
-        swal({
-            title: "Error!",
-            text: err,
-            icon: "error",
-        });
-    }
+  function success(title, text) {
+    swal({
+      title: title,
+      text: text,
+      icon: "success",
+    });
+  }
 
-    hideload();
+  function warning(title, text) {
+    swal({
+      title: title,
+      text: text,
+      icon: "warning",
+    });
+  }
+
+  function info(title, text) {
+    swal({
+      title: title,
+      text: text,
+      icon: "info",
+    });
+  }
+
+  function error(err) {
+    swal({
+      title: "Error!",
+      text: err,
+      icon: "error",
+    });
+  }
+
+  function closemodal(message) {
+    return new Promise((resolve) => {
+      swal(message, {
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: false,
+            visible: true,
+            className: "",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "",
+            closeModal: true,
+          },
+        },
+      }).then((result) => {
+        resolve(result);
+      });
+    });
+  }
+
+  hideload();
 </script>
