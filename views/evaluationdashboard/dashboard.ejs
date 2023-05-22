@@ -1,407 +1,453 @@
 <div class="row">
-    <div class="col-xl-6 col-lg-6 col-sm-6">
-        <h3>EVALUATION SUBJECTS</h3>
-        <!-- <select class="entry-input" name="yearlist" id="yearlist">
+  <div class="col-xl-6 col-lg-6 col-sm-6 table-responsive">
+    <h3>EVALUATION SUBJECTS</h3>
+    <!-- <select class="entry-input" name="yearlist" id="yearlist">
             <option value="-">YEAR</option>
         </select> -->
-        <table id="summary-table">
-            <thead>
-                <th class="criteria">ID</th>
-                <th class="criteria">NAME</th>
-                <th class="criteria">DEPARTMENT</th>
-                <th class="criteria">POSITION</th>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-    <div class="col-xl-6 col-lg-6 col-sm-6">
-        <div class="row">
-            <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body card-monitor">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    EMPLOYEES</div>
-                                <div id="employee" class="h5 mb-0 font-weight-bold"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body card-monitor">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    ACTIVE</div>
-                                <div id="participant" class="h5 mb-0 font-weight-bold"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
+    <table id="summary-table" class="table table-hover table-bordered">
+      <thead class="table-dark">
+        <th class="criteria">ID</th>
+        <th class="criteria">NAME</th>
+        <th class="criteria">DEPARTMENT</th>
+        <th class="criteria">POSITION</th>
+      </thead>
+      <tbody class="table-light"></tbody>
+    </table>
+  </div>
+  <div class="col-xl-6 col-lg-6 col-sm-6">
+    <div class="row">
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  EMPLOYEES
                 </div>
+                <div id="employee" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
             </div>
-
-            <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body card-monitor">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    INACTIVE</div>
-                                <div id="inactiveparticipant" class="h5 mb-0 font-weight-bold"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body card-monitor">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    DONE</div>
-                                <div id="doneparticipant" class="h5 mb-0 font-weight-bold"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
+      </div>
 
-        <div class="row">
-            <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body  card-monitor">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    IT</div>
-                                <div id="itemployee" class="h5 mb-0 font-weight-bold"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-user-shield fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  ACTIVE
                 </div>
+                <div id="participant" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
             </div>
-
-            <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body  card-monitor">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    CABLING</div>
-                                <div id="cablingemployee" class="h5 mb-0 font-weight-bold"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-user-ninja fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body  card-monitor">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    ADMIN</div>
-                                <div id="adminemployee" class="h5 mb-0 font-weight-bold"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-user-tie fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  INACTIVE
+                </div>
+                <div
+                  id="inactiveparticipant"
+                  class="h5 mb-0 font-weight-bold"
+                ></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  DONE
+                </div>
+                <div
+                  id="doneparticipant"
+                  class="h5 mb-0 font-weight-bold"
+                ></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  IT
+                </div>
+                <div id="itemployee" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-user-shield fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  CABLING
+                </div>
+                <div
+                  id="cablingemployee"
+                  class="h5 mb-0 font-weight-bold"
+                ></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-user-ninja fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  ADMIN
+                </div>
+                <div id="adminemployee" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-user-tie fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<hr class="hr-black">
+<hr class="hr-black" />
 <div class="row">
-
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                <h6 class="m-0 font-weight-bold ">IT TEAMLEAD RANKING</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-bar chart-content">
-                    <canvas id="ITrankingBarChart"></canvas>
-                </div>
-            </div>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+      >
+        <h6 class="m-0 font-weight-bold">IT TEAMLEAD RANKING</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="chart-bar chart-content">
+          <canvas id="ITrankingBarChart"></canvas>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                <h6 class="m-0 font-weight-bold ">CABLING TEAMLEAD RANKING</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-bar chart-content">
-                    <canvas id="CablingrankingBarChart"></canvas>
-                </div>
-            </div>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+      >
+        <h6 class="m-0 font-weight-bold">CABLING TEAMLEAD RANKING</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="chart-bar chart-content">
+          <canvas id="CablingrankingBarChart"></canvas>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                <h6 class="m-0 font-weight-bold ">ADMIN OFFICERS RANKING</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-bar chart-content">
-                    <canvas id="AdminrankingBarChart"></canvas>
-                </div>
-            </div>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+      >
+        <h6 class="m-0 font-weight-bold">ADMIN OFFICERS RANKING</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="chart-bar chart-content">
+          <canvas id="AdminrankingBarChart"></canvas>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<hr class="hr-black">
+<hr class="hr-black" />
 <div class="row">
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>IT ACTIVE PARTICIPANTS</h3>
-        <table id="it-participants-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-                <th>REMAINING</th>
-            </thead>
-            <tbody></tbody>
-        </table>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>IT ACTIVE PARTICIPANTS</h3>
+    <div class="table-responsive">
+      <table id="it-participants-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+          <th>REMAINING</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>CABLING ACTIVE PARTICIPANTS</h3>
-        <table id="cabling-participants-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-                <th>REMAINING</th>
-            </thead>
-            <tbody></tbody>
-        </table>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>CABLING ACTIVE PARTICIPANTS</h3>
+    <div class="table-responsive">
+      <table id="cabling-participants-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+          <th>REMAINING</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>ADMIN ACTIVE PARTICIPANTS</h3>
-        <table id="admin-participants-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-                <th>REMAINING</th>
-            </thead>
-            <tbody></tbody>
-        </table>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>ADMIN ACTIVE PARTICIPANTS</h3>
+    <div class="table-responsive">
+      <table id="admin-participants-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+          <th>REMAINING</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
     </div>
+  </div>
 </div>
-<hr class="hr-black">
+<hr class="hr-black" />
 <div class="row">
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>IT DONE PARTICIPANTS</h3>
-        <table id="it-participants-done-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-            </thead>
-            <tbody></tbody>
-        </table>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>IT DONE PARTICIPANTS</h3>
+    <div class="table-responsive">
+      <table id="it-participants-done-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>CABLING DONE PARTICIPANTS</h3>
-        <table id="cabling-participants-done-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-            </thead>
-            <tbody></tbody>
-        </table>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>CABLING DONE PARTICIPANTS</h3>
+    <div class="table-responsive">
+      <table id="cabling-participants-done-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="col-xl-4 col-lg-4 col-sm-4">
-        <h3>ADMIN DONE PARTICIPANTS</h3>
-        <table id="admin-participants-done-table">
-            <thead>
-                <th>ALLIAS</th>
-                <th>STATUS</th>
-            </thead>
-            <tbody></tbody>
-        </table>
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>ADMIN DONE PARTICIPANTS</h3>
+    <div class="table-responsive">
+      <table id="admin-participants-done-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
     </div>
+  </div>
 </div>
 
 <!-- The Modal -->
 <div id="summaryModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="questionModalSpan" class="close">&times;</span>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="questionModalSpan" class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <div class="table-responsive">
+            <table id="modal-summary-table" class="table table-bordered">
+              <thead class="table-dark">
+                <th>ID</th>
+                <th>NAME</th>
+                <th>E</th>
+                <th>G</th>
+                <th>S</th>
+                <th>N</th>
+                <th>U</th>
+                <th>O</th>
+              </thead>
+              <tbody class="table-light"></tbody>
+            </table>
+          </div>
         </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="modal-summary-table">
-                        <thead>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>E</th>
-                            <th>G</th>
-                            <th>S</th>
-                            <th>N</th>
-                            <th>U</th>
-                            <th>O</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="comment-table">
-                        <thead>
-                            <th>ALLIAS</th>
-                            <th>COMMENT</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <hr>
-            <div class="row">
-                <div class="col-xl-8 col-lg-8 col-sm-8">
-                    <table id="modal-details-table">
-                        <thead>
-                            <th class="criteria">CRITERIA</th>
-                            <th class="question">QUESTION</th>
-                            <th>GRADE</th>
-                            <th>COUNT</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <table id="comment-table">
+            <thead>
+              <th>ALLIAS</th>
+              <th>COMMENT</th>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
+      </div>
 
-        <!-- <div id="modal-button-container" class="center-content">
+      <hr />
+      <div class="row">
+        <div class="col-xl-8 col-lg-8 col-sm-8">
+          <table id="modal-details-table">
+            <thead>
+              <th class="criteria">CRITERIA</th>
+              <th class="question">QUESTION</th>
+              <th>GRADE</th>
+              <th>COUNT</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="modal-button-container" class="center-content">
             <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
             <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
         </div> -->
-    </div>
+  </div>
 </div>
 
 <!-- The Modal -->
 <div id="adminsummaryModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="adminsummaryModalSpan" class="close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="admin-modal-summary-table">
-                        <thead>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>O</th>
-                            <th>V</th>
-                            <th>S</th>
-                            <th>I</th>
-                            <th>P</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div class="entry-input">
-                        <button class="approve-btn" id="viewsummary" name="viewsummary">VIEW</button>
-                    </div>
-                </div>
-
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="admin-comment-table">
-                        <thead>
-                            <th>ALLIAS</th>
-                            <th>GOOD COMMENT</th>
-                            <th>NEED IMPROVEMENT COMMENT</th>
-                            <th>COMMENT</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-
-                    <div class="entry-input">
-                        <button class="approve-btn" id="viewcomment" name="viewcomment">VIEW</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <div class="card shadow mb-8">
-                        <!-- Card Header - Dropdown -->
-                        <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                            <h6 class="m-0 font-weight-bold ">RATINGS</h6>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-bar chart-content">
-                                <canvas id="ratingBarChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="admin-comment-question-table">
-                        <thead>
-                            <th>ALLIAS</th>
-                            <th>CRITERIA</th>
-                            <th>QUESTION</th>
-                            <th>COMMENT</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-
-                    <div class="entry-input">
-                        <button class="approve-btn" id="viewquestioncomment" name="viewquestioncomment">VIEW</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="adminsummaryModalSpan" class="close">&times;</span>
     </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <table id="admin-modal-summary-table">
+            <thead>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>O</th>
+              <th>V</th>
+              <th>S</th>
+              <th>I</th>
+              <th>P</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="entry-input">
+            <button class="approve-btn" id="viewsummary" name="viewsummary">
+              VIEW
+            </button>
+          </div>
+        </div>
 
-    <!-- <div id="modal-button-container" class="center-content">
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <table id="admin-comment-table">
+            <thead>
+              <th>ALLIAS</th>
+              <th>GOOD COMMENT</th>
+              <th>NEED IMPROVEMENT COMMENT</th>
+              <th>COMMENT</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div class="entry-input">
+            <button class="approve-btn" id="viewcomment" name="viewcomment">
+              VIEW
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <div class="card shadow mb-8">
+            <!-- Card Header - Dropdown -->
+            <div
+              class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+            >
+              <h6 class="m-0 font-weight-bold">RATINGS</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="chart-bar chart-content">
+                <canvas id="ratingBarChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <table id="admin-comment-question-table">
+            <thead>
+              <th>ALLIAS</th>
+              <th>CRITERIA</th>
+              <th>QUESTION</th>
+              <th>COMMENT</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div class="entry-input">
+            <button
+              class="approve-btn"
+              id="viewquestioncomment"
+              name="viewquestioncomment"
+            >
+              VIEW
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="modal-button-container" class="center-content">
             <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
             <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
         </div> -->
@@ -409,85 +455,109 @@
 
 <!-- The Modal -->
 <div id="supervisorsummaryModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="supervisorsummaryModalSpan" class="close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="supervisor-modal-summary-table">
-                        <thead>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>E</th>
-                            <th>G</th>
-                            <th>S</th>
-                            <th>N</th>
-                            <th>U</th>
-                            <th>O</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div class="entry-input">
-                        <button class="approve-btn" id="viewsummary" name="viewsummary">VIEW</button>
-                    </div>
-                </div>
-
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="supervisor-comment-table">
-                        <thead>
-                            <th>ALLIAS</th>
-                            <th>GOOD COMMENT</th>
-                            <th>NEED IMPROVEMENT COMMENT</th>
-                            <th>COMMENT</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-
-                    <div class="entry-input">
-                        <button class="approve-btn" id="viewcomment" name="viewcomment">VIEW</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <div class="card shadow mb-8">
-                        <!-- Card Header - Dropdown -->
-                        <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title">
-                            <h6 class="m-0 font-weight-bold ">RATINGS</h6>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-bar chart-content">
-                                <canvas id="supervisorratingBarChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="supervisor-comment-question-table">
-                        <thead>
-                            <th>ALLIAS</th>
-                            <th>CRITERIA</th>
-                            <th>QUESTION</th>
-                            <th>COMMENT</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-
-                    <div class="entry-input">
-                        <button class="approve-btn" id="viewquestioncomment" name="viewquestioncomment">VIEW</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="supervisorsummaryModalSpan" class="close">&times;</span>
     </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <div class="table-resposive">
+            <table
+              id="supervisor-modal-summary-table"
+              class="table table-bordered"
+            >
+              <thead class="table-dark">
+                <th>ID</th>
+                <th>NAME</th>
+                <th>E</th>
+                <th>G</th>
+                <th>S</th>
+                <th>N</th>
+                <th>U</th>
+                <th>O</th>
+              </thead>
+              <tbody class="table-light"></tbody>
+            </table>
+          </div>
 
-    <!-- <div id="modal-button-container" class="center-content">
+          <div class="entry-input">
+            <button class="approve-btn" id="viewsummary" name="viewsummary">
+              VIEW
+            </button>
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <div class="table-responsive">
+            <table id="supervisor-comment-table" class="table table-bordered">
+              <thead class="table-dark">
+                <th>ALLIAS</th>
+                <th>GOOD COMMENT</th>
+                <th>NEED IMPROVEMENT COMMENT</th>
+                <th>COMMENT</th>
+              </thead>
+              <tbody class="table-light"></tbody>
+            </table>
+          </div>
+
+          <div class="entry-input">
+            <button class="approve-btn" id="viewcomment" name="viewcomment">
+              VIEW
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <div class="card shadow mb-8">
+            <!-- Card Header - Dropdown -->
+            <div
+              class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+            >
+              <h6 class="m-0 font-weight-bold">RATINGS</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="chart-bar chart-content">
+                <canvas id="supervisorratingBarChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-sm-6">
+          <div class="table-responsive">
+            <table
+              id="supervisor-comment-question-table"
+              class="table table-bordered"
+            >
+              <thead class="table-dark">
+                <th>ALLIAS</th>
+                <th>CRITERIA</th>
+                <th>QUESTION</th>
+                <th>COMMENT</th>
+              </thead>
+              <tbody class="table-light"></tbody>
+            </table>
+          </div>
+
+          <div class="entry-input">
+            <button
+              class="approve-btn"
+              id="viewquestioncomment"
+              name="viewquestioncomment"
+            >
+              VIEW
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="modal-button-container" class="center-content">
             <a class="success btn-glow" href="/EquipmentPullout/returnReport"> GENERATE RETURN </a>
             <button class="btn-glow-modal" id="submitBtn" name="submitBtn">SUBMIT</button>
         </div> -->
@@ -495,678 +565,749 @@
 
 <!-- The Modal -->
 <div id="printsummaryModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="printsummarySpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="PrintArea" name="PrintArea" class="print-container">
-            <div class="modal-header">
-
-            </div>
-            <div class="modal-body">
-                <div class="outer">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-xl-1 col-lg-1 col-sm-1">
-                                <img class="logo" style="width: 100; height: auto; border-radius: 80px;"
-                                    src="/images/img/logo.jpg" alt="...">
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-sm">
-
-                                <div class="modal-print-background">
-                                    <div class="modal-print-background modal-company-header">
-                                        <strong><span class="report-header">5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES
-                                                CORP.</span></strong>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
-                                            Bi&ntilde;an
-                                            Laguna</span>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Contact No. : (8)952-15-60 , (8)273-44-69</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>NAME OF EVALUATEE: </strong><span id="sujectname">JOSEPH ORENCIO</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>JOB TITLE: </strong><span id="subkecttile">SOFTWARE DEVELOPER</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>DEPARTMENT: </strong><span id="department">ADMIN</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>TOTAL REPONDENTS: </strong><span id="repondents"></span> out of <span
-                                id="totalrepondents"></span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
-                        <h1>EVALUATION SUMMARY REPORT</h1>
-                        <table id="modal-summary-table-admin"> <!--class="result-table"-->
-                            <thead>
-                                <th class="criteria">CRITERIA</th>
-                                <th class="question">QUESTION</th>
-                                <th>O</th>
-                                <th>V</th>
-                                <th>S</th>
-                                <th>I</th>
-                                <th>P</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                </div>
-                <div class="col-xl-10 col-lg-10 col-sm-10" style="color: black;">
-                    <strong><span>O - Outstanding</span></strong>
-                    <strong><span>V - Very Satisfactory</span></strong>
-                    <strong><span>S - Satisfactory</span></strong>
-                    <strong><span>I - Inadequate</span></strong>
-                    <strong><span>P - Poor</span></strong>
-                </div>
-                <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                </div>
-                <div class="col-xl-8 col-lg-8 col-sm-8">
-                    <table id="rating-table"><!--class="result-table"-->
-                        <thead>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th style="width: 40px; text-align: center;">O</th>
-                            <th style="width: 40px; text-align: center;">V</th>
-                            <th style="width: 40px; text-align: center;">S</th>
-                            <th style="width: 40px; text-align: center;">I</th>
-                            <th style="width: 40px; text-align: center;">P</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="printBtn" name="printBtn">PRINT</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="printsummarySpan" class="close">&times;</span>
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div id="PrintArea" name="PrintArea" class="print-container">
+      <div class="modal-header"></div>
+      <div class="modal-body">
+        <div class="outer">
+          <div class="inner">
+            <div class="row">
+              <div class="col-xl-1 col-lg-1 col-sm-1">
+                <img
+                  class="logo"
+                  style="width: 100; height: auto; border-radius: 80px"
+                  src="/images/img/logo.jpg"
+                  alt="..."
+                />
+              </div>
+              <div class="col-xl-3 col-lg-3 col-sm">
+                <div class="modal-print-background">
+                  <div class="modal-print-background modal-company-header">
+                    <strong
+                      ><span class="report-header"
+                        >5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES CORP.</span
+                      ></strong
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
+                      Bi&ntilde;an Laguna</span
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Contact No. : (8)952-15-60 , (8)273-44-69</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>NAME OF EVALUATEE: </strong
+              ><span id="sujectname">JOSEPH ORENCIO</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>JOB TITLE: </strong
+              ><span id="subkecttile">SOFTWARE DEVELOPER</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>DEPARTMENT: </strong><span id="department">ADMIN</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>TOTAL REPONDENTS: </strong
+              ><span id="repondents"></span> out of
+              <span id="totalrepondents"></span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+          <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
+            <h1>EVALUATION SUMMARY REPORT</h1>
+            <table id="modal-summary-table-admin">
+              <!--class="result-table"-->
+              <thead>
+                <th class="criteria">CRITERIA</th>
+                <th class="question">QUESTION</th>
+                <th>O</th>
+                <th>V</th>
+                <th>S</th>
+                <th>I</th>
+                <th>P</th>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        <div class="col-xl-10 col-lg-10 col-sm-10" style="color: black">
+          <strong><span>O - Outstanding</span></strong>
+          <strong><span>V - Very Satisfactory</span></strong>
+          <strong><span>S - Satisfactory</span></strong>
+          <strong><span>I - Inadequate</span></strong>
+          <strong><span>P - Poor</span></strong>
+        </div>
+        <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        <div class="col-xl-8 col-lg-8 col-sm-8">
+          <table id="rating-table">
+            <!--class="result-table"-->
+            <thead>
+              <th>ID</th>
+              <th>NAME</th>
+              <th style="width: 40px; text-align: center">O</th>
+              <th style="width: 40px; text-align: center">V</th>
+              <th style="width: 40px; text-align: center">S</th>
+              <th style="width: 40px; text-align: center">I</th>
+              <th style="width: 40px; text-align: center">P</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button class="approve-btn" id="printBtn" name="printBtn">PRINT</button>
+    </div>
+  </div>
 </div>
 
 <!-- The Modal -->
 <div id="printsupervisorsummaryModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="printsupervisorsummaryModalSpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="PrintAreaSupervisor" name="PrintAreaSupervisor" class="print-container">
-            <div class="modal-header">
-
-            </div>
-            <div class="modal-body">
-                <div class="outer">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-xl-1 col-lg-1 col-sm-1">
-                                <img class="logo" style="width: 100; height: auto; border-radius: 80px;"
-                                    src="/images/img/logo.jpg" alt="...">
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-sm">
-
-                                <div class="modal-print-background">
-                                    <div class="modal-print-background modal-company-header">
-                                        <strong><span class="report-header">5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES
-                                                CORP.</span></strong>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
-                                            Bi&ntilde;an
-                                            Laguna</span>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Contact No. : (8)952-15-60 , (8)273-44-69</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <br>
-
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>NAME OF EVALUATEE: </strong><span id="supervisorsujectname">JOSEPH ORENCIO</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>JOB TITLE: </strong><span id="supervisorsubkecttile">SOFTWARE DEVELOPER</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>DEPARTMENT: </strong><span id="supervisordepartment">ADMIN</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>TOTAL REPONDENTS: </strong><span id="supervisorrepondents"></span> out of <span
-                                id="supervisortotalrepondents"></span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
-                        <h1>EVALUATION SUMMARY REPORT</h1>
-                        <table id="modal-summary-table-supervisor"> <!--class="result-table"-->
-                            <thead>
-                                <th>CRITERIA</th>
-                                <th>QUESTION</th>
-                                <th>E</th>
-                                <th>G</th>
-                                <th>S</th>
-                                <th>N</th>
-                                <th>U</th>
-                                <th>O</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                </div>
-                <div class="col-xl-10 col-lg-10 col-sm-10" style="color: black;">
-                    <strong><span>E - Excellent</span></strong>
-                    <strong><span>G - Good</span></strong>
-                    <strong><span>S - Satisfactory</span></strong>
-                    <strong><span>U - Unsatisfactory</span></strong>
-                    <strong><span>N - Need Work</span></strong>
-                    <strong><span>O - No Opinion</span></strong>
-                </div>
-                <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                </div>
-                <div class="col-xl-6 col-lg-6 col-sm-6">
-                    <table id="rating-table-supervisor"> <!--class="result-table"-->
-                        <thead>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th style="width: 40px; text-align: center;">E</th>
-                            <th style="width: 40px; text-align: center;">G</th>
-                            <th style="width: 40px; text-align: center;">S</th>
-                            <th style="width: 40px; text-align: center;">U</th>
-                            <th style="width: 40px; text-align: center;">N</th>
-                            <th style="width: 40px; text-align: center;">O</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="printsupervisorBtn" name="printsupervisorBtn">PRINT</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="printsupervisorsummaryModalSpan" class="close">&times;</span>
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div
+      id="PrintAreaSupervisor"
+      name="PrintAreaSupervisor"
+      class="print-container"
+    >
+      <div class="modal-body">
+        <div class="outer">
+          <div class="inner">
+            <div class="row">
+              <div class="col-xl-1 col-lg-1 col-sm-1">
+                <img
+                  class="logo"
+                  style="width: 100; height: auto; border-radius: 80px"
+                  src="/images/img/logo.jpg"
+                  alt="..."
+                />
+              </div>
+              <div class="col-xl-3 col-lg-3 col-sm">
+                <div class="modal-print-background">
+                  <div class="modal-print-background modal-company-header">
+                    <strong
+                      ><span class="report-header"
+                        >5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES CORP.</span
+                      ></strong
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
+                      Bi&ntilde;an Laguna</span
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Contact No. : (8)952-15-60 , (8)273-44-69</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>NAME OF EVALUATEE: </strong
+              ><span id="supervisorsujectname">JOSEPH ORENCIO</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>JOB TITLE: </strong
+              ><span id="supervisorsubkecttile">SOFTWARE DEVELOPER</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>DEPARTMENT: </strong
+              ><span id="supervisordepartment">ADMIN</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>TOTAL REPONDENTS: </strong
+              ><span id="supervisorrepondents"></span> out of
+              <span id="supervisortotalrepondents"></span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+          <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
+            <h1>EVALUATION SUMMARY REPORT</h1>
+            <div class="table-responsive-sm">
+              <table
+                id="modal-summary-table-supervisor"
+                class="table table-bordered table-sm"
+              >
+                <!--class="result-table"-->
+                <thead class="table-dark">
+                  <th>CRITERIA</th>
+                  <th>QUESTION</th>
+                  <th>E</th>
+                  <th>G</th>
+                  <th>S</th>
+                  <th>N</th>
+                  <th>U</th>
+                  <th>O</th>
+                </thead>
+                <tbody class="table-light"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        <div class="col-xl-10 col-lg-10 col-sm-10" style="color: black">
+          <strong><span>E - Excellent</span></strong>
+          <strong><span>G - Good</span></strong>
+          <strong><span>S - Satisfactory</span></strong>
+          <strong><span>U - Unsatisfactory</span></strong>
+          <strong><span>N - Need Work</span></strong>
+          <strong><span>O - No Opinion</span></strong>
+        </div>
+        <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        <div class="col-xl-10 col-lg-10 col-sm-10">
+          <div class="table-responsive-sm">
+            <table
+              id="rating-table-supervisor"
+              class="table table-bordered table-sm"
+            >
+              <!--class="result-table"-->
+              <thead class="table-dark border-black">
+                <th>ID</th>
+                <th>NAME</th>
+                <th>E</th>
+                <th>G</th>
+                <th>S</th>
+                <th>U</th>
+                <th>N</th>
+                <th>O</th>
+              </thead>
+              <tbody class="table-light border-black"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button
+        class="approve-btn"
+        id="printsupervisorBtn"
+        name="printsupervisorBtn"
+      >
+        PRINT
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- The Modal -->
 <div id="printsummarycommentModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="printsummarycommentModalSpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="printComment" name="printComment" class="print-container">
-            <div class="modal-header">
-
-            </div>
-            <div class="modal-body">
-                <div class="outer">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-xl-1 col-lg-1 col-sm-1">
-                                <img class="logo" style="width: 100; height: auto; border-radius: 80px;"
-                                    src="/images/img/logo.jpg" alt="...">
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-sm">
-
-                                <div class="modal-print-background">
-                                    <div class="modal-print-background modal-company-header">
-                                        <strong><span class="report-header">5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES
-                                                CORP.</span></strong>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
-                                            Bi&ntilde;an
-                                            Laguna</span>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Contact No. : (8)952-15-60 , (8)273-44-69</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>NAME OF EVALUATEE: </strong><span id="sujectnamecomment">JOSEPH ORENCIO</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>JOB TITLE: </strong><span id="subkecttilecomment">SOFTWARE DEVELOPER</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>DEPARTMENT: </strong><span id="departmentcomment">ADMIN</span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
-                        <h1>COMMENTS</h1>
-                        <table id="modal-summary-table-admin-comment">
-                            <thead>
-                                <th>ALLIAS</th>
-                                <th>GOOD COMMENT</th>
-                                <th>NEED IMPROVEMENT COMMENT</th>
-                                <th>COMMENT</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="printCommentBtn" name="printCommentBtn">PRINT</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="printsummarycommentModalSpan" class="close">&times;</span>
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div id="printComment" name="printComment" class="print-container">
+      <div class="modal-header"></div>
+      <div class="modal-body">
+        <div class="outer">
+          <div class="inner">
+            <div class="row">
+              <div class="col-xl-1 col-lg-1 col-sm-1">
+                <img
+                  class="logo"
+                  style="width: 100; height: auto; border-radius: 80px"
+                  src="/images/img/logo.jpg"
+                  alt="..."
+                />
+              </div>
+              <div class="col-xl-3 col-lg-3 col-sm">
+                <div class="modal-print-background">
+                  <div class="modal-print-background modal-company-header">
+                    <strong
+                      ><span class="report-header"
+                        >5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES CORP.</span
+                      ></strong
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
+                      Bi&ntilde;an Laguna</span
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Contact No. : (8)952-15-60 , (8)273-44-69</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>NAME OF EVALUATEE: </strong
+              ><span id="sujectnamecomment">JOSEPH ORENCIO</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>JOB TITLE: </strong
+              ><span id="subkecttilecomment">SOFTWARE DEVELOPER</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>DEPARTMENT: </strong
+              ><span id="departmentcomment">ADMIN</span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+          <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
+            <h1>COMMENTS</h1>
+            <table id="modal-summary-table-admin-comment">
+              <thead>
+                <th>ALLIAS</th>
+                <th>GOOD COMMENT</th>
+                <th>NEED IMPROVEMENT COMMENT</th>
+                <th>COMMENT</th>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button class="approve-btn" id="printCommentBtn" name="printCommentBtn">
+        PRINT
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- The Modal -->
 <div id="printsummarysupervisorcommentModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="printsummarysupervisorcommentModalSpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="printSupervisorComment" name="printSupervisorComment" class="print-container">
-            <div class="modal-header">
-
-            </div>
-            <div class="modal-body">
-                <div class="outer">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-xl-1 col-lg-1 col-sm-1">
-                                <img class="logo" style="width: 100; height: auto; border-radius: 80px;"
-                                    src="/images/img/logo.jpg" alt="...">
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-sm">
-
-                                <div class="modal-print-background">
-                                    <div class="modal-print-background modal-company-header">
-                                        <strong><span class="report-header">5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES
-                                                CORP.</span></strong>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
-                                            Bi&ntilde;an
-                                            Laguna</span>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Contact No. : (8)952-15-60 , (8)273-44-69</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>NAME OF EVALUATEE: </strong><span id="supervisorsujectnamecomment">JOSEPH
-                                ORENCIO</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>JOB TITLE: </strong><span id="supervisorsubkecttilecomment">SOFTWARE
-                                DEVELOPER</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>DEPARTMENT: </strong><span id="supervisordepartmentcomment">ADMIN</span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
-                        <h1>COMMENTS</h1>
-                        <table id="modal-summary-table-supervisor-comment">
-                            <thead>
-                                <th>ALLIAS</th>
-                                <th>GOOD COMMENT</th>
-                                <th>NEED IMPROVEMENT COMMENT</th>
-                                <th>COMMENT</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="printSupervisorCommentBtn" name="printSupervisorCommentBtn">PRINT</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="printsummarysupervisorcommentModalSpan" class="close"
+        >&times;</span
+      >
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div
+      id="printSupervisorComment"
+      name="printSupervisorComment"
+      class="print-container"
+    >
+      <div class="modal-body">
+        <div class="outer">
+          <div class="inner">
+            <div class="row">
+              <div class="col-xl-1 col-lg-1 col-sm-1">
+                <img
+                  class="logo"
+                  style="width: 100; height: auto; border-radius: 80px"
+                  src="/images/img/logo.jpg"
+                  alt="..."
+                />
+              </div>
+              <div class="col-xl-3 col-lg-3 col-sm">
+                <div class="modal-print-background">
+                  <div class="modal-print-background modal-company-header">
+                    <strong
+                      ><span class="report-header"
+                        >5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES CORP.</span
+                      ></strong
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
+                      Bi&ntilde;an Laguna</span
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Contact No. : (8)952-15-60 , (8)273-44-69</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>NAME OF EVALUATEE: </strong
+              ><span id="supervisorsujectnamecomment">JOSEPH ORENCIO</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>JOB TITLE: </strong
+              ><span id="supervisorsubkecttilecomment">SOFTWARE DEVELOPER</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>DEPARTMENT: </strong
+              ><span id="supervisordepartmentcomment">ADMIN</span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+          <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
+            <h1>COMMENTS</h1>
+            <div class="table-responsive-sm">
+              <table
+                id="modal-summary-table-supervisor-comment"
+                class="table table-bordered"
+              >
+                <thead class="table-dark">
+                  <th>ALLIAS</th>
+                  <th>GOOD COMMENT</th>
+                  <th>NEED IMPROVEMENT COMMENT</th>
+                  <th>COMMENT</th>
+                </thead>
+                <tbody class="table-light"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button
+        class="approve-btn"
+        id="printSupervisorCommentBtn"
+        name="printSupervisorCommentBtn"
+      >
+        PRINT
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- The Modal -->
 <div id="printquestioncommentModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="printquestioncommentModalSpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="printQuestionComment" name="printQuestionComment" class="print-container">
-            <div class="modal-header">
-
-            </div>
-            <div class="modal-body">
-                <div class="outer">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-xl-1 col-lg-1 col-sm-1">
-                                <img class="logo" style="width: 100; height: auto; border-radius: 80px;"
-                                    src="/images/img/logo.jpg" alt="...">
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-sm">
-
-                                <div class="modal-print-background">
-                                    <div class="modal-print-background modal-company-header">
-                                        <strong><span class="report-header">5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES
-                                                CORP.</span></strong>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
-                                            Bi&ntilde;an
-                                            Laguna</span>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Contact No. : (8)952-15-60 , (8)273-44-69</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>NAME OF EVALUATEE: </strong><span id="sujectnamequestioncomment">JOSEPH
-                                ORENCIO</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>JOB TITLE: </strong><span id="subkecttilequestioncomment">SOFTWARE DEVELOPER</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>DEPARTMENT: </strong><span id="departmentquestioncomment">ADMIN</span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
-                        <h1>NEEDS FOR IMPROVEMENT COMMENTS</h1>
-                        <table id="modal-summary-table-admin-quesiton-comment">
-                            <thead>
-                                <th>ALLIAS</th>
-                                <th>CRITERIA</th>
-                                <th>QUESTION</th>
-                                <th>COMMENT</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="printQuestionCommentBtn" name="printQuestionCommentBtn">PRINT</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="printquestioncommentModalSpan" class="close">&times;</span>
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div
+      id="printQuestionComment"
+      name="printQuestionComment"
+      class="print-container"
+    >
+      <div class="modal-header"></div>
+      <div class="modal-body">
+        <div class="outer">
+          <div class="inner">
+            <div class="row">
+              <div class="col-xl-1 col-lg-1 col-sm-1">
+                <img
+                  class="logo"
+                  style="width: 100; height: auto; border-radius: 80px"
+                  src="/images/img/logo.jpg"
+                  alt="..."
+                />
+              </div>
+              <div class="col-xl-3 col-lg-3 col-sm">
+                <div class="modal-print-background">
+                  <div class="modal-print-background modal-company-header">
+                    <strong
+                      ><span class="report-header"
+                        >5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES CORP.</span
+                      ></strong
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
+                      Bi&ntilde;an Laguna</span
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Contact No. : (8)952-15-60 , (8)273-44-69</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>NAME OF EVALUATEE: </strong
+              ><span id="sujectnamequestioncomment">JOSEPH ORENCIO</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>JOB TITLE: </strong
+              ><span id="subkecttilequestioncomment">SOFTWARE DEVELOPER</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>DEPARTMENT: </strong
+              ><span id="departmentquestioncomment">ADMIN</span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+          <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
+            <h1>NEEDS FOR IMPROVEMENT COMMENTS</h1>
+            <table id="modal-summary-table-admin-quesiton-comment">
+              <thead>
+                <th>ALLIAS</th>
+                <th>CRITERIA</th>
+                <th>QUESTION</th>
+                <th>COMMENT</th>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button
+        class="approve-btn"
+        id="printQuestionCommentBtn"
+        name="printQuestionCommentBtn"
+      >
+        PRINT
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- The Modal -->
 <div id="printsupervisorquestioncommentModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="printsupervisorquestioncommentModalSpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="printSupervisorQuestionComment" name="printSupervisorQuestionComment" class="print-container">
-            <div class="modal-header">
-
-            </div>
-            <div class="modal-body">
-                <div class="outer">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-xl-1 col-lg-1 col-sm-1">
-                                <img class="logo" style="width: 100; height: auto; border-radius: 80px;"
-                                    src="/images/img/logo.jpg" alt="...">
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-sm">
-
-                                <div class="modal-print-background">
-                                    <div class="modal-print-background modal-company-header">
-                                        <strong><span class="report-header">5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES
-                                                CORP.</span></strong>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
-                                            Bi&ntilde;an
-                                            Laguna</span>
-                                    </div>
-                                    <div class="modal-print-background">
-                                        <span class="report-subheader">Contact No. : (8)952-15-60 , (8)273-44-69</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>NAME OF EVALUATEE: </strong><span id="supervisorsujectnamequestioncomment">JOSEPH
-                                ORENCIO</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>JOB TITLE: </strong><span id="supervisorsubkecttilequestioncomment">SOFTWARE
-                                DEVELOPER</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="outer">
-                        <div class="inner">
-                            <strong>DEPARTMENT: </strong><span id="supervisordepartmentquestioncomment">ADMIN</span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
-                        <h1>NEEDS FOR IMPROVEMENT COMMENTS</h1>
-                        <table id="modal-summary-table-supervisor-quesiton-comment">
-                            <thead>
-                                <th>ALLIAS</th>
-                                <th>CRITERIA</th>
-                                <th>QUESTION</th>
-                                <th>COMMENT</th>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="col-xl-1 col-lg-1 col-sm-1">
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="printSupervisorQuestionCommentBtn"
-                name="printSupervisorQuestionCommentBtn">PRINT</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="printsupervisorquestioncommentModalSpan" class="close"
+        >&times;</span
+      >
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div
+      id="printSupervisorQuestionComment"
+      name="printSupervisorQuestionComment"
+      class="print-container"
+    >
+      <div class="modal-header"></div>
+      <div class="modal-body">
+        <div class="outer">
+          <div class="inner">
+            <div class="row">
+              <div class="col-xl-1 col-lg-1 col-sm-1">
+                <img
+                  class="logo"
+                  style="width: 100; height: auto; border-radius: 80px"
+                  src="/images/img/logo.jpg"
+                  alt="..."
+                />
+              </div>
+              <div class="col-xl-3 col-lg-3 col-sm">
+                <div class="modal-print-background">
+                  <div class="modal-print-background modal-company-header">
+                    <strong
+                      ><span class="report-header"
+                        >5L SOLUTIONS SUPPLY &amp; ALLIED SERVICES CORP.</span
+                      ></strong
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Lot 12 Block19 3B Pacita 1, Brgy. San Francisco,
+                      Bi&ntilde;an Laguna</span
+                    >
+                  </div>
+                  <div class="modal-print-background">
+                    <span class="report-subheader"
+                      >Contact No. : (8)952-15-60 , (8)273-44-69</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>NAME OF EVALUATEE: </strong
+              ><span id="supervisorsujectnamequestioncomment"
+                >JOSEPH ORENCIO</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>JOB TITLE: </strong
+              ><span id="supervisorsubkecttilequestioncomment"
+                >SOFTWARE DEVELOPER</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="outer">
+            <div class="inner">
+              <strong>DEPARTMENT: </strong
+              ><span id="supervisordepartmentquestioncomment">ADMIN</span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+          <div class="col-xl-10 col-lg-10 col-sm-10 center-text">
+            <h1>NEEDS FOR IMPROVEMENT COMMENTS</h1>
+            <div class="table-responsive-sm">
+              <table
+                id="modal-summary-table-supervisor-quesiton-comment"
+                class="table table-bordered"
+              >
+                <thead class="table-dark">
+                  <th>ALLIAS</th>
+                  <th>CRITERIA</th>
+                  <th>QUESTION</th>
+                  <th>COMMENT</th>
+                </thead>
+                <tbody class="table-light"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-xl-1 col-lg-1 col-sm-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button
+        class="approve-btn"
+        id="printSupervisorQuestionCommentBtn"
+        name="printSupervisorQuestionCommentBtn"
+      >
+        PRINT
+      </button>
+    </div>
+  </div>
 </div>
