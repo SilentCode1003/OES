@@ -1,302 +1,3 @@
-<div class="row">
-  <div class="col-xl-6 col-lg-6 col-sm-6 table-responsive">
-    <h3>EVALUATION SUBJECTS</h3>
-    <!-- <select class="entry-input" name="yearlist" id="yearlist">
-            <option value="-">YEAR</option>
-        </select> -->
-
-    <table id="summary-table" class="table table-hover table-bordered">
-      <thead class="table-dark">
-        <th class="criteria">ID</th>
-        <th class="criteria">NAME</th>
-        <th class="criteria">DEPARTMENT</th>
-        <th class="criteria">POSITION</th>
-      </thead>
-      <tbody class="table-light"></tbody>
-    </table>
-  </div>
-  <div class="col-xl-6 col-lg-6 col-sm-6">
-    <div class="row">
-      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body card-monitor">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                  EMPLOYEES
-                </div>
-                <div id="employee" class="h5 mb-0 font-weight-bold"></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-users fa-2x"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body card-monitor">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                  ACTIVE
-                </div>
-                <div id="participant" class="h5 mb-0 font-weight-bold"></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-users fa-2x"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body card-monitor">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                  INACTIVE
-                </div>
-                <div
-                  id="inactiveparticipant"
-                  class="h5 mb-0 font-weight-bold"
-                ></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-users fa-2x"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body card-monitor">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                  DONE
-                </div>
-                <div
-                  id="doneparticipant"
-                  class="h5 mb-0 font-weight-bold"
-                ></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-users fa-2x"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body card-monitor">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                  IT
-                </div>
-                <div id="itemployee" class="h5 mb-0 font-weight-bold"></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-user-shield fa-2x"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body card-monitor">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                  CABLING
-                </div>
-                <div
-                  id="cablingemployee"
-                  class="h5 mb-0 font-weight-bold"
-                ></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-user-ninja fa-2x"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body card-monitor">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                  ADMIN
-                </div>
-                <div id="adminemployee" class="h5 mb-0 font-weight-bold"></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-user-tie fa-2x"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr class="hr-black" />
-<div class="row">
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
-      <div
-        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
-      >
-        <h6 class="m-0 font-weight-bold">IT TEAMLEAD RANKING</h6>
-      </div>
-      <!-- Card Body -->
-      <div class="card-body">
-        <div class="chart-bar chart-content">
-          <canvas id="ITrankingBarChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
-      <div
-        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
-      >
-        <h6 class="m-0 font-weight-bold">CABLING TEAMLEAD RANKING</h6>
-      </div>
-      <!-- Card Body -->
-      <div class="card-body">
-        <div class="chart-bar chart-content">
-          <canvas id="CablingrankingBarChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
-      <div
-        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
-      >
-        <h6 class="m-0 font-weight-bold">ADMIN OFFICERS RANKING</h6>
-      </div>
-      <!-- Card Body -->
-      <div class="card-body">
-        <div class="chart-bar chart-content">
-          <canvas id="AdminrankingBarChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr class="hr-black" />
-<div class="row">
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <h3>IT ACTIVE PARTICIPANTS</h3>
-    <div class="table-responsive">
-      <table id="it-participants-table" class="table table-bordered">
-        <thead class="table-dark">
-          <th>ALLIAS</th>
-          <th>STATUS</th>
-          <th>REMAINING</th>
-        </thead>
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <h3>CABLING ACTIVE PARTICIPANTS</h3>
-    <div class="table-responsive">
-      <table id="cabling-participants-table" class="table table-bordered">
-        <thead class="table-dark">
-          <th>ALLIAS</th>
-          <th>STATUS</th>
-          <th>REMAINING</th>
-        </thead>
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <h3>ADMIN ACTIVE PARTICIPANTS</h3>
-    <div class="table-responsive">
-      <table id="admin-participants-table" class="table table-bordered">
-        <thead class="table-dark">
-          <th>ALLIAS</th>
-          <th>STATUS</th>
-          <th>REMAINING</th>
-        </thead>
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<hr class="hr-black" />
-<div class="row">
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <h3>IT DONE PARTICIPANTS</h3>
-    <div class="table-responsive">
-      <table id="it-participants-done-table" class="table table-bordered">
-        <thead class="table-dark">
-          <th>ALLIAS</th>
-          <th>STATUS</th>
-        </thead>
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <h3>CABLING DONE PARTICIPANTS</h3>
-    <div class="table-responsive">
-      <table id="cabling-participants-done-table" class="table table-bordered">
-        <thead class="table-dark">
-          <th>ALLIAS</th>
-          <th>STATUS</th>
-        </thead>
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="col-xl-4 col-lg-4 col-sm-4">
-    <h3>ADMIN DONE PARTICIPANTS</h3>
-    <div class="table-responsive">
-      <table id="admin-participants-done-table" class="table table-bordered">
-        <thead class="table-dark">
-          <th>ALLIAS</th>
-          <th>STATUS</th>
-        </thead>
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
 <!-- The Modal -->
 <div id="summaryModal" class="modal card shadow mb-4">
   <!-- Modal content -->
@@ -463,7 +164,7 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-sm-6">
-          <div class="table-resposive">
+          <div class="table-resposive-sm">
             <table
               id="supervisor-modal-summary-table"
               class="table table-bordered"
@@ -490,7 +191,7 @@
         </div>
 
         <div class="col-xl-6 col-lg-6 col-sm-6">
-          <div class="table-responsive">
+          <div class="table-responsive-sm">
             <table id="supervisor-comment-table" class="table table-bordered">
               <thead class="table-dark">
                 <th>ALLIAS</th>
@@ -528,7 +229,7 @@
           </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-sm-6">
-          <div class="table-responsive">
+          <div class="table-responsive-sm">
             <table
               id="supervisor-comment-question-table"
               class="table table-bordered"
@@ -1308,6 +1009,305 @@
       >
         PRINT
       </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-6 col-lg-6 col-sm-6 table-responsive">
+    <h3>EVALUATION SUBJECTS</h3>
+    <!-- <select class="entry-input" name="yearlist" id="yearlist">
+            <option value="-">YEAR</option>
+        </select> -->
+
+    <table id="summary-table" class="table table-hover table-bordered">
+      <thead class="table-dark">
+        <th class="criteria">ID</th>
+        <th class="criteria">NAME</th>
+        <th class="criteria">DEPARTMENT</th>
+        <th class="criteria">POSITION</th>
+      </thead>
+      <tbody class="table-light"></tbody>
+    </table>
+  </div>
+  <div class="col-xl-6 col-lg-6 col-sm-6">
+    <div class="row">
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  EMPLOYEES
+                </div>
+                <div id="employee" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  ACTIVE
+                </div>
+                <div id="participant" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  INACTIVE
+                </div>
+                <div
+                  id="inactiveparticipant"
+                  class="h5 mb-0 font-weight-bold"
+                ></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  DONE
+                </div>
+                <div
+                  id="doneparticipant"
+                  class="h5 mb-0 font-weight-bold"
+                ></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  IT
+                </div>
+                <div id="itemployee" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-user-shield fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  CABLING
+                </div>
+                <div
+                  id="cablingemployee"
+                  class="h5 mb-0 font-weight-bold"
+                ></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-user-ninja fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="itrequest" class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body card-monitor">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                  ADMIN
+                </div>
+                <div id="adminemployee" class="h5 mb-0 font-weight-bold"></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-user-tie fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="hr-black" />
+<div class="row">
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+      >
+        <h6 class="m-0 font-weight-bold">IT TEAMLEAD RANKING</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="chart-bar chart-content">
+          <canvas id="ITrankingBarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+      >
+        <h6 class="m-0 font-weight-bold">CABLING TEAMLEAD RANKING</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="chart-bar chart-content">
+          <canvas id="CablingrankingBarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+      >
+        <h6 class="m-0 font-weight-bold">ADMIN OFFICERS RANKING</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="chart-bar chart-content">
+          <canvas id="AdminrankingBarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="hr-black" />
+<div class="row">
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>IT ACTIVE PARTICIPANTS</h3>
+    <div class="table-responsive-sm">
+      <table id="it-participants-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+          <th>REMAINING</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>CABLING ACTIVE PARTICIPANTS</h3>
+    <div class="table-responsive-sm">
+      <table id="cabling-participants-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+          <th>REMAINING</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>ADMIN ACTIVE PARTICIPANTS</h3>
+    <div class="table-responsive-sm">
+      <table id="admin-participants-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+          <th>REMAINING</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<hr class="hr-black" />
+<div class="row">
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>IT DONE PARTICIPANTS</h3>
+    <div class="table-responsive-sm">
+      <table id="it-participants-done-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>CABLING DONE PARTICIPANTS</h3>
+    <div class="table-responsive-sm">
+      <table id="cabling-participants-done-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-xl-4 col-lg-4 col-sm-4">
+    <h3>ADMIN DONE PARTICIPANTS</h3>
+    <div class="table-responsive-sm">
+      <table id="admin-participants-done-table" class="table table-bordered">
+        <thead class="table-dark">
+          <th>ALLIAS</th>
+          <th>STATUS</th>
+        </thead>
+        <tbody class="table-light"></tbody>
+      </table>
     </div>
   </div>
 </div>
