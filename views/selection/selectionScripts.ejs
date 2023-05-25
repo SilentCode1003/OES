@@ -352,7 +352,6 @@
         }
 
         var question_comment = textarea.val();
-
         console.log(
           `criteria: ${innerData[0]} question: ${innerData[1]} grade: ${selection} comment: ${question_comment}\n`
         );
@@ -388,9 +387,20 @@
 
           $(textarea).removeClass("changing");
 
+          var mobile_question = "";
+          var mobile_criteria = "";
+          var data_split = innerData[0].split("\n");
+
+          mobile_criteria = data_split[0];
+          mobile_question = data_split[1];
+
+          console.log(mobile_question);
+
           dataRaw.push({
-            criteria: innerData[0],
-            question: innerData[1],
+            criteria:
+              innerData[1] == undefined ? mobile_criteria : innerData[0],
+            question:
+              innerData[1] == undefined ? mobile_question : innerData[1],
             comment: question_comment == "" ? "NO COMMENT" : question_comment,
             grade: selection,
           });
