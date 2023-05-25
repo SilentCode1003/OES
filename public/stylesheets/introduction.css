@@ -1,12 +1,12 @@
 .introduction-container {
   width: 100%;
-  height: 939px;
+  height: 100%;
   display: flex;
   overflow: auto;
   min-height: 100vh;
   flex-direction: column;
   background-size: cover;
-  background-image: url("/playground_assets/bg5l-1000h.png");
+  background-image: url("/playground_assets/bg5l-1500h.png");
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
@@ -17,21 +17,61 @@
   right: 0px;
   width: 1296px;
   bottom: 0px;
-  height: 728px;
+  height: 699px;
   margin: auto;
-  position: absolute;
-  align-items: flex-end;
+  position: sticky;
+  align-items: center;
   border-color: var(--dl-color-gray-black);
   border-width: 1px;
   border-radius: 20px;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: #ffffff;
 }
+.introduction-header {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: 159px;
+  display: flex;
+  position: absolute;
+  margin-top: var(--dl-space-space-oneandhalfunits);
+  align-items: center;
+  padding-left: 274px;
+  margin-bottom: var(--dl-space-space-oneandhalfunits);
+  justify-content: center;
+}
+.introduction-image {
+  top: 1px;
+  left: 68px;
+  width: 210px;
+  height: 156px;
+  margin: auto;
+  z-index: 50;
+  position: absolute;
+  margin-top: 0px;
+  object-fit: cover;
+  margin-left: var(--dl-space-space-twounits);
+  margin-right: var(--dl-space-space-twounits);
+  margin-bottom: 0px;
+}
+.introduction-text {
+  top: 0px;
+  right: 39px;
+  width: 937px;
+  bottom: 0px;
+  height: 60%;
+  margin: auto;
+  position: absolute;
+  font-size: 2.5em;
+  align-self: center;
+}
 .introduction-introductionbrder {
-  top: 257px;
+  top: 0px;
   left: 0px;
   right: 0px;
   width: 1107px;
+  bottom: 0px;
   height: 318px;
   margin: auto;
   display: flex;
@@ -45,95 +85,21 @@
 }
 .introduction-introductiontxt {
   width: 1000px;
+  position: sticky;
   align-self: center;
-}
-.introduction-text {
-  font-size: 20px;
-  font-weight: 700;
-}
-.introduction-text01 {
-  font-size: 20px;
-}
-.introduction-text02 {
-  font-size: 20px;
-  font-weight: 700;
-}
-.introduction-text03 {
-  font-size: 20px;
-}
-.introduction-text04 {
-  font-size: 20px;
+  text-indent: 30px;
 }
 .introduction-text05 {
-  font-size: 20px;
-}
-.introduction-text06 {
-  font-size: 20px;
-}
-.introduction-text07 {
-  font-size: 20px;
-}
-.introduction-text08 {
-  font-size: 20px;
-}
-.introduction-text09 {
-  font-size: 20px;
-}
-.introduction-text10 {
-  font-size: 20px;
-}
-.introduction-text11 {
-  font-size: 20px;
-}
-.introduction-text12 {
-  font-size: 20px;
-}
-.introduction-text13 {
-  font-size: 20px;
-}
-.introduction-header {
-  top: 46px;
-  left: 0px;
-  right: 0px;
-  width: 1133px;
-  height: 159px;
-  margin: auto;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-}
-.introduction-text15 {
-  left: 257px;
-  bottom: 0px;
-  margin: auto;
-  position: absolute;
-  text-align: left;
-}
-.introduction-text16 {
-  font-size: 40px;
-}
-.introduction-text17 {
-  font-size: 40px;
-}
-.introduction-text18 {
-  font-size: 45px;
   font-weight: 700;
 }
-.introduction-image {
-  left: 29px;
-  width: 210px;
-  bottom: 0px;
-  height: 156px;
-  margin: auto;
-  z-index: 50;
-  position: absolute;
-  object-fit: cover;
+.introduction-text07 {
+  font-weight: 700;
 }
 .introduction-navlink {
+  top: 567px;
   left: 0px;
   right: 0px;
   width: 193px;
-  bottom: 36px;
   height: 61px;
   margin: auto;
   position: absolute;
@@ -145,10 +111,170 @@
 }
 .introduction-navlink:hover {
   transform: scale(1.10);
+  background: #43c243;
 }
 .introduction-text20 {
   font-weight: bold;
 }
 .introduction-text21 {
   font-size: 25px;
+}
+@media(max-width: 1600px) {
+  .introduction-introduction {
+    height: 80%;
+  }
+  .introduction-image {
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+  }
+  .introduction-text {
+    left: 20%;
+    font-size: 2.5em;
+  }
+  .introduction-introductionbrder {
+    top: 80px;
+  }
+  .introduction-navlink {
+    top: 640px;
+  }
+}
+@media(max-width: 1200px) {
+  .introduction-introduction {
+    width: 90%;
+    height: 80%;
+  }
+  .introduction-header {
+    width: 100%;
+    height: 25%;
+  }
+  .introduction-image {
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+  }
+  .introduction-text {
+    top: 0px;
+    left: 20%;
+    width: 687px;
+    bottom: 0px;
+    height: 68px;
+    margin: auto;
+    font-size: 2em;
+    padding-right: 1px;
+  }
+  .introduction-introductionbrder {
+    top: 0px;
+    width: 90%;
+    bottom: 0px;
+    margin: auto;
+  }
+  .introduction-introductiontxt {
+    width: 90%;
+  }
+  .introduction-navlink {
+    top: 600px;
+  }
+}
+@media(max-width: 991px) {
+  .introduction-introduction {
+    gap: var(--dl-space-space-unit);
+    height: 75%;
+  }
+  .introduction-header {
+    width: 100%;
+    height: 141px;
+  }
+  .introduction-image {
+    width: 22%;
+    height: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .introduction-text {
+    left: 25%;
+    width: 516px;
+    font-size: 1.5em;
+  }
+  .introduction-introductionbrder {
+    top: 0px;
+    bottom: 0px;
+    height: 50%;
+    margin: auto;
+  }
+  .introduction-navlink {
+    top: 600px;
+  }
+}
+@media(max-width: 767px) {
+  .introduction-introduction {
+    height: 743px;
+  }
+  .introduction-header {
+    height: 133px;
+  }
+  .introduction-image {
+    top: 0px;
+    left: 6%;
+    width: 26%;
+    bottom: 0px;
+    margin: auto;
+  }
+  .introduction-text {
+    left: 35%;
+    width: 351px;
+  }
+  .introduction-introductionbrder {
+    top: 0px;
+    bottom: 0px;
+    height: 50%;
+    margin: auto;
+  }
+  .introduction-navlink {
+    top: 80%;
+  }
+}
+@media(max-width: 479px) {
+  .introduction-introduction {
+    height: 774px;
+    font-size: small;
+  }
+  .introduction-header {
+    height: 15%;
+  }
+  .introduction-image {
+    left: 4%;
+    width: 30%;
+    height: 67%;
+  }
+  .introduction-text {
+    left: 36%;
+    width: 269px;
+    font-size: 1.3em;
+  }
+  .introduction-introductionbrder {
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 501px;
+    margin: auto;
+    position: absolute;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .introduction-introductiontxt {
+    top: 10%;
+    left: 0px;
+    right: 0px;
+    bottom: 200px;
+    height: 50%;
+    margin: auto;
+    position: absolute;
+    font-size: auto;
+  }
+  .introduction-navlink {
+    top: 90%;
+  }
 }
