@@ -1,19 +1,19 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-const helper = require('./repository/customhelper');
-const mysql = require('./repository/evaluationdb');
-const dictionary = require('./repository/dictionary');
-const Filter = require('bad-words');
-const filipinoBadwords = require('filipino-badwords-list');
+const helper = require("./repository/customhelper");
+const mysql = require("./repository/evaluationdb");
+const dictionary = require("./repository/dictionary");
+const Filter = require("bad-words");
+const filipinoBadwords = require("filipino-badwords-list");
 const filter = new Filter({ list: filipinoBadwords.array });
-const natural = require('natural');
+const natural = require("natural");
 const tokenizer = new natural.SentenceTokenizer();
 
 const isSentence = (str) => {
   const sentences = tokenizer.tokenize(str);
   return sentences.length === 1 && sentences[0] === str;
-}
+};
 
 const isWord = (input) => {
   const regex = /^[A-Za-z]+$/; // regex that matches only alphabetical characters
@@ -21,21 +21,21 @@ const isWord = (input) => {
 };
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('selection', {
+router.get("/", function (req, res, next) {
+  res.render("selection", {
     title: process.env._TITLE,
     user: req.session.username,
     userid: req.session.userid,
     fullname: req.session.fullname,
     accounttype: req.session.accounttype,
     department: req.session.department,
-    date: helper.GetCurrentDate()
+    date: helper.GetCurrentDate(),
   });
 });
 
 module.exports = router;
 
-router.post('/generatereport', (req, res) => {
+router.post("/generatereport", (req, res) => {
   try {
     let supervisorid = req.body.supervisorid;
     let userid = req.body.userid;
@@ -49,57 +49,60 @@ router.post('/generatereport', (req, res) => {
     let transaction_evaluation_improvementcomment = [];
     let currentdate = helper.GetCurrentDate();
     let year = helper.GetCurrentYear();
-    let status = 'DONE';
-    let active = 'ACTIVE'
+    let status = "DONE";
+    let active = "ACTIVE";
     let alias = helper.GenerateCode(userid);
+    let datetime = helper.GetCurrentDatetime();
+    let login_log = [];
 
     // console.log(data);
     // console.log(alias);
     // console.log(filter.isProfane(`${comment}`));
-    var comment_msg = '';
-    var comment_data = '';
+    var comment_msg = "";
+    var comment_data = "";
     if (!isSentence(comment)) {
       comment_msg += `Your comment it is not a sentence\n`;
       comment_data += `${comment}\n`;
-      console.log('isSentence: Comment');
+      console.log("isSentence: Comment");
     }
 
     if (!isSentence(goodcomment)) {
       comment_msg += `Your comment it is not a sentence\n`;
-      comment_data += `${goodcomment}\n`
-      console.log('isSentence: Good Comment');
+      comment_data += `${goodcomment}\n`;
+      console.log("isSentence: Good Comment");
     }
 
     if (!isSentence(improvementcomment)) {
       comment_msg += `Your comment it is not a sentence\n`;
-      comment_data += `${improvementcomment}\n`
-      console.log('isSentence: Improvement Comment');
+      comment_data += `${improvementcomment}\n`;
+      console.log("isSentence: Improvement Comment");
     }
 
-    if (comment_msg != '') {
-      console.log('Not sentence');
+    if (comment_msg != "") {
+      console.log("Not sentence");
       return res.json({
-        msg: 'notsentence',
-        data: comment_data
-      })
-    }
-    else {
-
-      if (filter.isProfane(`${comment}`) || filter.isProfane(`${goodcomment}`) || filter.isProfane(`${improvementcomment}`)) {
-        console.log('Foul words detected!');
+        msg: "notsentence",
+        data: comment_data,
+      });
+    } else {
+      if (
+        filter.isProfane(`${comment}`) ||
+        filter.isProfane(`${goodcomment}`) ||
+        filter.isProfane(`${improvementcomment}`)
+      ) {
+        console.log("Foul words detected!");
         return res.json({
-          msg: 'badwords'
-        })
-      }
-      else {
-        console.log('No, foul words detected!');
+          msg: "badwords",
+        });
+      } else {
+        console.log("No, foul words detected!");
         transaction_evaluation_comment.push([
           year,
           supervisorid,
           alias,
           comment,
           status,
-        ])
+        ]);
 
         transaction_evaluation_goodcomment.push([
           year,
@@ -107,7 +110,7 @@ router.post('/generatereport', (req, res) => {
           alias,
           goodcomment,
           currentdate,
-        ])
+        ]);
 
         transaction_evaluation_improvementcomment.push([
           year,
@@ -115,17 +118,16 @@ router.post('/generatereport', (req, res) => {
           alias,
           improvementcomment,
           currentdate,
-        ])
+        ]);
 
-        let badcomment = '';
+        let badcomment = "";
         var data_length = data.length;
         var count = 0;
         data.forEach((key, item) => {
-          console.log(key.comment)
+          console.log(key.comment);
           if (filter.isProfane(`${key.comment}`)) {
             badcomment += `${key.criteria} ${key.question} with comment of "${key.comment}"\n`;
-          }
-          else {
+          } else {
             transaction_evaluation.push([
               year,
               userid,
@@ -140,125 +142,179 @@ router.post('/generatereport', (req, res) => {
           }
           count += 1;
           if (data_length == count) {
-
             console.log(badcomment);
-            if (badcomment != '') {
-              console.log('Foul words detected!');
+            if (badcomment != "") {
+              console.log("Foul words detected!");
               return res.json({
-                msg: 'badcomment',
-                data: badcomment
-              })
-            }
-            else {
+                msg: "badcomment",
+                data: badcomment,
+              });
+            } else {
               Insert_TransactionEvaluation(transaction_evaluation)
-                .then(result => {
+                .then((result) => {
                   console.log(result);
 
-                  Insert_TransactionEvaluationComment(transaction_evaluation_comment)
-                    .then(result => {
-                      console.log(result);
+                  Insert_TransactionEvaluationComment(
+                    transaction_evaluation_comment
+                  ).then((result) => {
+                    console.log(result);
 
-                      Insert_TransactionGoodComment(transaction_evaluation_goodcomment)
-                        .then(result => {
-                          console.log(result);
+                    Insert_TransactionGoodComment(
+                      transaction_evaluation_goodcomment
+                    )
+                      .then((result) => {
+                        console.log(result);
 
-                          Insert_TransactionNeedImprovementComment(transaction_evaluation_improvementcomment)
-                            .then(result => {
-                              console.log(result);
+                        Insert_TransactionNeedImprovementComment(
+                          transaction_evaluation_improvementcomment
+                        )
+                          .then((result) => {
+                            console.log(result);
 
-                              Update_TransactionParticipantSubjects(status, year, supervisorid, userid)
-                                .then(result => {
-                                  console.log(result)
+                            Update_TransactionParticipantSubjects(
+                              status,
+                              year,
+                              supervisorid,
+                              userid
+                            )
+                              .then((result) => {
+                                console.log(result);
 
-                                  let sql = `select * from transaction_participant_subjects 
+                                let sql = `select * from transaction_participant_subjects 
                     where ps_year='${year}'
                     and ps_participantid='${userid}'
                     and ps_status='${active}'`;
 
-                                  mysql.Select(sql, 'TransactionParticipantSubject', (err, result) => {
+                                mysql.Select(
+                                  sql,
+                                  "TransactionParticipantSubject",
+                                  (err, result) => {
                                     if (err) console.error(err);
 
                                     if (result.length != 0) {
-                                      return res.json({
-                                        msg: 'success'
-                                      })
-                                    } else {
 
-                                      Update_ParticipantDetails(status, year, userid)
-                                        .then(result => {
+                                      login_log.push([
+                                        datetime,
+                                        userid,
+                                        `${supervisorid} - DONE`,
+                                      ]);
+
+                                      mysql.InsertTable(
+                                        "login_logs",
+                                        login_log,
+                                        (err, result) => {
+                                          if (err)
+                                            console.error("Error: ", err);
+
                                           console.log(result);
+                                        }
+                                      );
+
+                                      return res.json({
+                                        msg: "success",
+                                      });
+                                    } else {
+                                      Update_ParticipantDetails(
+                                        status,
+                                        year,
+                                        userid
+                                      )
+                                        .then((result) => {
+                                          console.log(result);
+
+                                          login_log.push([
+                                            datetime,
+                                            userid,
+                                            `DONE`,
+                                          ]);
+
+                                          mysql.InsertTable(
+                                            "login_logs",
+                                            login_log,
+                                            (err, result) => {
+                                              if (err)
+                                                console.error("Error: ", err);
+
+                                              console.log(result);
+                                            }
+                                          );
+
                                           res.json({
-                                            msg: 'done'
-                                          })
+                                            msg: "done",
+                                          });
                                         })
-                                        .catch(error => {
+                                        .catch((error) => {
                                           res.json({
-                                            msg: error
-                                          })
-                                        })
+                                            msg: error,
+                                          });
+                                        });
                                     }
-                                  })
-                                })
-                                .catch(error => {
-                                  res.json({
-                                    msg: error
-                                  })
-                                })
-                            })
-                            .catch(error => {
-                              res.json({
-                                msg: error
+                                  }
+                                );
                               })
-                            })
-                        })
-                        .catch(error => {
-                          res.json({
-                            msg: error
+                              .catch((error) => {
+                                res.json({
+                                  msg: error,
+                                });
+                              });
                           })
-                        })
-                    })
+                          .catch((error) => {
+                            res.json({
+                              msg: error,
+                            });
+                          });
+                      })
+                      .catch((error) => {
+                        res.json({
+                          msg: error,
+                        });
+                      });
+                  });
                 })
-                .catch(error => {
+                .catch((error) => {
                   res.json({
-                    msg: error
-                  })
-                })
+                    msg: error,
+                  });
+                });
             }
           }
-
         });
       }
     }
-
   } catch (error) {
     res.json({
-      msg: error
-    })
+      msg: error,
+    });
   }
-})
+});
 
 //#region FUNCTIONS
 function Insert_TransactionEvaluation(data) {
   return new Promise((resolve, reject) => {
-    mysql.InsertTable('transaction_evaluation', data, (err, result) => {
+    mysql.InsertTable("transaction_evaluation", data, (err, result) => {
       if (err) reject(err);
 
       resolve(result);
-    })
-  })
+    });
+  });
 }
 
 function Insert_TransactionEvaluationComment(data) {
   return new Promise((resolve, reject) => {
-    mysql.InsertTable('transaction_evaluation_comment', data, (err, result) => {
+    mysql.InsertTable("transaction_evaluation_comment", data, (err, result) => {
       if (err) reject(err);
 
       resolve(result);
-    })
-  })
+    });
+  });
 }
 
-function Update_TransactionParticipantSubjects(status, year, subjectid, participantid) {
+function Update_TransactionParticipantSubjects(
+  status,
+  year,
+  subjectid,
+  participantid
+) {
   return new Promise((resolve, reject) => {
     let sql = `update transaction_participant_subjects 
     set ps_status='${status}'
@@ -270,8 +326,8 @@ function Update_TransactionParticipantSubjects(status, year, subjectid, particip
       if (err) reject(err);
 
       resolve(result);
-    })
-  })
+    });
+  });
 }
 
 function Update_ParticipantDetails(status, year, participantid) {
@@ -285,27 +341,31 @@ function Update_ParticipantDetails(status, year, participantid) {
       if (err) reject(err);
 
       resolve(result);
-    })
-  })
+    });
+  });
 }
 
 function Insert_TransactionNeedImprovementComment(data) {
   return new Promise((resolve, reject) => {
-    mysql.InsertTable('transaction_needimprovement_comment', data, (err, result) => {
-      if (err) reject(err);
+    mysql.InsertTable(
+      "transaction_needimprovement_comment",
+      data,
+      (err, result) => {
+        if (err) reject(err);
 
-      resolve(result);
-    })
-  })
+        resolve(result);
+      }
+    );
+  });
 }
 
 function Insert_TransactionGoodComment(data) {
   return new Promise((resolve, reject) => {
-    mysql.InsertTable('transaction_good_comment', data, (err, result) => {
+    mysql.InsertTable("transaction_good_comment", data, (err, result) => {
       if (err) reject(err);
 
       resolve(result);
-    })
-  })
+    });
+  });
 }
 //#endregion

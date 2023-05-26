@@ -1,62 +1,77 @@
 <div class="row">
-    <div class="col-xl-4 col-lg-3">
-        <div class="entry-area">
-            <select class="entry-input" name="typelist" id="typelist">
-                <option value="-">TYPE</option>
-            </select>
-        </div>
-        <div class="entry-area">
-            <input class="entry-input" type="text" name="criterianame" id="criterianame" placeholder="CRITERIA">
-        </div>
-
-        <div class="entry-area">
-            <button class="approve-btn" id="addBtn" name="addBtn">ADD</button>
-        </div>
+  <div class="col-xl-4 col-lg-3">
+    <div class="entry-area">
+      <select class="entry-input" name="typelist" id="typelist">
+        <option value="-">TYPE</option>
+      </select>
     </div>
+    <div class="entry-area">
+      <input
+        class="entry-input"
+        type="text"
+        name="criterianame"
+        id="criterianame"
+        placeholder="CRITERIA"
+      />
+    </div>
+
+    <div class="entry-area">
+      <button class="approve-btn" id="addBtn" name="addBtn">ADD</button>
+    </div>
+  </div>
 </div>
-<hr>
-<div>
-    <table id="criteria-table">
-        <thead>
-            <th>CODE</th>
-            <th>CRITERIA</th>
-            <th>SUBJECT TO</th>
-            <th>CREATED BY</th>
-            <th>CREATED DATE</th>
-            <th>ACTION</th>
-        </thead>
-        <tbody></tbody>
-    </table>
+<hr />
+<div class="table-responsive-sm">
+  <table id="criteria-table" class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <th>CODE</th>
+      <th>CRITERIA</th>
+      <th>SUBJECT TO</th>
+      <th>CREATED BY</th>
+      <th>CREATED DATE</th>
+      <th>ACTION</th>
+    </thead>
+    <tbody class="table-light"></tbody>
+  </table>
 </div>
 
 <!-- The Modal -->
 <div id="updateModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="updateModalSpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="printArea" name="printArea" class="print-container">
-            <div class="modal-body">
-                <div class="row center-content">
-                    <div class="col-xl-4 col-lg-3">
-                        <div class="entry-area">
-                            <select class="entry-input" name="modaltypelist" id="modaltypelist">
-                                <option value="-">TYPE</option>
-                            </select>
-                        </div>
-                        <div class="entry-area">
-                            <input class="entry-input" type="text" name="modalcriterianame" id="modalcriterianame"
-                                placeholder="CRITERIA">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="saveBtn" name="saveBtn">SAVE</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="updateModalSpan" class="close">&times;</span>
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div id="printArea" name="printArea" class="print-container">
+      <div class="modal-body">
+        <div class="row center-content">
+          <div class="col-xl-4 col-lg-3">
+            <div class="entry-area">
+              <select
+                class="entry-input"
+                name="modaltypelist"
+                id="modaltypelist"
+              >
+                <option value="-">TYPE</option>
+              </select>
+            </div>
+            <div class="entry-area">
+              <input
+                class="entry-input"
+                type="text"
+                name="modalcriterianame"
+                id="modalcriterianame"
+                placeholder="CRITERIA"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button class="approve-btn" id="saveBtn" name="saveBtn">SAVE</button>
+    </div>
+  </div>
 </div>

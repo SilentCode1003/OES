@@ -1,91 +1,151 @@
 <div class="row">
-    <div class="col-xl-4 col-lg-3">
-        <div class="entry-area">
-            <input class="entry-input" type="text" name="firstname" id="firstname" placeholder="FIRST NAME">
-        </div>
-        <div class="entry-area">
-            <input class="entry-input" type="text" name="middlename" id="middlename" placeholder="MIDDLE NAME">
-        </div>
-        <div class="entry-area">
-            <input class="entry-input" type="text" name="lastname" id="lastname" placeholder="LAST NAME">
-        </div>
-        <div class="entry-area">
-            <input class="entry-input" type="text" name="username" id="username" placeholder="USERNAME">
-        </div>
-        <div class="entry-area">
-            <input class="entry-input" type="text" name="password" id="password" placeholder="PASSWORD">
-        </div>
-        <div class="entry-area">
-            <select class="entry-input" name="accesstypelist" id="accesstypelist">
-                <option value="-">ACCESS TYPE</option>
-            </select>
-        </div>
-        <div class="entry-area">
-            <button class="approve-btn" id="addBtn" name="addBtn">ADD</button>
-        </div>
+  <div class="col-xl-4 col-lg-3">
+    <div class="entry-area">
+      <input
+        class="entry-input"
+        type="text"
+        name="firstname"
+        id="firstname"
+        placeholder="FIRST NAME"
+      />
     </div>
+    <div class="entry-area">
+      <input
+        class="entry-input"
+        type="text"
+        name="middlename"
+        id="middlename"
+        placeholder="MIDDLE NAME"
+      />
+    </div>
+    <div class="entry-area">
+      <input
+        class="entry-input"
+        type="text"
+        name="lastname"
+        id="lastname"
+        placeholder="LAST NAME"
+      />
+    </div>
+    <div class="entry-area">
+      <input
+        class="entry-input"
+        type="text"
+        name="username"
+        id="username"
+        placeholder="USERNAME"
+      />
+    </div>
+    <div class="entry-area">
+      <input
+        class="entry-input"
+        type="text"
+        name="password"
+        id="password"
+        placeholder="PASSWORD"
+      />
+    </div>
+    <div class="entry-area">
+      <select class="entry-input" name="accesstypelist" id="accesstypelist">
+        <option value="-">ACCESS TYPE</option>
+      </select>
+    </div>
+    <div class="entry-area">
+      <button class="approve-btn" id="addBtn" name="addBtn">ADD</button>
+    </div>
+  </div>
 </div>
-<hr>
-<div>
-    <table id="admin-table">
-        <thead>
-            <th>USER ID</th>
-            <th>FULLNAME</th>
-            <th>USERNAME</th>
-            <th>PASSWORD</th>
-            <th>TYPE</th>
-            <th>CREATED BY</th>
-            <th>CREATED DATE</th>
-            <th>STATUS</th>
-            <th>ACTION</th>
-        </thead>
-        <tbody></tbody>
-    </table>
+<hr />
+<div class="table-responsive-sm">
+  <table id="admin-table" class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <th>USER ID</th>
+      <th>FULLNAME</th>
+      <th>USERNAME</th>
+      <th>PASSWORD</th>
+      <th>TYPE</th>
+      <th>CREATED BY</th>
+      <th>CREATED DATE</th>
+      <th>STATUS</th>
+      <th>ACTION</th>
+    </thead>
+    <tbody class="table-light"></tbody>
+  </table>
 </div>
 
 <!-- The Modal -->
 <div id="updateModal" class="modal card shadow mb-4">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-button-container">
-            <span id="updateModalSpan" class="close">&times;</span>
-        </div>
-        <!-- AREA TO PRINT ONLY -->
-        <div id="printArea" name="printArea" class="print-container">
-            <div class="modal-body">
-                <div class="row center-content">
-
-                    <div class="col-xl-6 col-lg-6 col-sm-6">
-                        <div class="entry-area">
-                            <input class="entry-input" type="text" name="modalfirstname" id="modalfirstname"
-                                placeholder="FIRST NAME">
-                        </div>
-                        <div class="entry-area">
-                            <input class="entry-input" type="text" name="modalmiddlename" id="modalmiddlename"
-                                placeholder="MIDDLE NAME">
-                        </div>
-                        <div class="entry-area">
-                            <input class="entry-input" type="text" name="modallastname" id="modallastname"
-                                placeholder="LAST NAME">
-                        </div>
-                        <div class="entry-area">
-                            <input class="entry-input" type="text" name="modalusername" id="modalusername" placeholder="USERNAME">
-                        </div>
-                        <div class="entry-area">
-                            <input class="entry-input" type="text" name="modalpassword" id="modalpassword" placeholder="PASSWORD">
-                        </div>
-                        <div class="entry-area">
-                            <select class="entry-input" name="modalaccesstypelist" id="modalaccesstypelist">
-                                <option value="-">ACCESS TYPE</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-button-container" class="center-content">
-            <button class="approve-btn" id="saveBtn" name="saveBtn">SAVE</button>
-        </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-button-container">
+      <span id="updateModalSpan" class="close">&times;</span>
     </div>
+    <!-- AREA TO PRINT ONLY -->
+    <div id="printArea" name="printArea" class="print-container">
+      <div class="modal-body">
+        <div class="row center-content">
+          <div class="col-xl-6 col-lg-6 col-sm-6">
+            <div class="entry-area">
+              <input
+                class="entry-input"
+                type="text"
+                name="modalfirstname"
+                id="modalfirstname"
+                placeholder="FIRST NAME"
+              />
+            </div>
+            <div class="entry-area">
+              <input
+                class="entry-input"
+                type="text"
+                name="modalmiddlename"
+                id="modalmiddlename"
+                placeholder="MIDDLE NAME"
+              />
+            </div>
+            <div class="entry-area">
+              <input
+                class="entry-input"
+                type="text"
+                name="modallastname"
+                id="modallastname"
+                placeholder="LAST NAME"
+              />
+            </div>
+            <div class="entry-area">
+              <input
+                class="entry-input"
+                type="text"
+                name="modalusername"
+                id="modalusername"
+                placeholder="USERNAME"
+              />
+            </div>
+            <div class="entry-area">
+              <input
+                class="entry-input"
+                type="text"
+                name="modalpassword"
+                id="modalpassword"
+                placeholder="PASSWORD"
+              />
+            </div>
+            <div class="entry-area">
+              <select
+                class="entry-input"
+                name="modalaccesstypelist"
+                id="modalaccesstypelist"
+              >
+                <option value="-">ACCESS TYPE</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-button-container" class="center-content">
+      <button class="approve-btn" id="saveBtn" name="saveBtn">SAVE</button>
+    </div>
+  </div>
 </div>

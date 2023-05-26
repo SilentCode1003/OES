@@ -1,27 +1,27 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-require('dotenv').config();
+require("dotenv").config();
 
-const mysql = require('./repository/evaluationdb');
-const helper = require('./repository/customhelper');
-const dictionary = require('./repository/dictionary');
+const mysql = require("./repository/evaluationdb");
+const helper = require("./repository/customhelper");
+const dictionary = require("./repository/dictionary");
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', {
+router.get("/", function (req, res, next) {
+  res.render("index", {
     title: process.env._TITLE,
     user: req.session.username,
     userid: req.session.userid,
     fullname: req.session.fullname,
     accounttype: req.session.accounttype,
     department: req.session.department,
-    date: helper.GetCurrentDate()
+    date: helper.GetCurrentDate(),
   });
 });
 
 module.exports = router;
 
-router.post('/login', (req, res) => {
+router.post("/login", (req, res) => {
   try {
     let userid = req.body.userid;
     let password = req.body.password;
@@ -29,11 +29,10 @@ router.post('/login', (req, res) => {
         where mu_username='${userid}' 
         and mu_password='${password}'`;
 
-    mysql.Select(sql, 'MasterUsers', (err, data) => {
+    mysql.Select(sql, "MasterUsers", (err, data) => {
       if (err) console.error(err);
 
       if (data.length != 0) {
-
         req.session.isAuth = true;
         req.session.username = data[0].username;
         req.session.accounttype = data[0].type;
@@ -42,44 +41,42 @@ router.post('/login', (req, res) => {
         req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
         res.json({
-          msg: 'success'
+          msg: "success",
         });
-
-      }
-      else {
+      } else {
         res.json({
-          msg: 'none'
-        })
+          msg: "none",
+        });
       }
-    })
-
+    });
   } catch (error) {
     res.json({
-      msg: error
+      msg: error,
     });
   }
-})
+});
 
-router.post('/loginuser', (req, res) => {
+router.post("/loginuser", (req, res) => {
   try {
     let userid = req.body.userid;
     let sql = `select * from master_employee 
         where me_employeeid='${userid}'`;
-    let status = 'ACTIVE';
+    let status = "ACTIVE";
     let year = helper.GetCurrentYear();
+    let datetime = helper.GetCurrentDatetime();
+    let login_log = [];
 
-    mysql.Select(sql, 'MasterEmployee', (err, data) => {
+    mysql.Select(sql, "MasterEmployee", (err, data) => {
       if (err) console.error(err);
 
       console.log(data);
 
       if (data.length != 0) {
-
         let sql_check = `select * from participant_details 
         where pd_participantid='${userid}'
         and pd_year='${year}'`;
 
-        mysql.Select(sql_check, 'ParticipantDetails', (err, result) => {
+        mysql.Select(sql_check, "ParticipantDetails", (err, result) => {
           if (err) console.log(err);
 
           console.log(result);
@@ -87,96 +84,138 @@ router.post('/loginuser', (req, res) => {
           if (result.length != 0) {
             if (result[0].status == status) {
               req.session.isAuth = true;
-              req.session.accounttype = 'USER';
+              req.session.accounttype = "USER";
               req.session.position = data[0].position;
               req.session.userid = userid;
               req.session.department = data[0].department;
               req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
-              console.log(`${userid} ${req.session.fullname} ${req.session.department}`)
+              console.log(
+                `${userid} ${req.session.fullname} ${req.session.department}`
+              );
 
-              Create_ParticipantDetails(userid, req.session.fullname, req.session.department, req.session.position)
-                .then(result => {
+              Create_ParticipantDetails(
+                userid,
+                req.session.fullname,
+                req.session.department,
+                req.session.position
+              )
+                .then((result) => {
                   console.log(result);
+
+                  login_log.push([datetime, userid, "Re-Login"]);
+
+                  mysql.InsertTable("login_logs", login_log, (err, result) => {
+                    if (err) console.error("Error: ", err);
+
+                    console.log(result);
+                  });
                 })
-                .catch(error => {
+                .catch((error) => {
                   console.log(error);
                 });
 
               res.json({
-                msg: 'success'
+                msg: "success",
               });
-            }
-            else {
-              console.log('NOT ACTIVE');
+            } else {
+              login_log.push([datetime, userid, "DONE"]);
+
+              mysql.InsertTable("login_logs", login_log, (err, result) => {
+                if (err) console.error("Error: ", err);
+
+                console.log(result);
+              });
+              console.log("NOT ACTIVE");
               res.json({
-                msg: 'done',
+                msg: "done",
               });
             }
-          }
-          else {
+          } else {
             req.session.isAuth = true;
-            req.session.accounttype = 'USER';
+            req.session.accounttype = "USER";
             req.session.userid = userid;
             req.session.position = data[0].position;
             req.session.department = data[0].department;
             req.session.fullname = `${data[0].firstname} ${data[0].middlename} ${data[0].lastname}`;
 
-
-            Create_ParticipantDetails(userid, req.session.fullname, req.session.department, req.session.position)
-              .then(result => {
+            Create_ParticipantDetails(
+              userid,
+              req.session.fullname,
+              req.session.department,
+              req.session.position
+            )
+              .then((result) => {
                 console.log(result);
+
+                login_log.push([datetime, userid, "First Login"]);
+
+                mysql.InsertTable("login_logs", login_log, (err, result) => {
+                  if (err) console.error("Error: ", err);
+
+                  console.log(result);
+                });
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
 
             res.json({
-              msg: 'success'
+              msg: "success",
             });
           }
-        })
-      }
-      else {
+        });
+      } else {
         res.json({
-          msg: 'none'
-        })
+          msg: "none",
+        });
       }
-    })
-
+    });
   } catch (error) {
     res.json({
-      msg: error
+      msg: error,
     });
   }
-})
-
-router.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-
-      res.json({
-        msg: err
-      });
-
-    }
-
-    res.json({
-      msg: "success"
-    })
-  });
-
 });
 
+router.post("/logout", (req, res) => {
+  let datetime = helper.GetCurrentDatetime();
+  let userid = req.session.userid;
+  let login_log = [];
+
+  req.session.destroy((err) => {
+    if (err) {
+      res.json({
+        msg: err,
+      });
+    }
+
+    login_log.push([datetime, userid, "Logout"]);
+
+    mysql.InsertTable("login_logs", login_log, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+    });
+
+    res.json({
+      msg: "success",
+    });
+  });
+});
 
 //#region FUNCTIONS
 
-function Create_ParticipantDetails(participantid, fullname, department, position) {
-
+function Create_ParticipantDetails(
+  participantid,
+  fullname,
+  department,
+  position
+) {
   return new Promise((resolve, reject) => {
     let data = [];
     let year = helper.GetCurrentYear();
-    let details = '';
+    let details = "";
     let createdby = fullname;
     let createddate = helper.GetCurrentDatetime();
     let status = dictionary.GetValue(dictionary.ACT());
@@ -186,28 +225,26 @@ function Create_ParticipantDetails(participantid, fullname, department, position
     console.log(participantid);
 
     let sql_check = `select * from participant_details where pd_participantid='${participantid}' and pd_year='${year}'`;
-    mysql.Select(sql_check, 'ParticipantDetails', (err, result) => {
+    mysql.Select(sql_check, "ParticipantDetails", (err, result) => {
       if (err) reject(err);
 
       if (result.length != 0) {
-
-        resolve('exist')
-      }
-      else {
+        resolve("exist");
+      } else {
         let sql_supervisor = ``;
 
-        if (department == 'IT') {
+        if (department == "IT") {
           sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('IT','CABLING','ADMIN')`;
         }
-        if (department == 'ADMIN') {
+        if (department == "ADMIN") {
           sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('ADMIN')`;
         }
-        if (department == 'CABLING') {
+        if (department == "CABLING") {
           sql_supervisor = `select * from master_supervisor where ms_status='${status}' and ms_department in ('CABLING','ADMIN')`;
         }
         //further extension of filters
 
-        mysql.Select(sql_supervisor, 'MasterSupervisor', (err, result) => {
+        mysql.Select(sql_supervisor, "MasterSupervisor", (err, result) => {
           if (err) reject(err);
 
           console.log(result);
@@ -216,7 +253,7 @@ function Create_ParticipantDetails(participantid, fullname, department, position
             subjectid.push({
               employeeid: key.employeeid,
               type: key.type,
-            })
+            });
           });
 
           data.push([
@@ -226,16 +263,16 @@ function Create_ParticipantDetails(participantid, fullname, department, position
             status,
             createdby,
             createddate,
-          ])
+          ]);
 
-          mysql.InsertTable('participant_details', data, (err, result) => {
+          mysql.InsertTable("participant_details", data, (err, result) => {
             if (err) reject(err);
 
             console.log(result);
-          })
+          });
 
           let sql_check = `select * from participant_details where pd_participantid='${participantid}'`;
-          mysql.Select(sql_check, 'ParticipantDetails', (err, data) => {
+          mysql.Select(sql_check, "ParticipantDetails", (err, data) => {
             if (err) reject(err);
 
             console.log(data);
@@ -251,23 +288,26 @@ function Create_ParticipantDetails(participantid, fullname, department, position
                   key.type,
                   status,
                   createdby,
-                  createddate
-                ])
-              })
+                  createddate,
+                ]);
+              });
 
-              mysql.InsertTable('transaction_participant_subjects', transaction_participant_subjects, (err, result) => {
-                if (err) reject(err);
+              mysql.InsertTable(
+                "transaction_participant_subjects",
+                transaction_participant_subjects,
+                (err, result) => {
+                  if (err) reject(err);
 
-                console.log(result);
-              })
+                  console.log(result);
+                }
+              );
             }
-          })
-
-        })
-        resolve('new')
+          });
+        });
+        resolve("new");
       }
-    })
-  })
+    });
+  });
 }
 
 //#endregion
